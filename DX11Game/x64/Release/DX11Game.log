@@ -1,0 +1,10 @@
+﻿  SceneTitle.cpp
+c:\users\pengi\onedrive\デスクトップ\gm31\11_samplelandg\dx11game\scenetitle.cpp(162): warning C4101: 'hdc': ローカル変数は 1 度も使われていません。
+c:\users\pengi\onedrive\デスクトップ\gm31\11_samplelandg\dx11game\scenetitle.cpp(163): warning C4101: 'ps': ローカル変数は 1 度も使われていません。
+     ライブラリ C:\Users\pengi\OneDrive\デスクトップ\GM31\11_sampleLandG\DX11Game\DX11Game.lib とオブジェクト C:\Users\pengi\OneDrive\デスクトップ\GM31\11_sampleLandG\DX11Game\DX11Game.exp を作成中
+  コード生成しています。
+  1 of 1548 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  DX11Game.vcxproj -> C:\Users\pengi\OneDrive\デスクトップ\GM31\11_sampleLandG\DX11Game\DX11Game.exe
