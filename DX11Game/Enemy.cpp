@@ -15,6 +15,7 @@ const float VALUE_MOVE_ENEMY = 1.0f;		// 移動量
 const float RATE_ROTATE_ENEMY = 0.20f;		// 回転慣性係数
 const float VALUE_ROTATE_ENEMY = 7.0f;		// 回転速度
 const float SCALE = 10.0f;		// 大きさ
+const float MAX_VOLUME = 1.0f;	// 最大音量
 
 // コンストラクタ
 CEnemy::CEnemy(CScene* pScene) : CModel(pScene)
@@ -51,6 +52,9 @@ void CEnemy::Fin()
 // 更新
 void CEnemy::Update()
 {
+
+	float fChan = 0.0f;	//サウンドのLR調整用
+
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
 	// 現在位置取得
 	XMFLOAT3 vPos = GetPos();
@@ -76,10 +80,12 @@ void CEnemy::Update()
 	// プレイヤーを追尾する
 	if (pPos.x > vPos.x) {
 		vPos.x = VALUE_MOVE_ENEMY;
+		fChan = -1.0f;
 	}
 	else
 	{
 		vPos.x = -VALUE_MOVE_ENEMY;
+		fChan = 1.0f;
 	}
 	if (pPos.y > vPos.y) {
 		vPos.y = VALUE_MOVE_ENEMY;
@@ -129,6 +135,17 @@ void CEnemy::Update()
 	m_mWorld._43 = m_vPos.z;
 	SetPos(m_vPos);
 
+	//距離のよってサウンド調整をする
+	float x, z, volume;
+	x = vPos.x - pPos.x;
+	z = vPos.z - pPos.z;
+	volume = x * x + z * z;
+	sqrt(volume);
+	volume = volume / 50000;
+	volume = MAX_VOLUME - volume;
+	volume = std::max(volume, 0.15f);
+	volume = std::min(volume, 0.8f);
+	CSound::SetVolume(BGM_GAME, volume, fChan);
 
 	// 衝突判定
 	if (m_pPlayer) {
@@ -139,8 +156,8 @@ void CEnemy::Update()
 			if (CollisionBSphere(m_pPlayer)) {
 				m_pPlayer->SetBColor();
 				CFade::Out(SCENE_GAMEOVER);
-				/*CSound::SetVolume(SE_DAMAGE, 0.2f);
-				CSound::Play(SE_DAMAGE);*/
+				//CSound::SetVolume(SE_DAMAGE, 0.2f);
+				//CSound::Play(SE_DAMAGE);
 				SetBColor();
 			}
 			break;

@@ -22,10 +22,11 @@
 const int CHRCNT_SCORE = 2;
 const int POS_X_SCORE = 0.0f;
 const float POS_Y_SCORE = ((SCREEN_HEIGHT - 80.0f) * 0.5f + 16.0f);
-const int MAX_SCORE = CObject::GetCnt();
+const int MAX_SCORE = 10;
 // ÉOÉçÅ[ÉoÉãïœêî
 static ID3D11ShaderResourceView* g_pTexture;
 static int g_nScore;
+
 // èâä˙âª
 HRESULT InitScore()
 {
@@ -46,7 +47,7 @@ void UpdateScore()
 {
 	if (g_nScore == 0)
 	{
-		CFade::CutOut(SCENE_CLEAR);
+		//CFade::CutOut(SCENE_CLEAR);
 		CClear::Clearflg(true);
 	}
 }

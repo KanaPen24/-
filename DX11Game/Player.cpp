@@ -26,7 +26,7 @@ const float SPEED = 2.0f;						// 移動スピード
 const float SCALE = 14.0f;						// 大きさ
 const float DASH = 1.5f;						// ダッシュ
 const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
-//const REV_Z_AXIS	// Y軸180度回転
+//#define REV_Z_AXIS	// Y軸180度回転
 
 // コンストラクタ
 CPlayer::CPlayer(CScene* pScene) : CModel(pScene)

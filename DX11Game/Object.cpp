@@ -4,19 +4,14 @@
 // Author : HIROHIKO HAMAYA
 //
 //=============================================================================
-#include "Player.h"
 #include "Game.h"
 #include "Sound.h"
 #include "Score.h"
-#include "Number.h"
-#include "Texture.h"
 #include "Polygon.h"
-#include "Time.h"
 #include "Object.h"
 #include "Debugproc.h"
-#include "Fade.h"
 #include "Scene.h"
-#include "SceneClear.h"
+#include "StegeSelect.h"
 
 // ƒOƒ[ƒoƒ‹•Ï”
 namespace {
@@ -47,6 +42,19 @@ HRESULT CObject::Init()
 	SetModel(MODEL_OBJECT);
 	SetScale(XMFLOAT3(200.0f, 200.0f, 200.0f));
 	m_pLand = (CLand*)m_pScene->Find(GOT_LAND);
+	switch (GetStageSelect())
+	{
+	case STAGE_1:
+		g_MaxObject = 10;
+		break;
+	case STAGE_2:
+		g_MaxObject = 20;
+		break;
+	case STAGE_3:
+		g_MaxObject = 30;
+		break;
+	}
+	g_cntObject = g_MaxObject;
 	return hr;
 }
 
@@ -94,25 +102,13 @@ void CObject::Update()
 	m_mWorld._43 = m_vPos.z;
 	SetPos(m_vPos);
 
-
 	// Õ“Ë”»’è
-	if (m_pPlayer) {
-		switch (((CGame*)m_pScene)->GetBoundary()) {
-		case 0:
-			break;
-		case 1:
-			if (CollisionBSphere(m_pPlayer)) {
-				m_pPlayer->SetBColor();
-				//CFade::Out(SCENE_GAMEOVER);
-				/*CSound::SetVolume(SE_DAMAGE, 0.2f);
-				CSound::Play(SE_DAMAGE);*/
-				SetBColor();
-			}
-			break;
-		}
-	}
 	if (CollisionBSphere(m_pPlayer)) {
 		AddScore(-1);
+		m_vPos.x = 50000.0f;
+		m_mWorld._41 = m_vPos.x;
+		SetPos(m_vPos);
+		SetWorld(m_mWorld);
 		/*CSound::SetVolume(SE_DAMAGE, 0.2f);
 		CSound::Play(SE_DAMAGE);*/
 	}
