@@ -16,19 +16,19 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_PARTICLE	L"data/texture/hokori.jpg"	// 読み込むテクスチャファイル名
-#define	VALUE_MOVE_PARTICLE	(2.0f)							// 移動速度
+#define TEXTURE_PARTICLE	L"data/texture/hokori.jpg"	// 読み込むテクスチャファイル名
+const float VALUE_MOVE_PARTICLE = 2.0f;					// 移動速度
 
-#define	MAX_PARTICLE		(25)							// エフェクト最大数
+const int MAX_PARTICLE = 25;							// エフェクト最大数
 
-#define	DISP_SHADOW											// 影の表示
+//#define DISP_SHADOW										// 影の表示
 //#undef DISP_SHADOW
 
-#define MATERIAL_DIFFUSE	XMFLOAT4(1,1,1,1)
-#define MATERIAL_AMBIENT	XMFLOAT4(0,0,0,1)
-#define MATERIAL_SPECULAR	XMFLOAT4(0,0,0,1)
-#define MATERIAL_EMISSIVE	XMFLOAT4(0,0,0,1)
-#define MATERIAL_POWER		(1.0f)
+const XMFLOAT4 MATERIAL_DIFFUSE = XMFLOAT4(1, 1, 1, 1);
+const XMFLOAT4 MATERIAL_AMBIENT = XMFLOAT4(0, 0, 0, 1);
+const XMFLOAT4 MATERIAL_SPECULAR = XMFLOAT4(0, 0, 0, 1);
+const XMFLOAT4 MATERIAL_EMISSIVE = XMFLOAT4(0, 0, 0, 1);
+const float MATERIAL_POWER = 1.0f;
 
 //*****************************************************************************
 // 構造体定義

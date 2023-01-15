@@ -13,16 +13,16 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	NUM_SELECT_MENU		(3)			// セレクトメニュー数
-#define	SELECT_MENU_WIDTH	(360.0f)	// セレクトメニュー幅
-#define	SELECT_MENU_HEIGHT	(360.0f)		// セレクトメニュー高さ
-#define	SELECT_MENU_POS_X	(-420.0f)		// セレクトメニュー位置(X座標)
-#define	SELECT_MENU_POS_Y	(0.0f)	// セレクトメニュー位置(Y座標)
-#define	SELECT_MENU_INTERVAL	(400.0f)	// セレクトメニュー間隔
-#define GAMEPAD_LEFT_STICK_DEADZONE  (7800)	//左スティックのデッドゾーン
-#define UNDER_MOVE_RIMIT_Y	(-10.f)			//ロゴの動く下の上限値
-#define TOP_MOVE_RIMIT_Y	(10.f)			//ロゴの動く上の上限値
-#define ROGO_SPEED		(0.5f)				//ロゴが動くスピード
+const int NUM_SELECT_MENU = 3;					// セレクトメニュー数
+const float SELECT_MENU_WIDTH = 360.0f;			// セレクトメニュー幅
+const float SELECT_MENU_HEIGHT = 360.0f;		// セレクトメニュー高さ
+const float SELECT_MENU_POS_X = -420.0f;		// セレクトメニュー位置(X座標)
+const float SELECT_MENU_POS_Y = 0.0f;			// セレクトメニュー位置(Y座標)
+const float SELECT_MENU_INTERVAL = 400.0f;		// セレクトメニュー間隔
+const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	//左スティックのデッドゾーン
+const float UNDER_MOVE_RIMIT_Y = -10.f;			//ロゴの動く下の上限値
+const float TOP_MOVE_RIMIT_Y = 10.f;			//ロゴの動く上の上限値
+const float ROGO_SPEED = 0.5f;					//ロゴが動くスピード
 
 
 //*****************************************************************************

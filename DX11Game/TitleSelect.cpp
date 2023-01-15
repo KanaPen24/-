@@ -16,14 +16,14 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	NUM_SELECT_MENU		(2)			// セレクトメニュー数
-#define	SELECT_MENU_WIDTH	(500.0f)	// セレクトメニュー幅
-#define	SELECT_MENU_HEIGHT	(100.0f)	// セレクトメニュー高さ
-#define	SELECT_MENU_POS_X	(25.0f)		// セレクトメニュー位置(X座標)
-#define	SELECT_MENU_POS_Y	(-150.0f)	// セレクトメニュー位置(Y座標)
-#define	SELECT_MENU_INTERVAL	(150.0f)	// セレクトメニュー間隔
-#define GAMEPAD_LEFT_STICK_DEADZONE  (7800)	//左スティックのデッドゾーン
-#define MAX_TEXTURE	(2)
+const int NUM_SELECT_MENU = 2;					// セレクトメニュー数
+const float SELECT_MENU_WIDTH = 500.0f;			// セレクトメニュー幅
+const float	SELECT_MENU_HEIGHT = 100.0f;		// セレクトメニュー高さ
+const float SELECT_MENU_POS_X = 25.0f;			// セレクトメニュー位置(X座標)
+const float SELECT_MENU_POS_Y = -150.0f;		// セレクトメニュー位置(Y座標)
+const float SELECT_MENU_INTERVAL = 150.0f;		// セレクトメニュー間隔
+const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	//左スティックのデッドゾーン
+const int MAX_TEXTURE = 2;
 
 //*****************************************************************************
 // グローバル変数

@@ -31,7 +31,7 @@
 using namespace std;
 using namespace DirectX;
 
-#define MAX_BONE_MATRIX	64
+const int MAX_BONE_MATRIX = 64;
 
 // シェーダに渡す値
 struct SHADER_GLOBAL {

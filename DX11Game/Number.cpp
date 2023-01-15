@@ -14,8 +14,8 @@
 #include "Polygon.h"
 // マクロ定義
 #define PATH_TEXTURE_NUMBER L"data/texture/number004.png"
-#define COUNT_X_NUMBER 10
-#define COUNT_Y_NUMBER 1
+const int COUNT_X_NUMBER = 10;
+const int COUNT_Y_NUMBER = 1;
 // グローバル変数
 static ID3D11ShaderResourceView* g_pTexture;
 // 初期化

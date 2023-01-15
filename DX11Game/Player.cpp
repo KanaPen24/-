@@ -21,20 +21,21 @@ namespace {
 	};
 }
 
-#define	RATE_MOVE_MODEL		(0.25f)		// 移動慣性係数
-#define SPEED 				(2.0f)		// 移動スピード
-#define SCALE				(14.0f)		// 大きさ
-#define DASH				(1.5f)		// ダッシュ
-#define GAMEPAD_LEFT_STICK_DEADZONE  (7800)	// 左スティックのデッドゾーン
-//#define REV_Z_AXIS	// Y軸180度回転
+const float RATE_MOVE_MODEL = 0.25f;			// 移動慣性係数
+const float SPEED = 2.0f;						// 移動スピード
+const float SCALE = 14.0f;						// 大きさ
+const float DASH = 1.5f;						// ダッシュ
+const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
+//const REV_Z_AXIS	// Y軸180度回転
 
 // コンストラクタ
 CPlayer::CPlayer(CScene* pScene) : CModel(pScene)
 {
 	m_id = GOT_PLAYER;
 	m_uTick = 0;
-	m_nSpeed = 0.0f;
-	m_pLand = nullptr;
+	m_nSpeed = 0;
+	m_pCity = nullptr;
+	m_bCollision = false;
 	XMStoreFloat4x4(&m_mInvWorld, XMMatrixIdentity());
 }
 
@@ -50,10 +51,12 @@ HRESULT CPlayer::Init()
 	if (SUCCEEDED(hr)) {
 		SetModel(MODEL_PLAYER);
 		m_uTick = 0;
-		m_pLand = (CLand*)m_pScene->Find(GOT_LAND);
-		m_animNo = ANIM_IDLE;
-		m_animTime = 0.0;
+		m_pCity = (CCity*)m_pScene->Find(GOT_CITY);
+		m_naAnimNo = ANIM_IDLE;
+		m_dAnimTime = 0.0;
 	}
+	CAssimpModel* pModel = GetAssimp(MODEL_ENEMY);
+	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
 	return hr;
 }
 
@@ -204,7 +207,6 @@ void CPlayer::Update()
 		else {
 			// 右移動
 			vPos.x -= SinDeg(rotCamera.y - 90.0f) * SPEED * fDash;
-			//vPos.z -= CosDeg(rotCamera.y - 90.0f) * SPEED * fDash;
 
 			angle.y = rotCamera.y - 90.0f;
 		}
@@ -212,7 +214,6 @@ void CPlayer::Update()
 	}
 	else if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
 		// 前移動
-		//vPos.x -= SinDeg(180.0f + rotCamera.y) * SPEED * fDash;
 		vPos.z -= CosDeg(180.0f + rotCamera.y) * SPEED * fDash;
 
 		angle.y = 180.0f + rotCamera.y;
@@ -220,7 +221,6 @@ void CPlayer::Update()
 	}
 	else if (CInput::GetKeyPress(VK_DOWN)|| CInput::GetKeyPress(VK_S)) {
 		// 後移動
-		//vPos.x -= SinDeg(rotCamera.y) * SPEED * fDash;
 		vPos.z -= CosDeg(rotCamera.y) * SPEED * fDash;
 
 		angle.y = rotCamera.y;
@@ -239,12 +239,14 @@ void CPlayer::Update()
 	vP0.x = vPos.x;
 	vP0.y = vPos.y + GetRadius() * 2;
 	vP0.z = vPos.z;
-	XMFLOAT3 vX, vN;
-	if (m_pLand && m_pLand->Collision(vP0,
-		XMFLOAT3(0.0f, -1.0f, 0.0f), &vX, &vN)) {
-		//vPos.y = vX.y;
+	XMFLOAT3 vX, vN;	//交点座標
+	if (m_pCity && m_pCity->Collision(vP0,XMFLOAT3(0.0f, -1.0f, 0.0f),m_bCollision, &vX, &vN)) {
+		vPos.x = vX.x;	
+		vPos.z = vX.z;
+		m_bCollision = false;	//当たった瞬間の座標が欲しいのでここで当たり判定を消す
 	} else {
 		vPos.y = 0.0f;
+		m_bCollision = true;	//離れたら次に当たる瞬間備えて当たり判定を付ける
 	}
 
 	//移動反映
@@ -261,23 +263,23 @@ void CPlayer::Update()
 	
 	// アニメーション更新
 	if (m_nSpeed == 0)
-		m_animNo = ANIM_IDLE;
+		m_naAnimNo = ANIM_IDLE;
 	if (m_nSpeed == 1)
-		m_animNo = ANIM_WALK;
+		m_naAnimNo = ANIM_WALK;
 	if (m_nSpeed == 2)
-		m_animNo = ANIM_RUN;
+		m_naAnimNo = ANIM_RUN;
 	static double dLastTime = clock() / double(CLOCKS_PER_SEC);
 	double dNowTime = clock() / double(CLOCKS_PER_SEC);
 	double dSlice = dNowTime - dLastTime;
 	dLastTime = dNowTime;
-	m_animTime += dSlice;
-	if (m_animTime >= GetModel()->GetAnimDuration(m_animNo)) {
-		m_animTime = 0.0;
+	m_dAnimTime += dSlice;
+	if (m_dAnimTime >= GetModel()->GetAnimDuration(m_naAnimNo)) {
+		m_dAnimTime = 0.0;
 	}
 #ifdef _DEBUG
 	//デバック表示
 	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
-	CDebugProc::Print("Animation=%d\n", m_animNo);
+	CDebugProc::Print("Animation=%d\n", m_naAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
 #endif
 }
@@ -288,8 +290,8 @@ void CPlayer::Draw()
 	CAssimpModel::InitShader(pDevice, 1);
 	CAssimpModel* pModel = GetModel();
 	if (pModel) {
-		pModel->SetAnimIndex(m_animNo);
-		pModel->SetAnimTime(m_animTime);
+		pModel->SetAnimIndex(m_naAnimNo);
+		pModel->SetAnimTime(m_dAnimTime);
 #ifdef REV_Z_AXIS
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 		XMFLOAT4X4 mW;
@@ -308,8 +310,8 @@ void CPlayer::DrawAlpha()
 {
 	CAssimpModel* pModel = GetModel();
 	if (pModel) {
-		pModel->SetAnimIndex(m_animNo);
-		pModel->SetAnimTime(m_animTime);
+		pModel->SetAnimIndex(m_naAnimNo);
+		pModel->SetAnimTime(m_dAnimTime);
 #ifdef REV_Z_AXIS
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 		XMFLOAT4X4 mW;

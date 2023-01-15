@@ -23,23 +23,12 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
-#define Rule_POS_X			(0)			// ポリゴンの表示位置
-#define Rule_POS_Y			(0)			// ポリゴンの表示位置
-#define Rule_SIZE_X			(1280)		// ポリゴンのサイズ
-#define Rule_SIZE_Y			(720)		// ポリゴンのサイズ
-
-#define	START_POS_X			(0)			// スタートボタンの位置(X座標)
-#define	START_POS_Y			(-220)		// スタートボタンの位置(Y座標)
-#define	START_WIDTH			(480)		// スタートボタンの幅
-#define	START_HEIGHT		(120)		// スタートボタンの高さ
-
-#define	COUNT_APPEAR		(60)		// スタートボタン出現までの時間
-#define	INTERVAL_DISP		(60)		// スタートボタン点滅の時間
+const int COUNT_APPEAR = 60;		// スタートボタン出現までの時間
+const int INTERVAL_DISP = 60;		// スタートボタン点滅の時間
 
 
-#define BLINK_TIMER		(30)			//点滅時間で使用
-#define BLINK_START_TIMER	(5)			//点滅開始時間
+const int BLINK_TIMER = 30;			//点滅時間で使用
+const int BLINK_START_TIMER = 5;			//点滅開始時間
 
 //*****************************************************************************
 // グローバル変数

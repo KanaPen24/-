@@ -6,17 +6,20 @@
 //=============================================================================
 #pragma once
 #include "Model.h"
-#include "Land.h"
+#include "City.h"
 
 class CPlayer : public CModel
 {
 private:
+	UINT m_nVertex;				// 頂点数
+	UINT m_nIndex;				// インデックス数
+
 	UINT m_uTick;
 	XMFLOAT4X4 m_mInvWorld;
 	int m_nSpeed;			// 速さ
-	CLand* m_pLand;			// 地面
-	int m_animNo;			// アニメーションNo.
-	double m_animTime;		// 再生時間
+	CCity* m_pCity;			// 街
+	int m_naAnimNo;			// アニメーションNo.
+	double m_dAnimTime;		// 再生時間
 public:
 	CPlayer(CScene* pScene);
 	virtual ~CPlayer();
@@ -25,6 +28,6 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void DrawAlpha();
-
+	bool m_bCollision;
 	XMFLOAT4X4& GetInvWorld() { return m_mInvWorld; }
 };

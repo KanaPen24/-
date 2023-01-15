@@ -19,10 +19,10 @@
 #include "SceneClear.h"
 
 // マクロ定義
-#define CHRCNT_SCORE 2
-#define POS_X_SCORE 0.0f
-#define POS_Y_SCORE ((SCREEN_HEIGHT-80.0f)*0.5f+16.0f)
-#define MAX_SCORE CObject::GetCnt()
+const int CHRCNT_SCORE = 2;
+const int POS_X_SCORE = 0.0f;
+const float POS_Y_SCORE = ((SCREEN_HEIGHT - 80.0f) * 0.5f + 16.0f);
+const int MAX_SCORE = CObject::GetCnt();
 // グローバル変数
 static ID3D11ShaderResourceView* g_pTexture;
 static int g_nScore;

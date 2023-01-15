@@ -12,8 +12,8 @@
 //*****************************************************************************
 #include "Main.h"
 // マクロ定義
-#define NUMBER_SIZE_X 35.0f // 文字幅
-#define NUMBER_SIZE_Y 50.0f // 文字高さ
+const float NUMBER_SIZE_X = 35.0f; // 文字幅
+const float NUMBER_SIZE_Y = 50.0f; // 文字高さ
 // 関数プロトタイプ
 HRESULT InitNumber(); // 初期化
 void UninitNumber(); // 終了処理

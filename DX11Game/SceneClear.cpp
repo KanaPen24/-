@@ -21,23 +21,23 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	NUM_CLEAR_MENU		(3)			// クリアメニュー数
-#define	CLEAR_MENU_WIDTH	(320.0f)	// クリアメニュー幅
-#define	CLEAR_MENU_HEIGHT	(60.0f)		// クリアメニュー高さ
-#define	CLEAR_MENU_POS_X	(-380.0f)	// クリアメニュー位置(X座標)
-#define	CLEAR_MENU_POS_Y	(-250.0f)	// クリアメニュー位置(Y座標)
-#define	CLEAR_MENU_INTERVAL	(400.0f)	// クリアメニュー間隔
-#define	PLATE_WIDTH			(SCREEN_WIDTH)	// プレートの幅
-#define	PLATE_HEIGHT		(50.0f)		// プレートの高さ
-#define	PLATE_POS_X			(0.0f)		// プレートの位置(X座標)
-#define	PLATE_POS_Y			(CLEAR_MENU_POS_Y)		// プレートの位置(Y座標)
-#define GAMEPAD_LEFT_STICK_DEADZONE  (7800)	//左スティックのデッドゾーン
-#define MAX_TEXTURE			(4)
-#define POS_X_BG			(0.0f)			//背景のX座標
-#define POS_Y_BG			(0.0f)			//背景のY座標
-#define WIDTH_BG			(SCREEN_WIDTH)	//横幅
-#define HEIGHT_BG			(SCREEN_HEIGHT)	//立幅
-#define TEX_BG				(0)				//背景の画像数
+const int		NUM_CLEAR_MENU = 3;			// クリアメニュー数
+const float 	CLEAR_MENU_WIDTH = 320.0f;	// クリアメニュー幅
+const float 	CLEAR_MENU_HEIGHT = 60.0f;		// クリアメニュー高さ
+const float 	CLEAR_MENU_POS_X = -380.0f;// クリアメニュー位置(X座標)
+const float 	CLEAR_MENU_POS_Y = -250.0f;	// クリアメニュー位置(Y座標)
+const float 	CLEAR_MENU_INTERVAL = 400.0f;	// クリアメニュー間隔
+const int 		PLATE_WIDTH = SCREEN_WIDTH;	// プレートの幅
+const float 	PLATE_HEIGHT = 50.0f;		// プレートの高さ
+const float 	PLATE_POS_X = 0.0f;		// プレートの位置X座標)
+const int 		PLATE_POS_Y = CLEAR_MENU_POS_Y;		// プレートの位置(Y座標)
+const int		GAMEPAD_LEFT_STICK_DEADZONE = 7800;	//左スティックのデッドゾーン
+const int		MAX_TEXTURE = 4;
+const float		POS_X_BG = 0.0f;		//背景のX座標
+const float		POS_Y_BG = 0.0f;		//背景のY座標
+const int		WIDTH_BG = SCREEN_WIDTH;	//横幅
+const int		HEIGHT_BG = SCREEN_HEIGHT;	//立幅
+const int		TEX_BG = 0;				//背景の画像数
 
 //*****************************************************************************
 // グローバル変数

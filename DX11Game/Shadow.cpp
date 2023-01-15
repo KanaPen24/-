@@ -16,15 +16,15 @@
 ////*****************************************************************************
 //// マクロ定義
 ////*****************************************************************************
-//#define	TEXTURE_FILENAME	L"data/texture/shadow000.jpg"	// テクスチャファイル名
+//const	TEXTURE_FILENAME	L"data/texture/shadow000.jpg"	// テクスチャファイル名
 //
-//#define M_DIFFUSE			XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-//#define M_SPECULAR			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-//#define M_POWER				(50.0f)
-//#define M_AMBIENT			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-//#define M_EMISSIVE			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+//const M_DIFFUSE			XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
+//const M_SPECULAR			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+//const M_POWER				(50.0f)
+//const M_AMBIENT			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+//const M_EMISSIVE			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
 //
-//#define MAX_SHADOW			5000
+//const MAX_SHADOW			5000
 //
 ////*****************************************************************************
 //// 構造体

@@ -13,12 +13,11 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define M_DIFFUSE		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-#define M_SPECULAR		XMFLOAT4(0.1f,0.1f,0.1f,1.0f)
-#define M_POWER			(1.0f)
-#define M_AMBIENT		XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
-#define M_EMISSIVE		XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
-
+const XMFLOAT4 M_DIFFUSE = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+const XMFLOAT4 M_SPECULAR = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
+const XMFLOAT4 M_AMBIENT = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+const XMFLOAT4 M_EMISSIVE = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+const float M_POWER = 1.0f;
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************

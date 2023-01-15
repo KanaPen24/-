@@ -1,4 +1,4 @@
-//#define D3DCOMPILER
+//const D3DCOMPILER
 
 #include <stdio.h>
 #include "Shader.h"

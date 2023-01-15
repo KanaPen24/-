@@ -21,11 +21,11 @@
 // マクロ定義
 #define PATH_BGTEXTURE L"data/texture/ゲームオーバーデッドエンド赤.png"
 
-#define BG_POS_X 0.0f
-#define BG_POS_Y 0.0f
-#define BG_WIDTH SCREEN_WIDTH
-#define BG_HEIGHT SCREEN_HEIGHT
-#define GAMEOVER_TIMER 250
+const float BG_POS_X = 0.0f;
+const float BG_POS_Y = 0.0f;
+const int BG_WIDTH = SCREEN_WIDTH;
+const int BG_HEIGHT = SCREEN_HEIGHT;
+const int GAMEOVER_TIMER = 250;
 // グローバル変数
 static ID3D11ShaderResourceView* g_pTexture;
 // コンストラクタ

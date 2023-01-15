@@ -12,8 +12,8 @@
 
 // マクロ定義
 #define	TEXTURE_FILENAME	L"data/texture/PressStart2Ph_e.png"
-#define FONT_WIDTH			16
-#define FONT_HEIGHT			16
+const int FONT_WIDTH = 16;
+const int FONT_HEIGHT = 16;
 
 // 静的メンバ
 ID3D11ShaderResourceView* CDebugProc::m_pTexture;	// テクスチャへのポインタ

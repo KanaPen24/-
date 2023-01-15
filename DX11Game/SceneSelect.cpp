@@ -22,15 +22,13 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define POS_X_BG		(0.0f)			//背景のX座標
-#define POS_Y_BG		(0.0f)			//背景のY座標
-#define WIDTH_BG		(SCREEN_WIDTH)	//横幅
-#define HEIGHT_BG		(SCREEN_HEIGHT)	//立幅
-#define TEX_BG			(0)				//背景の画像数
-#define TEX_ENTER		(1)				//エンター画像数
-#define MAX_TEXTURE		(1)				//使う画像数
-#define BLINK_TIMER		(30)			//点滅時間で使用
-#define BLINK_START_TIMER	(5)			//点滅開始時間
+const float POS_X_BG = 0.0f;			//背景のX座標
+const float POS_Y_BG = 0.0f;			//背景のY座標
+const int WIDTH_BG = SCREEN_WIDTH;		//横幅
+const int HEIGHT_BG = SCREEN_HEIGHT;	//立幅
+const int MAX_TEXTURE = 1;				//使う画像数
+const int BLINK_TIMER = 30;			//点滅時間で使用
+const int BLINK_START_TIMER = 5;			//点滅開始時間
 
 //*****************************************************************************
 // グローバル宣言
@@ -229,7 +227,7 @@ void  CSelect::Draw() {
 	CPolygon::SetSize((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
 	CPolygon::SetUV(0.0f, 0.0f);
 	CPolygon::SetFrameSize(1.0f, 1.0f);
-	CPolygon::SetPos(0.0f, 0.0f);
+	CPolygon::SetPos(POS_X_BG, POS_Y_BG);
 	CPolygon::Draw(pDC);
 
 	//ステージセレクト描画

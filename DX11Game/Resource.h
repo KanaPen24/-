@@ -2,7 +2,7 @@
 // Microsoft Visual C++ で生成されたインクルード ファイル。
 // DX11Game.rc で使用
 //
-#define IDI_MAINFRM                     101
+#define IDI_MAINFRM	101
 
 // Next default values for new objects
 // 

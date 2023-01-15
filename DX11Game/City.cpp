@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
+const XMFLOAT3 POS = XMFLOAT3(0.0f, -40.0f, 0.0f);
+
 // コンストラクタ
 CCity::CCity(CScene* pScene) : CModel(pScene)
 {
@@ -22,6 +24,8 @@ CCity::~CCity()
 // 初期化
 HRESULT CCity::Init()
 {
+	// ワールドマトリックス生成
+	XMFLOAT4X4 mW;
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = GetDevice();
 	SetModel(MODEL_CITY);
@@ -32,7 +36,12 @@ HRESULT CCity::Init()
 	m_pIndex = new UINT[m_nIndex];
 	pModel->GetVertex(m_pVertex, m_pIndex);
 	SetScale(XMFLOAT3(1.0f, 1.0f, 1.0f));
-	SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
+	/*mW._41 = POS.x;
+	mW._42 = POS.y;
+	mW._43 = POS.x;*/
+	SetPos(POS);
+	SetWorld(mW);
+
 	return CModel::Init();
 	
 }
@@ -48,8 +57,9 @@ void CCity::Fin()
 }
 
 // レイとの当たり判定
-bool CCity::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, XMFLOAT3* pX, XMFLOAT3* pN)
+bool CCity::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, bool collision, XMFLOAT3* pX, XMFLOAT3* pN)
 {
+	//ワールド座標変換うまくいってない＆レイじゃなくて線分での当たり判定
 	// 全ての三角形について繰り返し
 	for (int i = 0; i < m_nIndex; ) {
 		// 三角形の3頂点
@@ -103,8 +113,13 @@ bool CCity::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, XMFLOAT3* pX, XMFLOAT3* pN)
 			continue;
 		}
 		// 点が内側だったので当たっている
-		if (pX) {
+		if (pX && collision) {
 			*pX = vX;
+			a = vX;
+		}
+		else
+		{
+			*pX = a;
 		}
 		if (pN) {
 			XMStoreFloat3(pN, n);

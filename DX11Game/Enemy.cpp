@@ -11,11 +11,10 @@
 #include "Fade.h"
 #include "Sound.h"
 
-#define VALUE_MOVE_ENEMY	(1.0f);		// 移動量
-#define	RATE_ROTATE_ENEMY	(0.20f)		// 回転慣性係数
-#define	VALUE_ROTATE_ENEMY	(7.0f)		// 回転速度
-#define	RATE_ROTATE_ENEMY	(0.20f)		// 回転慣性係数
-#define SCALE				(10.0f)		// 大きさ
+const float VALUE_MOVE_ENEMY = 1.0f;		// 移動量
+const float RATE_ROTATE_ENEMY = 0.20f;		// 回転慣性係数
+const float VALUE_ROTATE_ENEMY = 7.0f;		// 回転速度
+const float SCALE = 10.0f;		// 大きさ
 
 // コンストラクタ
 CEnemy::CEnemy(CScene* pScene) : CModel(pScene)

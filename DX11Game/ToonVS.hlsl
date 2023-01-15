@@ -1,6 +1,6 @@
 // Assimp用頂点シェーダ (AssimpVertex.hlsl)
 
-#define MAX_BONE_MATRIX	64
+#define MAX_BONE_MATRIX 64
 
 // グローバル
 cbuffer global : register(b0) {
