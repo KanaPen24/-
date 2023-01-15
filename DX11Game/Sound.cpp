@@ -1,5 +1,13 @@
 // CSoundクラス実装 [Sound.cpp]
 #include "Sound.h"
+#include <mmsystem.h>
+#include <mmreg.h>
+#include <MSAcm.h>
+#include <Shlwapi.h>
+
+#include <vector>
+#include <map>
+#include <string>
 
 // 静的リンク ライブラリ
 #pragma comment(lib, "xaudio2.lib")
@@ -22,11 +30,10 @@ IXAudio2*				CSound::m_pXAudio2 = nullptr;
 IXAudio2MasteringVoice*	CSound::m_pMasteringVoice = nullptr;
 CSoundStream*			CSound::m_pBgm = nullptr;
 CSoundEffect*			CSound::m_pSe = nullptr;
-
+IXAudio2SourceVoice*	CSound::m_pSource = nullptr;
 // コンストラクタ
 CSound::CSound(void)
 {
-	
 }
 
 // デストラクタ
@@ -43,14 +50,15 @@ void CSound::Init(void)
 	if (!m_pXAudio2) {
 		UINT32 flags = 0;
 #if defined(_DEBUG)
-		//flags |= XAUDIO2_DEBUG_ENGINE;
+		flags |= XAUDIO2_DEBUG_ENGINE;
 #endif
 		hr = XAudio2Create(&m_pXAudio2, flags);
 		if (FAILED(hr)) {
 			m_pXAudio2 = nullptr;
-		} else {
+		}
+		else {
 #if defined(_DEBUG)
-			XAUDIO2_DEBUG_CONFIGURATION debug = {0};
+			XAUDIO2_DEBUG_CONFIGURATION debug = { 0 };
 			debug.TraceMask = XAUDIO2_LOG_ERRORS | XAUDIO2_LOG_WARNINGS;
 			debug.BreakMask = XAUDIO2_LOG_ERRORS;
 			m_pXAudio2->SetDebugConfiguration(&debug, 0);
@@ -59,7 +67,8 @@ void CSound::Init(void)
 			if (FAILED(hr)) {
 				m_pMasteringVoice = nullptr;
 				SAFE_RELEASE(m_pXAudio2);
-			} else {
+			}
+			else {
 				hr = MFStartup(MF_VERSION);
 				if (FAILED(hr)) {
 					SAFE_DESTROYVOICE(m_pMasteringVoice);
@@ -88,10 +97,32 @@ void CSound::Init(void)
 				::MessageBoxW(nullptr, szPath, L"SE:error", MB_OK);
 			}
 		}
+
 	}
 }
-
-// ポーリング
+/**
+ * @brief サウンドの再生
+ * @param[in] fVolume	ボリューム					( 0.0f～1.0f)
+ * @param[in] fChannel	LRのチャンネルボリューム	(-1.0f～1.0f)
+ * @return なし
+ */
+ //void CSound::PlayLR(float fChannel, IXAudio2SourceVoice*  Source)
+ //{
+ //
+ //	m_pSource = Source;
+ //
+ //	
+ //	//ボリューム設定
+ //	m_pSource->SetVolume(1.0f);
+ //	
+ //	// セット
+ //	m_pSource->SetChannelVolumes(2, fChan);
+ //
+ //	
+ //
+ //
+ //}
+	 // ポーリング
 void CSound::Update(void)
 {
 	if (m_pBgm) {
@@ -126,6 +157,7 @@ void CSound::Play(eBGM bgm)
 {
 	if (!m_pBgm || bgm < 0 || bgm >= MAX_BGM) return;
 	m_pBgm[bgm].Play();
+
 }
 
 // SE再生
@@ -193,12 +225,12 @@ float CSound::GetVolume()
 }
 
 // BGMボリューム設定
-void CSound::SetVolume(eBGM bgm, float fVol)
+void CSound::SetVolume(eBGM bgm, float fVol,float fChan)
 {
 	if (!m_pBgm || bgm < 0 || bgm >= MAX_BGM) {
 		return;
 	}
-	m_pBgm[bgm].SetVolume(fVol);
+	m_pBgm[bgm].SetVolume(fVol, fChan);
 }
 
 // BGMボリューム取得
@@ -279,7 +311,7 @@ void CSoundStream::Update()
 	if (!m_pSourceVoice) {
 		return;
 	}
-	XAUDIO2_VOICE_STATE state = {0};
+	XAUDIO2_VOICE_STATE state = { 0 };
 	m_pSourceVoice->GetState(&state);
 	if (state.BuffersQueued >= MAX_BUFFER_COUNT - 1) {
 		return;
@@ -315,7 +347,7 @@ void CSoundStream::Update()
 	if (FAILED(hr)) {
 		return;
 	}
-	XAUDIO2_BUFFER buf = {0};
+	XAUDIO2_BUFFER buf = { 0 };
 	buf.AudioBytes = sampleBufferLength;
 	buf.pAudioData = &buffer[0];
 	m_pSourceVoice->SubmitSourceBuffer(&buf);
@@ -338,6 +370,7 @@ void CSoundStream::Play()
 		m_pSourceVoice->Start();
 		m_status = SS_PLAY;
 	}
+	
 }
 
 // BGM停止
@@ -348,7 +381,7 @@ void CSoundStream::Stop()
 		m_pSourceVoice->Stop();
 		m_pSourceVoice->FlushSourceBuffers();
 		if (m_reader) {
-			PROPVARIANT var = {0};
+			PROPVARIANT var = { 0 };
 			var.vt = VT_I8;
 			m_reader->SetCurrentPosition(GUID_NULL, var);
 		}
@@ -379,11 +412,36 @@ bool CSoundStream::IsPlaying()
 }
 
 // BGMボリューム設定
-void CSoundStream::SetVolume(float fVol)
+void CSoundStream::SetVolume(float fVol,float fChan)
 {
+	// チャンネル設定
+ 	float fChannel[2];
+ 	if (fChan == 0.0f)
+ 	{
+ 		// L
+ 		fChannel[0] = 1.0f;
+ 		// R
+ 		fChannel[1] = 1.0f;
+ 	}
+ 	else if (fChan < 0)
+ 	{
+ 		// L
+ 		fChannel[0] = -fChan;
+ 		// R
+ 		fChannel[1] = 1.0f + fChan;
+ 	}
+ 	else
+ 	{
+ 		// L
+ 		fChannel[0] = 1.0f - fChan;
+ 		// R
+ 		fChannel[1] = fChan;
+ 	}
 	if (m_pSourceVoice) {
 		m_pSourceVoice->SetVolume(fVol);
 	}
+	//左右の音量調整
+	m_pSourceVoice->SetChannelVolumes(2, fChannel);
 }
 
 // BGMボリューム取得
@@ -502,7 +560,7 @@ void CSoundEffect::Play()
 			}
 		}
 		if (i >= MAX_DUP) {
-			XAUDIO2_VOICE_STATE state = {0};
+			XAUDIO2_VOICE_STATE state = { 0 };
 			for (i = 0; i < MAX_DUP; ++i) {
 				if (!m_pSourceVoice[i]) {
 					continue;
@@ -523,7 +581,7 @@ void CSoundEffect::Play()
 			Stop(i);		// 乱数で適当にどれかを止める
 		}
 	}
-	XAUDIO2_BUFFER buf = {0};
+	XAUDIO2_BUFFER buf = { 0 };
 	buf.AudioBytes = m_bufferLength;
 	buf.pAudioData = &m_buffer[0];
 	buf.Flags = XAUDIO2_END_OF_STREAM;

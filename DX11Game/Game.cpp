@@ -11,6 +11,7 @@
 #include "Fade.h"
 #include "Debugproc.h"
 #include "City.h"
+#include "Score.h"
 
 // コンストラクタ
 CGame::CGame() : CScene()
@@ -33,6 +34,8 @@ CGame::~CGame()
 // 初期化
 bool CGame::Init()
 {
+	HRESULT hr = S_OK;
+
 	m_bResult = false;
 
 	m_camera.Init();
@@ -62,7 +65,12 @@ bool CGame::Init()
 		m_pObject[i]->SetWorld(mW);
 	}
 
-	UpdateBoundary();
+	//スコア初期化
+	hr = InitScore();
+	if (FAILED(hr)) {
+		MessageBox(GetMainWnd(), _T("スコア初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
+		return hr;
+	}
 
 	// 全オブジェクト初期化
 	if (FAILED(CGameObj::InitAll(m_pObj))) {
@@ -83,6 +91,9 @@ void CGame::Fin()
 	// BGM再生停止
 	CSound::Stop(BGM_GAME);
 
+	//スコア終了処理
+	UninitScore();
+
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);
 }
@@ -90,11 +101,6 @@ void CGame::Fin()
 // 更新
 void CGame::Update()
 {
-	//if (CInput::GetKeyTrigger(VK_B)) {
-	//	m_nBoundary = (m_nBoundary + 1) % 2;
-	//	UpdateBoundary();
-	//}
-
 	// 全キャラ更新
 	CGameObj::UpdateAll(m_pObj);
 
@@ -105,6 +111,10 @@ void CGame::Update()
 			CFade::Out(SCENE_TITLE);
 		}
 	}
+
+	// スコアの更新
+	UpdateScore();
+
 #ifdef _DEBUG
 	//static LPCSTR boundary[] = {"ﾋﾋｮｳｼﾞ", "ｷｭｳ"};
 	//CDebugProc::Print("[B] : ｷｮｳｶｲ %s\n", boundary[m_nBoundary]);
@@ -119,6 +129,9 @@ void CGame::Draw()
 {
 	// 全キャラ描画
 	CGameObj::DrawAll(m_pObj);
+
+	// スコア描画
+	DrawScore();
 }
 
 // 境界表示更新

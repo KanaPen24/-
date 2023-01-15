@@ -81,7 +81,7 @@ bool CSelect::Init()
 	bSound2 = false;
 	bSound3 = false;
 	// BGMÄ¶
-	CSound::SetVolume(BGM_TITLE, 0.1f);
+	CSound::SetVolume(BGM_TITLE, 0.1f, 0.0f);
 	CSound::Play(BGM_TITLE);
 	//ˆê’â~‰Šú‰»
 	hr = InitSSelect();

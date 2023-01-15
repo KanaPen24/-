@@ -53,12 +53,13 @@ struct CSoundStream
 private:
 	IXAudio2SourceVoice*	m_pSourceVoice;
 	COMPTR(IMFSourceReader)	m_reader;
-	DWORD					m_currentStreamBuffer;
+
 	std::vector<BYTE>		m_buffers[MAX_BUFFER_COUNT];
 	bool					m_endOfStream;
 	SoundStatus				m_status;
 
 public:
+	DWORD					m_currentStreamBuffer;
 	CSoundStream();
 	virtual ~CSoundStream();
 	HRESULT Open(IXAudio2* pXAudio2, LPCWSTR pszPath);
@@ -69,8 +70,9 @@ public:
 	void Pause();
 	void Resume();
 	bool IsPlaying();
-	void SetVolume(float fVol);
+	void SetVolume(float fVol, float fChan);
 	float GetVolume();
+
 };
 
 // SEƒNƒ‰ƒX
@@ -104,8 +106,10 @@ private:
 	static IXAudio2MasteringVoice*	m_pMasteringVoice;
 	static CSoundStream*			m_pBgm;
 	static CSoundEffect*			m_pSe;
-
+	static IXAudio2SourceVoice*  m_pSource;
 public:
+
+
 	CSound(void);
 	virtual ~CSound(void);
 
@@ -121,8 +125,10 @@ public:
 	static void Resume();
 	static void SetVolume(float fVol);
 	static float GetVolume();
-	static void SetVolume(eBGM bgm, float fVol);
+	static void SetVolume(eBGM bgm, float fVol,float fChan);
 	static float GetVolume(eBGM bgm);
 	static void SetVolume(eSE se, float fVol);
 	static float GetVolume(eSE se);
+	//	static void PlayLR(float fChannel, IXAudio2SourceVoice* Source);
+
 };

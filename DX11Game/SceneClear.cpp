@@ -99,7 +99,7 @@ bool CClear::Init(void)
 
 	// Œø‰Ê‰¹‰Šú‰»
 	// BGMÄ¶
-	CSound::SetVolume(BGM_TITLE, 0.04f);
+	CSound::SetVolume(BGM_TITLE, 0.04f, 0.0f);
 	CSound::Play(BGM_TITLE);
 
 	return hr;

@@ -81,11 +81,12 @@ bool CTitle::Init()
 	if (FAILED(CGameObj::InitAll(m_pObj))) {
 		return false;
 	}
+	//ƒJƒƒ‰‚ğŠX‚ÉŒü‚¯‚é
 	m_camera.SetCity(m_pCity);
 
 	// BGMÄ¶ŠJn
 	CSound::Play(BGM_TITLE);
-	CSound::SetVolume(BGM_TITLE, 0.2f);
+	CSound::SetVolume(BGM_TITLE, 0.2f, 0.0f);
 	return true;
 }
 
