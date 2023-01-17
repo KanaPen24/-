@@ -1,14 +1,15 @@
-//=============================================================================
-//
-// 敵クラス実装 [Object.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：Object.cpp
+*@説明・概要	：回収するようアイテムについて
+*@製作者	：吉田叶聖
+*@更新内容	：2023/01/17
+*@更新履歴	：コメント追記
+*@更新者	：吉田叶聖
+*/
 #include "Game.h"
 #include "Sound.h"
 #include "Score.h"
 #include "Polygon.h"
-#include "Object.h"
 #include "Debugproc.h"
 #include "Scene.h"
 #include "StegeSelect.h"
@@ -108,8 +109,6 @@ void CObject::Update()
 	m_mWorld._42 = m_vPos.y;
 	m_mWorld._43 = m_vPos.z;
 	SetPos(m_vPos);
-
-	
 
 #ifdef _DEBUG
 	CDebugProc::Print("[ﾓﾉ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);

@@ -1,18 +1,20 @@
-//=============================================================================
-//
-// 光源クラス [Light.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：Light.cpp
+*@説明・概要	：光源やライトについて
+*@製作者	：吉田叶聖
+*@更新内容	：2022/06/04
+*@更新履歴	：コメント追記
+*@更新者	：吉田叶聖
+*/
 #include "Light.h"
 
 using namespace DirectX;
 
 // グローバル変数
 namespace {
-	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, -1.0f, 5.0f);		//方向
+	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, 1.0f, 0.0f);		//方向
 	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);	//拡散
-	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);//周囲
+	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4(0.01f, 0.01f, 0.01f, 1.0f);//周囲
 	const XMFLOAT4 LIGHT0_SPECULAR = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);	//鏡面反射
 
 	CLight g_light;

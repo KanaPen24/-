@@ -1,4 +1,11 @@
-// 地面 [City.cpp]
+/*=====ヘッダコメント=====
+*@プログラム名	：City.cpp
+*@説明・概要	：街について
+*@製作者	：吉田叶聖
+*@更新内容	：コメント追記
+*@更新履歴	：2023/01/17
+*@更新者	：吉田叶聖
+*/
 #include "city.h"
 #include "Shader.h"
 #include "Texture.h"
@@ -106,9 +113,7 @@ bool CCity::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, bool collision, XMFLOAT3* pX, X
 			continue;
 		}
 		XMVECTOR v2v0 = XMVectorSet(vV0.x - vV2.x, vV0.y - vV2.y, vV0.z - vV2.z, 0.0f);
-		XMStoreFloat(&dot, XMVector3Dot(n,
-			XMVector3Cross(v2v0,
-				XMVectorSet(vX.x - vV2.x, vX.y - vV2.y, vX.z - vV2.z, 0.0f))));
+		XMStoreFloat(&dot, XMVector3Dot(n, XMVector3Cross(v2v0, XMVectorSet(vX.x - vV2.x, vX.y - vV2.y, vX.z - vV2.z, 0.0f))));
 		if (dot < 0.0f) {
 			continue;
 		}

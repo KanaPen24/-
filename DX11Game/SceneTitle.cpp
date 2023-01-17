@@ -1,9 +1,11 @@
-//=============================================================================
-//
-// タイトル画面クラス実装 [Title.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：SceneTitle.cpp
+*@説明・概要	：タイトルシーンについて
+*@製作者	：吉田叶聖
+*@更新者	：吉田叶聖
+*@更新内容	：初期制作
+*@更新履歴	：2021/11/28
+*/
 #include "SceneTitle.h"
 #include "Texture.h"
 #include "Sound.h"
@@ -149,7 +151,7 @@ void CTitle::Update()
 		}
 		if (CInput::GetKeyRelease(VK_RETURN)) {//){ || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
 			CSound::Play(SE_SELECT);	//効果音
-			PostQuitMessage(0);				// システムにスレッドの終了を要求
+			PostQuitMessage(0);			// システムにスレッドの終了を要求
 		}
 		break;
 	}

@@ -1,9 +1,11 @@
-//=============================================================================
-//
-// プレイヤー クラス実装 [Player.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：Player.cpp
+*@説明・概要	：プレイヤーのモデル及び挙動について
+*@製作者	：吉田叶聖
+*@更新内容	：2022/06/04
+*@更新履歴	：コメント追記
+*@更新者	：吉田叶聖
+*/
 #include "Player.h"
 #include "Input.h"
 #include "Debugproc.h"
@@ -183,7 +185,6 @@ void CPlayer::Update()
 		else {
 			// 左移動
 			vPos.x -= SinDeg(rotCamera.y + 90.0f) * SPEED * fDash;
-			//vPos.z -= CosDeg(rotCamera.y + 90.0f) * SPEED * fDash;
 
 			angle.y = rotCamera.y + 90.0f;
 		}

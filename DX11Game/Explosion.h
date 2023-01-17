@@ -1,4 +1,11 @@
-// 爆発エフェクト クラス [Explosion.h]
+/*=====ヘッダコメント=====
+*@プログラム名	：Explosion.cpp
+*@説明・概要	：爆発について
+*@製作者	：吉田叶聖
+*@更新者	：吉田叶聖
+*@更新内容	：初期入力
+*@更新履歴	：2022/09/08
+*/
 #pragma once
 #include "GameObj.h"
 #include "AssimpModel.h"

@@ -1,9 +1,11 @@
-//=============================================================================
-//
-// ゲーム カメラ クラス [GameCamera.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：GameCamera.cpp
+*@説明・概要	：ゲームカメラについて
+*@製作者	：吉田叶聖
+*@更新内容	：コメント追記
+*@更新履歴	：2023/01/17
+*@更新者	：吉田叶聖
+*/
 #include "GameCamera.h"
 #include "Model.h"
 #include "Input.h"
@@ -13,8 +15,8 @@
 // グローバル変数
 namespace {
 	const float CAM_POS_P_X = 0.0f;		// 定点カメラの視点位置(X座標)
-	const float CAM_POS_P_Y = 100.0f;	// 定点カメラの視点位置(Y座標)
-	const float CAM_POS_P_Z = -250.0f;	// 定点カメラの視点位置(Z座標)
+	const float CAM_POS_P_Y = 90.0f;	// 定点カメラの視点位置(Y座標)
+	const float CAM_POS_P_Z = -200.0f;	// 定点カメラの視点位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;		// 定点カメラの注視点位置(X座標)
 	const float CAM_POS_R_Y = 0.0f;		// 定点カメラの注視点位置(Y座標)
 	const float CAM_POS_R_Z = 0.0f;		// 定点カメラの注視点位置(Z座標)
@@ -99,8 +101,7 @@ void CGameCamera::Update()
 	CDebugProc::Print("[3] : TP View\n");
 	CDebugProc::Print("[0] : Fixed point\n");
 	CDebugProc::Print("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
-	CDebugProc::Print("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n",
-		m_vTarget.x, m_vTarget.y, m_vTarget.z);
+	CDebugProc::Print("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	CDebugProc::Print("\n");
 #endif
 }

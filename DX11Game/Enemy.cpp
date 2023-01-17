@@ -1,9 +1,11 @@
-//=============================================================================
-//
-// 敵クラス実装 [Enemy.cpp]
-// Author : HIROHIKO HAMAYA
-//
-//=============================================================================
+/*=====ヘッダコメント=====
+*@プログラム名	：Enemy.cpp
+*@説明・概要	：敵の挙動について
+*@製作者	：吉田叶聖
+*@更新内容	：2022/06/24
+*@更新履歴	：コメント追記
+*@更新者	：吉田叶聖
+*/
 #include "Enemy.h"
 #include "Player.h"
 #include "Game.h"
@@ -78,11 +80,11 @@ void CEnemy::Update()
 	//float fDiffRotY = g_EnemyRotDest.y - g_EnemyRot.y;
 
 	// プレイヤーを追尾する
-	if (pPos.x > vPos.x) {
+	if (pPos.x  > vPos.x + 1.0f) {
 		vPos.x = VALUE_MOVE_ENEMY;
 		fChan = -1.0f;
 	}
-	else if (pPos.x < vPos.x)
+	else if (pPos.x  < vPos.x - 1.0f)
 	{
 		vPos.x = -VALUE_MOVE_ENEMY;
 		fChan = 1.0f;
@@ -91,7 +93,7 @@ void CEnemy::Update()
 	{
 		//x軸が重なるときにぶるぶるするのを防ぐため
 		fChan = 0.0f;
-		vPos.x = vPos.x;
+		vPos.x = 0.0f;
 	}
 	if (pPos.y > vPos.y) {
 		vPos.y = VALUE_MOVE_ENEMY;
@@ -143,14 +145,14 @@ void CEnemy::Update()
 
 	//距離のよってサウンド調整をする
 	float x, z, volume;
-	x = vPos.x - pPos.x;
-	z = vPos.z - pPos.z;
+	x = m_vPos.x - pPos.x;
+	z = m_vPos.z - pPos.z;
 	volume = x * x + z * z;
 	sqrt(volume);
 	volume = volume / 50000;
 	volume = MAX_VOLUME - volume;
-	volume = std::max(volume, 0.15f);
-	volume = std::min(volume, 0.8f);
+	volume = std::fmax(volume, 0.15f);
+	volume = std::fmin(volume, 1.0f);
 	CSound::SetVolume(BGM_GAME, volume, fChan);
 
 	// 衝突判定
@@ -170,7 +172,8 @@ void CEnemy::Update()
 		}
 	}
 #ifdef _DEBUG
-	CDebugProc::Print("[ﾃｷ ｲﾁ : (%f, %f, %f)]\n", vPos.x, vPos.y, vPos.z);
+	CDebugProc::Print("[ﾃｷ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
+	CDebugProc::Print("[Vol : (%f)\n", volume);
 #endif
 }
 
