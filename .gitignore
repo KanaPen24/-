@@ -35,6 +35,13 @@
 *.i*86
 *.x86_64
 *.hex
+.vs/ 
+x64/ 
+Debug/ 
+Release/
+*.ilk
+*.pdb
+
 
 # Debug files
 *.dSYM/

@@ -47,7 +47,7 @@ void UpdateScore()
 {
 	if (g_nScore == 0)
 	{
-		//CFade::CutOut(SCENE_CLEAR);
+		CFade::CutOut(SCENE_CLEAR);
 		CClear::Clearflg(true);
 	}
 }

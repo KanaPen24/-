@@ -82,10 +82,16 @@ void CEnemy::Update()
 		vPos.x = VALUE_MOVE_ENEMY;
 		fChan = -1.0f;
 	}
-	else
+	else if (pPos.x < vPos.x)
 	{
 		vPos.x = -VALUE_MOVE_ENEMY;
 		fChan = 1.0f;
+	}
+	else
+	{
+		//xŽ²‚ªd‚È‚é‚Æ‚«‚É‚Ô‚é‚Ô‚é‚·‚é‚Ì‚ð–h‚®‚½‚ß
+		fChan = 0.0f;
+		vPos.x = vPos.x;
 	}
 	if (pPos.y > vPos.y) {
 		vPos.y = VALUE_MOVE_ENEMY;

@@ -60,7 +60,7 @@ bool CGame::Init()
 		m_pObject[i]->SetPlayer(m_pPlayer);
 		XMFLOAT4X4 mW;
 		XMStoreFloat4x4(&mW, XMMatrixRotationRollPitchYaw(0.0f,XMConvertToRadians(rand() % 360),0.0f));
-		mW._41 = (float)(rand() % 800);
+		mW._41 = - 400.0f + (float)(rand() % 400);
 		mW._43 = (float)(rand() % 800);
 		m_pObject[i]->SetWorld(mW);
 	}
@@ -80,7 +80,7 @@ bool CGame::Init()
 	m_camera.SetPlayer(m_pPlayer);
 
 	// BGMçƒê∂äJén
-	//CSound::Play(BGM_GAME);
+	CSound::Play(BGM_GAME);
 
 	return true;
 }

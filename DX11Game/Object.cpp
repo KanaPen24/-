@@ -96,22 +96,20 @@ void CObject::Update()
 	else {
 		m_vPos.y = 0.0f;
 	}
+	// è’ìÀîªíË
+	if (CollisionBSphere(m_pPlayer)) {
+		AddScore(-1);
+		m_vPos.x = 50000.0f;
+		/*CSound::SetVolume(SE_DAMAGE, 0.2f);
+		CSound::Play(SE_DAMAGE);*/
+	}
 
 	m_mWorld._41 = m_vPos.x;
 	m_mWorld._42 = m_vPos.y;
 	m_mWorld._43 = m_vPos.z;
 	SetPos(m_vPos);
 
-	// è’ìÀîªíË
-	if (CollisionBSphere(m_pPlayer)) {
-		AddScore(-1);
-		m_vPos.x = 50000.0f;
-		m_mWorld._41 = m_vPos.x;
-		SetPos(m_vPos);
-		SetWorld(m_mWorld);
-		/*CSound::SetVolume(SE_DAMAGE, 0.2f);
-		CSound::Play(SE_DAMAGE);*/
-	}
+	
 
 #ifdef _DEBUG
 	CDebugProc::Print("[”… ≤¡ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
