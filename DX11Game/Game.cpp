@@ -43,18 +43,22 @@ bool CGame::Init()
 	m_camera.Init();
 	CCamera::Set(&m_camera);
 
-	CLight* pLight = CLight::Get();
-	if (pLight) {
-		pLight->Init();
-	}
-
 	new CLand(this);
 
 	new CCity(this);
 
+	CLight* pLight = CLight::Get();
+	if (pLight) {
+		pLight->Init();
+	}
+	
+	
+
 	m_pPlayer = new CPlayer(this);
 
 	m_pEnemy = new CEnemy(this);
+	m_pEnemy->SetPlayer(m_pPlayer);
+	
 
 	for (int i = 0; i < MAX_OBJECT; i++) {
 
@@ -133,6 +137,8 @@ void CGame::Draw()
 	// 全キャラ描画
 	CGameObj::DrawAll(m_pObj);
 
+	SetZBuffer(false);
+	SetBlendState(BS_ALPHABLEND);
 	// スコア描画
 	DrawScore();
 }

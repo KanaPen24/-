@@ -70,13 +70,7 @@ void CGameCamera::Update()
 	// éãì_êÿë÷
 	if (CInput::GetKeyRelease(VK_0) || CInput::GetKeyRelease(VK_NUMPAD0))
 		m_nMode = 0;
-	if (CInput::GetKeyRelease(VK_1) || CInput::GetKeyRelease(VK_NUMPAD1))
-		m_nMode = 1;
-	if (CInput::GetKeyRelease(VK_2) || CInput::GetKeyRelease(VK_NUMPAD2))
-		m_nMode = 2;
-	if (CInput::GetKeyRelease(VK_3) || CInput::GetKeyRelease(VK_NUMPAD3))
-		m_nMode = 3;
-
+	
 	if (m_pPlayer) {
 		//XMMATRIX mW;
 		switch (m_nMode) {

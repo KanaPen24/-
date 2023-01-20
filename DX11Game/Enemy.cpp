@@ -12,6 +12,7 @@
 #include "Debugproc.h"
 #include "Fade.h"
 #include "Sound.h"
+#include "Input.h"
 
 const float VALUE_MOVE_ENEMY = 1.0f;		// 移動量
 const float RATE_ROTATE_ENEMY = 0.20f;		// 回転慣性係数
@@ -19,12 +20,13 @@ const float VALUE_ROTATE_ENEMY = 7.0f;		// 回転速度
 const float SCALE = 10.0f;		// 大きさ
 const float MAX_VOLUME = 1.0f;	// 最大音量
 
+//グローバル変数
+bool g_bAlflg = true;
+
 // コンストラクタ
 CEnemy::CEnemy(CScene* pScene) : CModel(pScene)
 {
 	m_id = GOT_ENEMY;
-	m_pLand = nullptr;
-
 	m_pPlayer = nullptr;
 	
 }
@@ -39,9 +41,9 @@ HRESULT CEnemy::Init()
 {
 	HRESULT hr = CModel::Init();
 	SetModel(MODEL_ENEMY);
-	m_pPlayer = (CPlayer*)m_pScene->Find(GOT_PLAYER);
-	m_pLand = (CLand*)m_pScene->Find(GOT_LAND);
 	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
+	SetPos(XMFLOAT3(-400.0f + (float)(rand() % 400), 0.0f, (float)(rand() % 900)));
+	
 	return hr;
 }
 
@@ -54,6 +56,11 @@ void CEnemy::Fin()
 // 更新
 void CEnemy::Update()
 {
+	//デバック用透明オンオフ
+	if (CInput::GetKeyTrigger(VK_1))
+		g_bAlflg = true;
+	if (CInput::GetKeyTrigger(VK_2))
+		g_bAlflg = false;
 
 	float fChan = 0.0f;	//サウンドのLR調整用
 
@@ -81,34 +88,27 @@ void CEnemy::Update()
 
 	// プレイヤーを追尾する
 	if (pPos.x  > vPos.x + 1.0f) {
-		vPos.x = VALUE_MOVE_ENEMY;
+		vPos.x += VALUE_MOVE_ENEMY;
 		fChan = -1.0f;
 	}
 	else if (pPos.x  < vPos.x - 1.0f)
 	{
-		vPos.x = -VALUE_MOVE_ENEMY;
+		vPos.x += -VALUE_MOVE_ENEMY;
 		fChan = 1.0f;
 	}
 	else
 	{
 		//x軸が重なるときにぶるぶるするのを防ぐため
 		fChan = 0.0f;
-		vPos.x = 0.0f;
-	}
-	if (pPos.y > vPos.y) {
-		vPos.y = VALUE_MOVE_ENEMY;
-	}
-	else
-	{
-		vPos.y = -VALUE_MOVE_ENEMY;
+		vPos.x = vPos.x;
 	}
 	if (pPos.z > vPos.z)
 	{
-		vPos.z = VALUE_MOVE_ENEMY;
+		vPos.z += VALUE_MOVE_ENEMY;
 	}
 	else
 	{
-		vPos.z = -VALUE_MOVE_ENEMY;
+		vPos.z += -VALUE_MOVE_ENEMY;
 	}
 
 	// 目的の角度まで慣性をかける
@@ -116,31 +116,14 @@ void CEnemy::Update()
 	SetAngle(angle);
 
 	// 移動
-	m_vPos.x += vPos.x;
-	m_vPos.y += vPos.y;
-	m_vPos.z += vPos.z;
+	m_vPos.x = vPos.x;
+	m_vPos.y = vPos.y;
+	m_vPos.z = vPos.z;
 	//位置を反映
 	m_mWorld._41 = m_vPos.x;
 	m_mWorld._42 = m_vPos.y;
 	m_mWorld._43 = m_vPos.z;
 
-	// 地面との当たり判定
-	XMFLOAT3 vP0;
-	vP0.x = m_vPos.x;
-	vP0.y = m_vPos.y + GetRadius() * 2;
-	vP0.z = m_vPos.z;
-	XMFLOAT3 vX2, vN;
-	if (m_pLand && m_pLand->Collision(vP0,
-		XMFLOAT3(0.0f, -1.0f, 0.0f), &vX2, &vN)) {
-		m_vPos.y = vX2.y;
-	}
-	else {
-		m_vPos.y = 0.0f;
-	}
-
-	m_mWorld._41 = m_vPos.x;
-	m_mWorld._42 = m_vPos.y;
-	m_mWorld._43 = m_vPos.z;
 	SetPos(m_vPos);
 
 	//距離のよってサウンド調整をする
@@ -156,21 +139,12 @@ void CEnemy::Update()
 	CSound::SetVolume(BGM_GAME, volume, fChan);
 
 	// 衝突判定
-	if (m_pPlayer) {
-		switch (((CGame*)m_pScene)->GetBoundary()) {
-		case 0:
-			break;
-		case 1:
-			if (CollisionBSphere(m_pPlayer)) {
-				m_pPlayer->SetBColor();
-				CFade::Out(SCENE_GAMEOVER);
-				//CSound::SetVolume(SE_DAMAGE, 0.2f);
-				//CSound::Play(SE_DAMAGE);
-				SetBColor();
-			}
-			break;
-		}
+	if (CollisionBSphere(m_pPlayer)) {
+		//CFade::CutOut(SCENE_GAMEOVER);
+		//CSound::SetVolume(SE_DAMAGE, 0.2f);
+		//CSound::Play(SE_DAMAGE);
 	}
+
 #ifdef _DEBUG
 	CDebugProc::Print("[ﾃｷ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	CDebugProc::Print("[Vol : (%f)\n", volume);
@@ -180,7 +154,9 @@ void CEnemy::Update()
 //描画
 void CEnemy::Draw()
 {
-	ID3D11Device* pDevice = GetDevice();
-	CAssimpModel::InitShader(pDevice, 0);
-	CModel::Draw();
+	if (g_bAlflg) {
+		ID3D11Device* pDevice = GetDevice();
+		CAssimpModel::InitShader(pDevice, 0);
+		CModel::Draw();
+	}
 }

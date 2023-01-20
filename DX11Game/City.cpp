@@ -43,6 +43,7 @@ HRESULT CCity::Init()
 	m_pIndex = new UINT[m_nIndex];
 	pModel->GetVertex(m_pVertex, m_pIndex);
 	SetScale(XMFLOAT3(1.0f, 1.0f, 1.0f));
+	SetAngle(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	/*mW._41 = POS.x;
 	mW._42 = POS.y;
 	mW._43 = POS.x;*/

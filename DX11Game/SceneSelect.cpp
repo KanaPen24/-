@@ -123,7 +123,7 @@ void CSelect::Update() {
 			bSound1 = false;
 		}
 		// 開始
-		if (CInput::GetKeyRelease(VK_RETURN)){// || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム1画面へ
@@ -142,7 +142,7 @@ void CSelect::Update() {
 			CSound::Play(SE_PI);
 			bSound2 = false;
 		}
-		if (CInput::GetKeyRelease(VK_RETURN)){// || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
@@ -160,7 +160,7 @@ void CSelect::Update() {
 			CSound::Play(SE_PI);
 			bSound3 = false;
 		}
-		if (CInput::GetKeyRelease(VK_RETURN)){// || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
@@ -171,7 +171,7 @@ void CSelect::Update() {
 		break;
 	}
 	//操作説明画面
-	if (CInput::GetKeyPress(VK_X))//||GetJoyTrigger(JOYSTICKID1, JOYBUTTON4)) //Y押したら
+	if (CInput::GetKeyPress(VK_X) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON4)) //Y押したら
 	{
 		CFade::Out(SCENE_RULE);	//ルール画面へ
 		g_nStart = 1; // 開始フラグ

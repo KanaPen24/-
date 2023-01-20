@@ -15,7 +15,7 @@
 #include "Object.h"
 
 //定数定義
-const int MAX_OBJECT = 10;
+const int MAX_OBJECT = 1;
 
 // クラス定義
 class CGame : public CScene

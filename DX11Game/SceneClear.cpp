@@ -125,38 +125,38 @@ void CClear::Fin(void)
 //=============================================================================
 void CClear::Update(void)
 {
-	//DWORD JoyCount = GetJoyCount();
-	//LONG JoyX = GetJoyX(JOYSTICKID1);
-	//CSound::SetVolume(SE_PI, 0.2f);
-	////デッドゾーン以下ならすべて０にする
-	//if ((JoyX <  GAMEPAD_LEFT_STICK_DEADZONE &&
-	//	JoyX > -GAMEPAD_LEFT_STICK_DEADZONE))
-	//{
-	//	JoyX = 0l;
-	//}
+	DWORD JoyCount =CInput::GetJoyCount();
+	LONG JoyX = CInput::GetJoyX(JOYSTICKID1);
+	CSound::SetVolume(SE_PI, 0.2f);
+	//デッドゾーン以下ならすべて０にする
+	if ((JoyX <  GAMEPAD_LEFT_STICK_DEADZONE &&
+		JoyX > -GAMEPAD_LEFT_STICK_DEADZONE))
+	{
+		JoyX = 0l;
+	}
 
-	//if (JoyCount >= 1) {
-	//	//左スティックが左に押された
-	//	if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
-	//	{
-	//		CSound::Play(SE_PI);
-	//		g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + NUM_CLEAR_MENU - 1) % NUM_CLEAR_MENU);
-	//		SetClearMenu();
-	//		g_bJoyStick = true;
-	//	}
-	//	//左スティックが右に押された
-	//	if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
-	//	{
-	//		CSound::Play(SE_PI);
-	//		g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + 1) % NUM_CLEAR_MENU);
-	//		SetClearMenu();
-	//		g_bJoyStick = true;
-	//	}
-	//	if (JoyX == 0l)
-	//	{
-	//		g_bJoyStick = false;
-	//	}
-	//}
+	if (JoyCount >= 1) {
+		//左スティックが左に押された
+		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
+		{
+			CSound::Play(SE_PI);
+			g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + NUM_CLEAR_MENU - 1) % NUM_CLEAR_MENU);
+			SetClearMenu();
+			g_bJoyStick = true;
+		}
+		//左スティックが右に押された
+		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
+		{
+			CSound::Play(SE_PI);
+			g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + 1) % NUM_CLEAR_MENU);
+			SetClearMenu();
+			g_bJoyStick = true;
+		}
+		if (JoyX == 0l)
+		{
+			g_bJoyStick = false;
+		}
+	}
 	if (CInput::GetKeyRepeat(VK_LEFT)) {
 		CSound::Play(SE_PI);
 		g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + NUM_CLEAR_MENU - 1) % NUM_CLEAR_MENU);
@@ -175,7 +175,7 @@ void CClear::Update(void)
 	//ゲームクリアメニューの選択
 	if (g_bClear&&CFade::Get() == FADE_NONE) {
 		//[Enter]が押された？
-		if (CInput::GetKeyTrigger(VK_RETURN)){// || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {
+		if (CInput::GetKeyTrigger(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {
 			//選択中のメニュー項目により分岐
 			switch (GetClearMenu())
 			{

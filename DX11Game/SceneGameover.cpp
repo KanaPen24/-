@@ -54,8 +54,8 @@ bool CGOver::Init() {
 	if(FAILED(hr)) {
 		return hr;
 	}
-	// BGM再生
-	//CSound::Play(SE_GAMEOVER);
+
+
 	return hr;
 }
 // 終了処理
@@ -68,8 +68,8 @@ void CGOver::Fin() {
 void CGOver::Update() {
 	// [Enter]またはスペースキー押下
 		// [Enter]またはスペースキー押下
-	if (CInput::GetKeyRelease(VK_RETURN)){// || GetKeyRelease(VK_SPACE)||GetJoyButton(JOYSTICKID1,JOYBUTTON1)) {
-		// タイトル画面へ
+	if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON1)) {
+		// セレクト画面へ
 		CFade::Out(SCENE_SELECT);
 		return;
 	}

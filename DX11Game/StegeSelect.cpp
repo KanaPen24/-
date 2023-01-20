@@ -100,13 +100,13 @@ void UpdateSSelect(void)
 	}
 	if (JoyCount >= 1) {
 		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false) {
-			//	CSound::Play(SE_SHIZUKU);
+				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
 			SetStageSelect();
 			g_bJoyStick = true;
 		}
 		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false) {
-			//	CSound::Play(SE_SHIZUKU);
+				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + 1) % NUM_SELECT_MENU);
 			SetStageSelect();
 			g_bJoyStick = true;

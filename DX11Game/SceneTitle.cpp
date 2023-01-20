@@ -133,9 +133,9 @@ void CTitle::Update()
 			bSound1 = false;
 		}
 		// 開始
-		if (CInput::GetKeyRelease(VK_RETURN)) {//){ || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+		if (CInput::GetKeyRelease(VK_RETURN)|| CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 			CSound::Play(SE_SELECT);	//効果音
-			CFade::Out(SCENE_SELECT);	//ゲーム1画面へ
+			CFade::Out(SCENE_RULE);	//ルール画面へ
 			
 		}
 		break;
@@ -149,7 +149,7 @@ void CTitle::Update()
 			CSound::Play(SE_PI);
 			bSound2 = false;
 		}
-		if (CInput::GetKeyRelease(VK_RETURN)) {//){ || GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+		if (CInput::GetKeyRelease(VK_RETURN)||CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 			CSound::Play(SE_SELECT);	//効果音
 			PostQuitMessage(0);			// システムにスレッドの終了を要求
 		}
@@ -195,12 +195,7 @@ void CTitle::Draw()
 
 	//タイトルセレクト描画
 	DrawTSelect();
-	
-	// パーティクル描画
-	/*hdc = BeginPaint(hWnd, &ps);
-	CParticle::ExecParticle();
-	CParticle::DrawParticle(hdc);
-	EndPaint(hWnd, &ps);*/
+
 	SetZBuffer(true);
 
 }

@@ -97,14 +97,14 @@ void UpdateTSelect(void)
 	if (JoyCount >= 1) {
 		//ジョイスティックがうえ
 		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false){
-			//	CSound::Play(SE_SHIZUKU);
+				CSound::Play(SE_SHIZUKU);
 			g_nSelectTMenu = (TITLE_SELECT)((g_nSelectTMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
 			SetTitleSelect();
 			g_bJoyStick = true;
 		}
 		//ジョイスティックが下
 		if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false){
-			//	CSound::Play(SE_SHIZUKU);
+				CSound::Play(SE_SHIZUKU);
 			g_nSelectTMenu = (TITLE_SELECT)((g_nSelectTMenu + 1) % NUM_SELECT_MENU);
 			SetTitleSelect();
 			g_bJoyStick = true;
@@ -188,6 +188,6 @@ TITLE_SELECT GetTitleSelect(void)
 void ResetTitleSelect(void)
 {
 	g_nSelectTMenu = GAME;
-	//CSound::Play(SE_SHIZUKU);
+	CSound::Play(SE_SHIZUKU);
 	SetTitleSelect();
 }

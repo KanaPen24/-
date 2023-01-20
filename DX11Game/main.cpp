@@ -15,6 +15,7 @@
 #include "Mesh.h"
 #include "mesh2.h"
 #include "Particle.h"
+#include "Number.h"
 
 //-------- ライブラリのリンク
 #pragma comment(lib, "winmm")
@@ -418,7 +419,10 @@ HRESULT Init(HWND hWnd, BOOL bWindow)
 	hr = CExplosion::InitShader();
 	if (FAILED(hr))
 		return hr;
-
+	// 番号初期化
+	hr = InitNumber();
+	if (FAILED(hr))
+		return hr;
 	// シーン初期化
 	if (!CScene::InitAll())
 		return E_FAIL;
@@ -446,6 +450,9 @@ void Uninit(void)
 {
 	// シーン終了処理
 	CScene::FinAll();
+
+	//番号終了
+	UninitNumber();
 
 	// パーティクル終了処理
 	UninitParticle();

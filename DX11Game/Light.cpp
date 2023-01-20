@@ -13,7 +13,7 @@ using namespace DirectX;
 // グローバル変数
 namespace {
 	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, 1.0f, 0.0f);		//方向
-	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);	//拡散
+	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);	//拡散
 	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4(0.01f, 0.01f, 0.01f, 1.0f);//周囲
 	const XMFLOAT4 LIGHT0_SPECULAR = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);	//鏡面反射
 
@@ -43,9 +43,17 @@ void CLight::Init()
 // 光源方向取得
 XMFLOAT3& CLight::GetDir()
 {
-	static float q;
-	q += 0.00005f;
-	m_direction = XMFLOAT3 (sin(q), -1.0f, cos(q));
+	//シーンで挙動を変える
+	if (m_pScene == SCENE_TITLE)
+	{
+		static float q;
+		q += 0.00005f;
+		m_direction = XMFLOAT3(sin(q), -1.0f, cos(q));
+	}
+	else
+	{
+		m_direction = XMFLOAT3(0.0f, -1.0f, 1.0f);
+	}
 	if (m_bEnable) return m_direction;
 	static XMFLOAT3 off(0.0f, 0.0f, 0.0f);
 	return off;

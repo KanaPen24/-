@@ -36,8 +36,7 @@ void DrawNumber(XMFLOAT2 vPos, // 表示位置(左上)
 	unsigned uNumber, // 表示数値
 	int nWidth, // 表示桁数
 	float fSizeX, // 1文字の幅
-	float fSizeY
-) // 1文字の高さ
+	float fSizeY) // 1文字の高さ
 {
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 	CPolygon::SetSize(fSizeX, fSizeY);

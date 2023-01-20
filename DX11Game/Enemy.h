@@ -8,14 +8,13 @@
 */
 #pragma once
 #include "Model.h"
-#include "Land.h"
 
 class CPlayer;
 class CEnemy : public CModel
 {
 private:
 	CPlayer* m_pPlayer;
-	CLand* m_pLand;			// ’n–Ê
+
 
 public:
 	CEnemy(CScene* pScene);

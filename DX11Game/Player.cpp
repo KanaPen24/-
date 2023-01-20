@@ -25,7 +25,7 @@ namespace {
 
 const float RATE_MOVE_MODEL = 0.25f;			// 移動慣性係数
 const float SPEED = 2.0f;						// 移動スピード
-const float SCALE = 14.0f;						// 大きさ
+const float SCALE = 1.0f;						// 大きさ
 const float DASH = 1.5f;						// ダッシュ
 const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
 //#define REV_Z_AXIS	// Y軸180度回転
@@ -59,6 +59,8 @@ HRESULT CPlayer::Init()
 	}
 	CAssimpModel* pModel = GetAssimp(MODEL_ENEMY);
 	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
+	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
+
 	return hr;
 }
 
@@ -79,6 +81,8 @@ void CPlayer::Update()
 	XMFLOAT3 angle = GetAngle();
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
+	//ダッシュ処理
+	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) fDash = DASH;
 	//ゲームコントローラー
 	DWORD JoyCount = CInput::GetJoyCount();
 	CInput::GetJoyState(JOYSTICKID1);
@@ -164,8 +168,6 @@ void CPlayer::Update()
 	// タイマ更新
 	++m_uTick;
 	//キー入力処理
-	//ダッシュ処理
-	if (CInput::GetKeyPress(VK_LSHIFT)) fDash = DASH;
 	
 	if (CInput::GetKeyPress(VK_LEFT)|| CInput::GetKeyPress(VK_A)) {
 		if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
@@ -227,7 +229,7 @@ void CPlayer::Update()
 		angle.y = rotCamera.y;
 		m_nSpeed = 1;
 	}
-	if (CInput::GetKeyPress(VK_LSHIFT)) m_nSpeed = 2;
+	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) m_nSpeed = 2;
 
 	// 回転マトリックス生成
 	XMFLOAT4X4 mW;

@@ -136,9 +136,9 @@ void CLand::Draw()
 	ID3D11Device* pDevice = GetDevice();
 
 	// シーンによってシェーダーを変える
-	if (m_pScene == 1)
+	if (m_pScene == SCENE_TITLE)
 		CAssimpModel::InitShader(pDevice, 0);
-	if (m_pScene == 4)
+	if (m_pScene == SCENE_GAME)
 		CAssimpModel::InitShader(pDevice, 0);
 
 	//描画

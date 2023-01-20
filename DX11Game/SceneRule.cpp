@@ -81,7 +81,7 @@ bool CRule::Init()
 	g_bSkip = false;
 
 	// BGM再生開始
-	//CSound::Play(BGM_TITLE);
+	CSound::Play(BGM_TITLE);
 
 	return hr;
 }
@@ -123,8 +123,8 @@ void CRule::Update(void)
 
 	//	g_bSkip = true;
 	//}
-	// タイトル画面へ
-	if (CInput::GetKeyRelease(VK_RETURN)){ //GetJoyTrigger(JOYSTICKID1, JOYBUTTON1)) {//エンター入力
+	// セレクト画面へ
+	if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
 		CSound::SetVolume(SE_SELECT, 0.3f);
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_SELECT);//セレクトに移動

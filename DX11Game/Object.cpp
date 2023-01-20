@@ -101,8 +101,8 @@ void CObject::Update()
 	if (CollisionBSphere(m_pPlayer)) {
 		AddScore(-1);
 		m_vPos.x = 50000.0f;
-		/*CSound::SetVolume(SE_DAMAGE, 0.2f);
-		CSound::Play(SE_DAMAGE);*/
+		CSound::SetVolume(SE_DAMAGE, 0.2f);
+		CSound::Play(SE_DAMAGE);
 	}
 
 	m_mWorld._41 = m_vPos.x;

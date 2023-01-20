@@ -69,7 +69,8 @@ bool CScene::InitAll()
 	new CClear;
 	new CGOver;
 
-	Change(SCENE_GAME);
+	//Å‰‚ÌƒV[ƒ“
+	Change(SCENE_TITLE);
 	return true;
 }
 

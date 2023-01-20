@@ -8,6 +8,7 @@
 */
 #pragma once
 #include "Main.h"
+#include "Scene.h"
 
 class CLight
 {
@@ -19,7 +20,7 @@ private:
 	bool m_bEnable;			// ライティング有効/無効
 
 	static CLight* m_pLight;
-
+	EScene m_pScene;			// 現在シーン
 public:
 	CLight();
 
