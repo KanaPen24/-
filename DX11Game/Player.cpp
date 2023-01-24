@@ -38,6 +38,7 @@ CPlayer::CPlayer(CScene* pScene) : CModel(pScene)
 	m_nSpeed = 0;
 	m_pCity = nullptr;
 	m_bCollision = false;
+	m_pGCam = nullptr;
 	XMStoreFloat4x4(&m_mInvWorld, XMMatrixIdentity());
 }
 
@@ -54,13 +55,14 @@ HRESULT CPlayer::Init()
 		SetModel(MODEL_PLAYER);
 		m_uTick = 0;
 		m_pCity = (CCity*)m_pScene->Find(GOT_CITY);
+		m_pGCam = CCamera::Get();
 		m_naAnimNo = ANIM_IDLE;
 		m_dAnimTime = 0.0;
 	}
 	CAssimpModel* pModel = GetAssimp(MODEL_ENEMY);
 	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
 	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
-
+	SetAngle(XMFLOAT3(0.0f, 180.0f, 0.0f));	//初期で奥を向く
 	return hr;
 }
 
@@ -80,7 +82,7 @@ void CPlayer::Update()
 	// 回転
 	XMFLOAT3 angle = GetAngle();
 	// カメラの向き取得
-	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
+	XMFLOAT3 rotCamera = m_pGCam->GetAngle();
 	//ダッシュ処理
 	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) fDash = DASH;
 	//ゲームコントローラー
@@ -167,8 +169,8 @@ void CPlayer::Update()
 
 	// タイマ更新
 	++m_uTick;
+
 	//キー入力処理
-	
 	if (CInput::GetKeyPress(VK_LEFT)|| CInput::GetKeyPress(VK_A)) {
 		if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
 			// 左前移動
@@ -215,7 +217,7 @@ void CPlayer::Update()
 		}
 		m_nSpeed = 1;
 	}
-	else if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
+	if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
 		// 前移動
 		vPos.z -= CosDeg(180.0f + rotCamera.y) * SPEED * fDash;
 
@@ -284,6 +286,7 @@ void CPlayer::Update()
 	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
 	CDebugProc::Print("Animation=%d\n", m_naAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
+	
 #endif
 }
 // 描画

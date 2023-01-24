@@ -15,7 +15,7 @@
 // グローバル変数
 namespace {
 	const float CAM_POS_P_X = 0.0f;		// 定点カメラの視点位置(X座標)
-	const float CAM_POS_P_Y = 90.0f;	// 定点カメラの視点位置(Y座標)
+	const float CAM_POS_P_Y = 70.0f;	// 定点カメラの視点位置(Y座標)
 	const float CAM_POS_P_Z = -200.0f;	// 定点カメラの視点位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;		// 定点カメラの注視点位置(X座標)
 	const float CAM_POS_R_Y = 0.0f;		// 定点カメラの注視点位置(Y座標)
@@ -34,6 +34,8 @@ namespace {
 	const float TP_POS_R_X = 0.0f;		// 三人称カメラの注視点位置(X座標)
 	const float TP_POS_R_Y = 80.0f;		// 三人称カメラの注視点位置(Y座標)
 	const float TP_POS_R_Z = 0.0f;		// 三人称カメラの注視点位置(Z座標)
+
+	const float DISTANCE = 9.0f;		// カメラの距離
 };
 
 // カメラモード
@@ -66,36 +68,29 @@ void CGameCamera::Init()
 void CGameCamera::Update()
 {
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
-
-	// 視点切替
-	if (CInput::GetKeyRelease(VK_0) || CInput::GetKeyRelease(VK_NUMPAD0))
-		m_nMode = 0;
 	
-	if (m_pPlayer) {
-		//XMMATRIX mW;
-		switch (m_nMode) {
-		case CM_FIXED:	// 定点カメラ
-			m_vTarget = m_pPlayer->GetPos();
-			m_vPos = XMFLOAT3(CAM_POS_P_X + pPos.x, CAM_POS_P_Y + pPos.y, CAM_POS_P_Z + pPos.z);
-			m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
-			break;
-		}
-	} else {
-		m_vPos = XMFLOAT3(CAM_POS_P_X + pPos.x, CAM_POS_P_Y + pPos.y, CAM_POS_P_Z + pPos.z);
-		m_vTarget = m_pPlayer->GetPos();
-		m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
-	}
+	if(CInput::GetKeyPress(VK_J))
+	m_fAngle -= 1.0f;
+	if (CInput::GetKeyPress(VK_L))
+	m_fAngle += 1.0f;
+	if (m_fAngle >= 180.0f)m_fAngle -= 360.0f;	
+	m_vTarget = m_pPlayer->GetPos();
+	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	m_vPos.x = m_vTarget.x + sinf(XMConvertToRadians(m_fAngle))*(m_fRadius*DISTANCE);
+	m_vPos.y = CAM_POS_P_Y;
+	m_vPos.z = m_vTarget.z - cosf(XMConvertToRadians(m_fAngle))*(m_fRadius*DISTANCE);
+	float fVecX, fVecZ;
+	fVecX = m_vPos.x - m_vTarget.x;
+	fVecZ = m_vPos.z - m_vTarget.z;
+	m_fLengthInterval = sqrtf(fVecX * fVecX + fVecZ * fVecZ);
 
 	CCamera::Update();
 #ifdef _DEBUG
 	// デバッグ表示
 	CDebugProc::Print("*** ｶﾒﾗ ｿｳｻ ***\n");
-	CDebugProc::Print("[1] : FP View\n");
-	CDebugProc::Print("[2] : Bullet-time style\n");
-	CDebugProc::Print("[3] : TP View\n");
-	CDebugProc::Print("[0] : Fixed point\n");
 	CDebugProc::Print("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	CDebugProc::Print("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
+	CDebugProc::Print("[ｷｮﾘ : (%f)]\n", m_fLengthInterval);
 	CDebugProc::Print("\n");
 #endif
 }

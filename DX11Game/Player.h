@@ -9,6 +9,7 @@
 #pragma once
 #include "Model.h"
 #include "City.h"
+#include "GameCamera.h"
 
 class CPlayer : public CModel
 {
@@ -22,6 +23,7 @@ private:
 	CCity* m_pCity;			// 街
 	int m_naAnimNo;			// アニメーションNo.
 	double m_dAnimTime;		// 再生時間
+	CCamera* m_pGCam;	// ゲームカメラ
 public:
 	CPlayer(CScene* pScene);
 	virtual ~CPlayer();

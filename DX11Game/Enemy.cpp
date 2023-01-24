@@ -28,7 +28,7 @@ CEnemy::CEnemy(CScene* pScene) : CModel(pScene)
 {
 	m_id = GOT_ENEMY;
 	m_pPlayer = nullptr;
-	
+	m_fChan = 0.0f;
 }
 
 // デストラクタ
@@ -62,7 +62,7 @@ void CEnemy::Update()
 	if (CInput::GetKeyTrigger(VK_2))
 		g_bAlflg = false;
 
-	float fChan = 0.0f;	//サウンドのLR調整用
+	
 
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
 	// 現在位置取得
@@ -89,17 +89,22 @@ void CEnemy::Update()
 	// プレイヤーを追尾する
 	if (pPos.x  > vPos.x + 1.0f) {
 		vPos.x += VALUE_MOVE_ENEMY;
-		fChan = -1.0f;
+		if (m_fChan >= -1.0f)
+			m_fChan -= 0.01f;
 	}
 	else if (pPos.x  < vPos.x - 1.0f)
 	{
 		vPos.x += -VALUE_MOVE_ENEMY;
-		fChan = 1.0f;
+		if (m_fChan <= 1.0f)
+			m_fChan += 0.01f;
 	}
 	else
 	{
+		if (m_fChan >= 0.0f)
+			m_fChan -= 0.01f;
+		if (m_fChan <= 0.0f)
+			m_fChan += 0.01f;
 		//x軸が重なるときにぶるぶるするのを防ぐため
-		fChan = 0.0f;
 		vPos.x = vPos.x;
 	}
 	if (pPos.z > vPos.z)
@@ -136,7 +141,7 @@ void CEnemy::Update()
 	volume = MAX_VOLUME - volume;
 	volume = std::fmax(volume, 0.15f);
 	volume = std::fmin(volume, 1.0f);
-	CSound::SetVolume(BGM_GAME, volume, fChan);
+	CSound::SetVolume(BGM_GAME, volume, m_fChan);
 
 	// 衝突判定
 	if (CollisionBSphere(m_pPlayer)) {
@@ -148,6 +153,7 @@ void CEnemy::Update()
 #ifdef _DEBUG
 	CDebugProc::Print("[ﾃｷ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	CDebugProc::Print("[Vol : (%f)\n", volume);
+	CDebugProc::Print("[Chan : (%f)\n", m_fChan);
 #endif
 }
 

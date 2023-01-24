@@ -14,7 +14,7 @@ class CEnemy : public CModel
 {
 private:
 	CPlayer* m_pPlayer;
-
+	float m_fChan;	//LR’²®—p
 
 public:
 	CEnemy(CScene* pScene);
