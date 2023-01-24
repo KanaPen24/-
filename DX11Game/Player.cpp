@@ -24,9 +24,10 @@ namespace {
 }
 
 const float RATE_MOVE_MODEL = 0.25f;			// 移動慣性係数
-const float SPEED = 2.0f;						// 移動スピード
+const float SPEED = 0.02f;						// 移動スピード
 const float SCALE = 1.0f;						// 大きさ
 const float DASH = 1.5f;						// ダッシュ
+const float ROTATE = 1.7f;		// カメラの距離
 const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
 //#define REV_Z_AXIS	// Y軸180度回転
 
@@ -73,8 +74,10 @@ void CPlayer::Update()
 {
 	//変数宣言
 	float fDash = 1.0f;
-
+	float fLength = m_pGCam->GetLength();
 	CModel::Update();
+	XMFLOAT3 vVec = m_pGCam->GetVec();
+	vVec.y = 0.0f;
 
 	// 現在位置取得
 	XMFLOAT3 vPos = GetPos();
@@ -100,69 +103,16 @@ void CPlayer::Update()
 	}
 	/*ここからコントローラー操作の入力*/
 	if (JoyCount >= 1) {
-
-		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
-			if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
-				// 左前移動
-				vPos.x -= SinDeg(rotCamera.y + 135.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y + 135.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y + 135.0f;
-			}
-			else if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE) {
-				// 左後移動
-				vPos.x -= SinDeg(rotCamera.y + 45.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y + 45.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y + 45.0f;
-			}
-			else {
-				// 左移動
-				vPos.x -= SinDeg(rotCamera.y + 90.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y + 90.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y + 90.0f;
-			}
-			m_nSpeed = 1;
-		}
-		else if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
-			if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
-				// 右前移動
-				vPos.x -= SinDeg(rotCamera.y - 135.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y - 135.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y - 135.0f;
-			}
-			else if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE) {
-				// 右後移動
-				vPos.x -= SinDeg(rotCamera.y - 45.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y - 45.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y - 45.0f;
-			}
-			else {
-				// 右移動
-				vPos.x -= SinDeg(rotCamera.y - 90.0f) * SPEED * fDash;
-				vPos.z -= CosDeg(rotCamera.y - 90.0f) * SPEED * fDash;
-
-				angle.y = rotCamera.y - 90.0f;
-			}
-			m_nSpeed = 1;
-		}
-		else if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
+		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
 			// 前移動
-			vPos.x -= SinDeg(180.0f + rotCamera.y) * SPEED * fDash;
-			vPos.z -= CosDeg(180.0f + rotCamera.y) * SPEED * fDash;
-
-			angle.y = 180.0f + rotCamera.y;
+			vPos.x -= vVec.x* SPEED * fDash;
+			vPos.z -= vVec.z* SPEED * fDash;
 			m_nSpeed = 1;
 		}
 		else if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE) {
 			// 後移動
-			vPos.x -= SinDeg(rotCamera.y) * SPEED * fDash;
-			vPos.z -= CosDeg(rotCamera.y) * SPEED * fDash;
-
-			angle.y = rotCamera.y;
+			vPos.x += vVec.x* SPEED * fDash;
+			vPos.z += vVec.z* SPEED * fDash;
 			m_nSpeed = 1;
 		}
 	}
@@ -171,67 +121,25 @@ void CPlayer::Update()
 	++m_uTick;
 
 	//キー入力処理
-	if (CInput::GetKeyPress(VK_LEFT)|| CInput::GetKeyPress(VK_A)) {
-		if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
-			// 左前移動
-			vPos.x -= SinDeg(rotCamera.y + 135.0f) * SPEED * fDash;
-			vPos.z -= CosDeg(rotCamera.y + 135.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y + 135.0f;
-		}
-		else if (CInput::GetKeyPress(VK_DOWN)|| CInput::GetKeyPress(VK_S)) {
-			// 左後移動
-			vPos.x -= SinDeg(rotCamera.y + 45.0f) * SPEED * fDash;
-			vPos.z -= CosDeg(rotCamera.y + 45.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y + 45.0f;
-		}
-		else {
-			// 左移動
-			vPos.x -= SinDeg(rotCamera.y + 90.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y + 90.0f;
-		}
-		m_nSpeed = 1;
-	}
-	else if (CInput::GetKeyPress(VK_RIGHT)|| CInput::GetKeyPress(VK_D)) {
-		if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
-			// 右前移動
-			vPos.x -= SinDeg(rotCamera.y - 135.0f) * SPEED * fDash;
-			vPos.z -= CosDeg(rotCamera.y - 135.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y - 135.0f;
-		}
-		else if (CInput::GetKeyPress(VK_DOWN)|| CInput::GetKeyPress(VK_S)) {
-			// 右後移動
-			vPos.x -= SinDeg(rotCamera.y - 45.0f) * SPEED * fDash;
-			vPos.z -= CosDeg(rotCamera.y - 45.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y - 45.0f;
-		}
-		else {
-			// 右移動
-			vPos.x -= SinDeg(rotCamera.y - 90.0f) * SPEED * fDash;
-
-			angle.y = rotCamera.y - 90.0f;
-		}
-		m_nSpeed = 1;
-	}
 	if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
 		// 前移動
-		vPos.z -= CosDeg(180.0f + rotCamera.y) * SPEED * fDash;
-
-		angle.y = 180.0f + rotCamera.y;
+		vPos.x -= vVec.x* SPEED * fDash;
+		vPos.z -= vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
 	else if (CInput::GetKeyPress(VK_DOWN)|| CInput::GetKeyPress(VK_S)) {
 		// 後移動
-		vPos.z -= CosDeg(rotCamera.y) * SPEED * fDash;
-
-		angle.y = rotCamera.y;
+		vPos.x += vVec.x* SPEED * fDash;
+		vPos.z += vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
 	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) m_nSpeed = 2;
+
+	//角度の変更
+	if (CInput::GetKeyPress(VK_J))
+		angle.y += ROTATE;
+	if (CInput::GetKeyPress(VK_L))
+		angle.y -= ROTATE;
 
 	// 回転マトリックス生成
 	XMFLOAT4X4 mW;
@@ -246,7 +154,7 @@ void CPlayer::Update()
 	vP0.z = vPos.z;
 	XMFLOAT3 vX, vN;	//交点座標
 	if (m_pCity && m_pCity->Collision(vP0,XMFLOAT3(0.0f, -1.0f, 0.0f),m_bCollision, &vX, &vN)) {
-		vPos.x = vX.x;	
+		vPos.x = vX.x*0.9f;	
 		vPos.z = vX.z;
 		m_bCollision = false;	//当たった瞬間の座標が欲しいのでここで当たり判定を消す
 	} else {
@@ -286,6 +194,7 @@ void CPlayer::Update()
 	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
 	CDebugProc::Print("Animation=%d\n", m_naAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
+	CDebugProc::Print("ﾌﾟﾚｲﾔｰVec=X:%f Y:%f Z:%f\n", vVec.x, vVec.y, vVec.z);
 	
 #endif
 }

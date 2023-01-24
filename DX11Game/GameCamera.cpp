@@ -36,6 +36,7 @@ namespace {
 	const float TP_POS_R_Z = 0.0f;		// 三人称カメラの注視点位置(Z座標)
 
 	const float DISTANCE = 9.0f;		// カメラの距離
+	const float ROTATE = 1.7f;		// カメラの距離
 };
 
 // カメラモード
@@ -70,19 +71,21 @@ void CGameCamera::Update()
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
 	
 	if(CInput::GetKeyPress(VK_J))
-	m_fAngle -= 1.0f;
+	m_fAngle -= ROTATE;
 	if (CInput::GetKeyPress(VK_L))
-	m_fAngle += 1.0f;
+	m_fAngle += ROTATE;
 	if (m_fAngle >= 180.0f)m_fAngle -= 360.0f;	
 	m_vTarget = m_pPlayer->GetPos();
+	m_vTarget.y += 30.0f;
 	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	m_vPos.x = m_vTarget.x + sinf(XMConvertToRadians(m_fAngle))*(m_fRadius*DISTANCE);
 	m_vPos.y = CAM_POS_P_Y;
 	m_vPos.z = m_vTarget.z - cosf(XMConvertToRadians(m_fAngle))*(m_fRadius*DISTANCE);
-	float fVecX, fVecZ;
-	fVecX = m_vPos.x - m_vTarget.x;
-	fVecZ = m_vPos.z - m_vTarget.z;
-	m_fLengthInterval = sqrtf(fVecX * fVecX + fVecZ * fVecZ);
+
+	//カメラからターゲットの距離	
+	m_vVec.x = m_vPos.x - m_vTarget.x;
+	m_vVec.z = m_vPos.z - m_vTarget.z;
+	m_fLengthInterval = sqrtf(m_vVec.x * m_vVec.x + m_vVec.z * m_vVec.z);
 
 	CCamera::Update();
 #ifdef _DEBUG

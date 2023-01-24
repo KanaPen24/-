@@ -18,6 +18,7 @@ protected:
 	DirectX::XMFLOAT3 m_vUp;		// 上方ベクトル
 
 	DirectX::XMFLOAT3 m_vAngle;		// カメラの角度
+	DirectX::XMFLOAT3 m_vVec;		// カメラとターゲットのベクトル
 	float m_fLengthInterval;		// カメラの視点と注視点の距離
 
 private:
@@ -58,6 +59,8 @@ public:
 	DirectX::XMFLOAT4X4& GetViewMatrix() { return m_mtxView; }
 	DirectX::XMFLOAT4X4& GetProjMatrix() { return m_mtxProj; }
 	DirectX::XMFLOAT3& GetAngle() { return m_vAngle; }
+	DirectX::XMFLOAT3& GetVec() { return m_vVec; }
+	float GetLength() { return m_fLengthInterval; }
 	void SetSky(CAssimpModel* pSky) { m_pSky = pSky; }
 	CAssimpModel* GetSky() { return m_pSky; }
 	float GetFarZ() { return m_fFarZ; }
