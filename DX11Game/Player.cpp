@@ -46,6 +46,8 @@ CPlayer::CPlayer(CScene* pScene) : CModel(pScene)
 // デストラクタ
 CPlayer::~CPlayer()
 {
+	m_id = GOT_PLAYER;
+	XMStoreFloat4x4(&m_mInvWorld, XMMatrixIdentity());
 }
 
 // 初期化
@@ -173,6 +175,10 @@ void CPlayer::Update()
 
 	// 角度更新
 	SetAngle(angle);
+
+	// 逆行列生成
+	XMStoreFloat4x4(&m_mInvWorld,
+		XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_mWorld)));
 	
 	// アニメーション更新
 	if (m_nSpeed == 0)

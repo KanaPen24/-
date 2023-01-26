@@ -18,6 +18,9 @@
 const int MAX_OBJECT = 1;
 
 // ƒNƒ‰ƒX’è‹`
+class CEnemy;
+class CRadar;
+class CScore;
 class CGame : public CScene
 {
 private:
@@ -27,6 +30,8 @@ private:
 	CPlayer* m_pPlayer;
 	CEnemy* m_pEnemy;
 	CObject* m_pObject[MAX_OBJECT];
+	CRadar* m_pRadar;
+	CScore* m_pScore;
 
 	int m_nBoundary;
 

@@ -19,11 +19,13 @@
 //*****************************************************************************
 
 class CPlayer;
+class CScore;
 class CObject : public CModel
 {
 private:
 	CPlayer* m_pPlayer;
 	CLand* m_pLand;			// ’n–Ê
+	CScore* m_pScore;
 
 public:
 	CObject(CScene* pScene);

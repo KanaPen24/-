@@ -11,9 +11,16 @@
 // インクルード部
 //*****************************************************************************
 #include "Main.h"
-HRESULT InitScore();
-void UninitScore();
-void UpdateScore();
-void DrawScore();
-void AddScore(int nScore);
-int GetScore();
+
+class CScore
+{
+private:
+	int m_nScore;
+public:
+	HRESULT Init();
+	void Uninit();
+	void Update();
+	void Draw();
+	void Add(int nScore) { m_nScore += nScore; }
+	int Get() {	return m_nScore;}
+};

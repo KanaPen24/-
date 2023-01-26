@@ -228,6 +228,9 @@
     <ClCompile Include="GameObj.cpp">
       <Filter>ソース ファイル\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Radar.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -351,6 +354,9 @@
       <Filter>ヘッダー ファイル\Model</Filter>
     </ClInclude>
     <ClInclude Include="Polygon.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Radar.h">
       <Filter>ヘッダー ファイル\2D</Filter>
     </ClInclude>
   </ItemGroup>

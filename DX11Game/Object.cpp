@@ -43,6 +43,7 @@ HRESULT CObject::Init()
 	SetModel(MODEL_OBJECT);
 	SetScale(XMFLOAT3(200.0f, 200.0f, 200.0f));
 	m_pLand = (CLand*)m_pScene->Find(GOT_LAND);
+	m_pScore = new CScore;
 	switch (GetStageSelect())
 	{
 	case STAGE_1:
@@ -99,7 +100,7 @@ void CObject::Update()
 	}
 	// Õ“Ë”»’è
 	if (CollisionBSphere(m_pPlayer)) {
-		AddScore(-1);
+		m_pScore->Add(-1);
 		m_vPos.x = 50000.0f;
 		CSound::SetVolume(SE_DAMAGE, 0.2f);
 		CSound::Play(SE_DAMAGE);

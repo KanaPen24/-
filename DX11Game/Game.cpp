@@ -14,6 +14,7 @@
 #include "Debugproc.h"
 #include "City.h"
 #include "Score.h"
+#include "Radar.h"
 
 // コンストラクタ
 CGame::CGame() : CScene()
@@ -72,18 +73,29 @@ bool CGame::Init()
 	}
 
 	//スコア初期化
-	hr = InitScore();
+	m_pScore = new CScore;
+	hr =m_pScore->Init();
 	if (FAILED(hr)) {
 		MessageBox(GetMainWnd(), _T("スコア初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
 		return hr;
+	}
+
+	// レーダー テクスチャ読込
+	if (FAILED(CRadar::LoadTexture())) {
+		return false;
 	}
 
 	// 全オブジェクト初期化
 	if (FAILED(CGameObj::InitAll(m_pObj))) {
 		return false;
 	}
-
+	
+	//カメラプレイヤーに設定
 	m_camera.SetPlayer(m_pPlayer);
+
+	// レーダー生成、初期化
+	m_pRadar = new CRadar();
+	m_pRadar->Init(this);
 
 	// BGM再生開始
 	CSound::Play(BGM_GAME);
@@ -98,7 +110,10 @@ void CGame::Fin()
 	CSound::Stop(BGM_GAME);
 
 	//スコア終了処理
-	UninitScore();
+	m_pScore->Uninit();
+
+	// レーダー テクスチャ解放
+	CRadar::ReleaseTexture();
 
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);
@@ -118,8 +133,11 @@ void CGame::Update()
 		}
 	}
 
+	// レーダー更新
+	m_pRadar->Update();
+
 	// スコアの更新
-	UpdateScore();
+	m_pScore->Update();
 
 #ifdef _DEBUG
 	//static LPCSTR boundary[] = {"ﾋﾋｮｳｼﾞ", "ｷｭｳ"};
@@ -140,7 +158,9 @@ void CGame::Draw()
 	SetZBuffer(false);
 	SetBlendState(BS_ALPHABLEND);
 	// スコア描画
-	DrawScore();
+	m_pScore->Draw();
+	// レーダー描画
+	m_pRadar->Draw();
 }
 
 // 境界表示更新
