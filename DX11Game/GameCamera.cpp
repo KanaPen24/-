@@ -37,6 +37,8 @@ namespace {
 
 	const float DISTANCE = 9.0f;		// カメラの距離
 	const float ROTATE = 1.7f;		// カメラの距離
+	const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
+
 };
 
 // カメラモード
@@ -62,6 +64,8 @@ CGameCamera::CGameCamera()
 void CGameCamera::Init()
 {
 	CCamera::Init();
+	SetPos(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);
+
 	SetSky(CModel::GetAssimp(MODEL_SKY));
 }
 
@@ -69,7 +73,20 @@ void CGameCamera::Init()
 void CGameCamera::Update()
 {
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
-	
+		//ゲームコントローラー
+	DWORD JoyCount = CInput::GetJoyCount();
+	LONG JoyX = CInput::GetJoyX(JOYSTICKID1);
+	if (JoyX <  GAMEPAD_LEFT_STICK_DEADZONE &&
+		JoyX > -GAMEPAD_LEFT_STICK_DEADZONE)
+	{
+		JoyX = 0;
+	}
+	if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
+		m_fAngle += ROTATE;
+	}
+	if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
+		m_fAngle -= ROTATE;
+	}
 	if(CInput::GetKeyPress(VK_J))
 	m_fAngle -= ROTATE;
 	if (CInput::GetKeyPress(VK_L))

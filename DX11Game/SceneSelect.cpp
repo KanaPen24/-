@@ -38,12 +38,7 @@ namespace {
 }
 
 static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTURE];
-static int g_nBlink;
-static int g_nStart;
 
-static bool bSound1;	//一回だけ流す
-static bool bSound2;	//一回だけ流す
-static bool bSound3;	//一回だけ流す
 
 CSelect::CSelect() : CScene()
 {
@@ -74,8 +69,8 @@ bool CSelect::Init()
 		return false;
 	}
 	// 変数初期化
-	g_nBlink = 0;
-	g_nStart = 0;
+	m_nBlink = 0;
+	m_nStart = 0;
 	//一回だけ再生初期化
 	bSound1 = false;
 	bSound2 = false;
@@ -127,8 +122,8 @@ void CSelect::Update() {
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム1画面へ
-			g_nStart = 1; // 開始フラグ
-			g_nBlink = BLINK_START_TIMER;
+			m_nStart = 1; // 開始フラグ
+			m_nBlink = BLINK_START_TIMER;
 			return;
 		}
 		break;
@@ -146,8 +141,8 @@ void CSelect::Update() {
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
-			g_nStart = 1; // 開始フラグ
-			g_nBlink = BLINK_START_TIMER;
+			m_nStart = 1; // 開始フラグ
+			m_nBlink = BLINK_START_TIMER;
 			return;
 		}		
 		break;
@@ -164,8 +159,8 @@ void CSelect::Update() {
 			CSound::SetVolume(SE_SELECT, 0.2f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
-			g_nStart = 1; // 開始フラグ
-			g_nBlink = BLINK_START_TIMER;
+			m_nStart = 1; // 開始フラグ
+			m_nBlink = BLINK_START_TIMER;
 			return;
 		}		
 		break;
@@ -174,33 +169,33 @@ void CSelect::Update() {
 	if (CInput::GetKeyPress(VK_X) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON4)) //Y押したら
 	{
 		CFade::Out(SCENE_RULE);	//ルール画面へ
-		g_nStart = 1; // 開始フラグ
-		g_nBlink = BLINK_START_TIMER;
+		m_nStart = 1; // 開始フラグ
+		m_nBlink = BLINK_START_TIMER;
 		return;
 	}
 	// デバック用シーン遷移
 	if (CInput::GetKeyRelease(VK_1)) {//エンター入力
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_TITLE);	//タイトル画面へ
-		g_nStart = 1; // 開始フラグ
+		m_nStart = 1; // 開始フラグ
 		return;
 	}
 	if (CInput::GetKeyRelease(VK_2)) {//エンター入力
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_RULE);	//ルール画面へ
-		g_nStart = 1; // 開始フラグ
+		m_nStart = 1; // 開始フラグ
 		return;
 	}
 	if (CInput::GetKeyRelease(VK_3)) {//エンター入力
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_SELECT);	//セレクト画面へ
-		g_nStart = 1; // 開始フラグ
+		m_nStart = 1; // 開始フラグ
 		return;
 	}
 	if (CInput::GetKeyRelease(VK_4)) {//エンター入力
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_GAME);	//ゲーム画面へ
-		g_nStart = 1; // 開始フラグ
+		m_nStart = 1; // 開始フラグ
 		return;
 	}
 

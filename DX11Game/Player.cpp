@@ -62,7 +62,7 @@ HRESULT CPlayer::Init()
 		m_naAnimNo = ANIM_IDLE;
 		m_dAnimTime = 0.0;
 	}
-	CAssimpModel* pModel = GetAssimp(MODEL_ENEMY);
+	CAssimpModel* pModel = GetAssimp(MODEL_PLAYER);
 	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
 	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
 	SetAngle(XMFLOAT3(0.0f, 180.0f, 0.0f));	//初期で奥を向く
@@ -117,6 +117,13 @@ void CPlayer::Update()
 			vPos.z += vVec.z* SPEED * fDash;
 			m_nSpeed = 1;
 		}
+		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
+			angle.y -= ROTATE;
+		}
+		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
+			angle.y += ROTATE;
+		}
+
 	}
 
 	// タイマ更新
@@ -129,10 +136,20 @@ void CPlayer::Update()
 		vPos.z -= vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
-	else if (CInput::GetKeyPress(VK_DOWN)|| CInput::GetKeyPress(VK_S)) {
+	else if (CInput::GetKeyPress(VK_DOWN) || CInput::GetKeyPress(VK_S)) {
 		// 後移動
 		vPos.x += vVec.x* SPEED * fDash;
 		vPos.z += vVec.z* SPEED * fDash;
+		m_nSpeed = 1;
+	}
+	else if (CInput::GetKeyPress(VK_RIGHT) || CInput::GetKeyPress(VK_D)) {
+		// 右移動
+		vPos.x += SPEED * fDash *50;
+		m_nSpeed = 1;
+	}
+	if (CInput::GetKeyPress(VK_LEFT) || CInput::GetKeyPress(VK_A)) {
+		// 左移動
+		vPos.x -= SPEED * fDash *50;
 		m_nSpeed = 1;
 	}
 	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) m_nSpeed = 2;
@@ -143,6 +160,10 @@ void CPlayer::Update()
 	if (CInput::GetKeyPress(VK_L))
 		angle.y -= ROTATE;
 
+	if (angle.y >= 360.0f)
+		angle.y = 0.0f;
+	if (angle.y < 0.0f)
+		angle.y = 360.0f;
 	// 回転マトリックス生成
 	XMFLOAT4X4 mW;
 	XMStoreFloat4x4(&mW, XMMatrixRotationY(XMConvertToRadians(angle.y)));
@@ -156,7 +177,7 @@ void CPlayer::Update()
 	vP0.z = vPos.z;
 	XMFLOAT3 vX, vN;	//交点座標
 	if (m_pCity && m_pCity->Collision(vP0,XMFLOAT3(0.0f, -1.0f, 0.0f),m_bCollision, &vX, &vN)) {
-		vPos.x = vX.x*0.9f;	
+		vPos.x = vX.x;	
 		vPos.z = vX.z;
 		m_bCollision = false;	//当たった瞬間の座標が欲しいのでここで当たり判定を消す
 	} else {
@@ -201,6 +222,7 @@ void CPlayer::Update()
 	CDebugProc::Print("Animation=%d\n", m_naAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰVec=X:%f Y:%f Z:%f\n", vVec.x, vVec.y, vVec.z);
+	CDebugProc::Print("ﾌﾟﾚｲﾔｰAng=X:%f Y:%f Z:%f\n", angle.x, angle.y, angle.z);
 	
 #endif
 }

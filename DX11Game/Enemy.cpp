@@ -67,6 +67,7 @@ void CEnemy::Update()
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
 	// 現在位置取得
 	XMFLOAT3 vPos = GetPos();
+	XMFLOAT3 vAng = m_pPlayer->GetAngle();		//プレイヤーの角度取得
 	// 回転
 	XMFLOAT3 angle = GetAngle();
 
@@ -87,22 +88,26 @@ void CEnemy::Update()
 	//float fDiffRotY = g_EnemyRotDest.y - g_EnemyRot.y;
 
 	// プレイヤーを追尾する
-	if (pPos.x  > vPos.x + 1.0f) {
+	if (pPos.x  > vPos.x + 5.0f) {
 		vPos.x += VALUE_MOVE_ENEMY;
-		if (m_fChan >= -1.0f)
-			m_fChan -= 0.01f;
+		if (90 <= vAng.y &&vAng.y <= 275)
+		m_fChan -= 0.01f;	//Lの音量
+		else
+		m_fChan += 0.01f;	//Rの音量
 	}
-	else if (pPos.x  < vPos.x - 1.0f)
+	else if (pPos.x  < vPos.x - 5.0f)
 	{
 		vPos.x += -VALUE_MOVE_ENEMY;
-		if (m_fChan <= 1.0f)
-			m_fChan += 0.01f;
+		if (90 <= vAng.y &&vAng.y <= 275)
+		m_fChan += 0.01f;	//Rの音量
+		else
+		m_fChan -= 0.01f;	//Lの音量
 	}
 	else
 	{
-		if (m_fChan >= 0.0f)
+		if (m_fChan > 0.0f)
 			m_fChan -= 0.01f;
-		if (m_fChan <= 0.0f)
+		if (m_fChan < 0.0f)
 			m_fChan += 0.01f;
 		//x軸が重なるときにぶるぶるするのを防ぐため
 		vPos.x = vPos.x;
@@ -141,6 +146,12 @@ void CEnemy::Update()
 	volume = MAX_VOLUME - volume;
 	volume = std::fmax(volume, 0.15f);
 	volume = std::fmin(volume, 1.0f);
+	m_fChan= std::fmax(m_fChan, -1.0f);
+	m_fChan = std::fmin(m_fChan, 1.0f);
+	////角度によってLRを調整する
+	//if (vAng.y <= 90)	m_fChan += 0.01f;
+	//if (vAng.y >= 275)	m_fChan += -0.01f;
+
 	CSound::SetVolume(BGM_GAME, volume, m_fChan);
 
 	// 衝突判定

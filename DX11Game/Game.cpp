@@ -15,6 +15,7 @@
 #include "City.h"
 #include "Score.h"
 #include "Radar.h"
+#include "StegeSelect.h"
 
 // コンストラクタ
 CGame::CGame() : CScene()
@@ -52,8 +53,18 @@ bool CGame::Init()
 	if (pLight) {
 		pLight->Init();
 	}
-	
-	
+	switch (GetStageSelect())
+	{
+	case STAGE_1:
+		m_nCntObj = 1;
+		break;
+	case STAGE_2:
+		m_nCntObj = 10;
+		break;
+	case STAGE_3:
+		m_nCntObj = 20;
+		break;
+	}	
 
 	m_pPlayer = new CPlayer(this);
 
@@ -61,20 +72,20 @@ bool CGame::Init()
 	m_pEnemy->SetPlayer(m_pPlayer);
 	
 
-	for (int i = 0; i < MAX_OBJECT; i++) {
+	for (int i = 0; i < m_nCntObj; i++) {
 
 		m_pObject[i] = new CObject(this);
 		m_pObject[i]->SetPlayer(m_pPlayer);
 		XMFLOAT4X4 mW;
 		XMStoreFloat4x4(&mW, XMMatrixRotationRollPitchYaw(0.0f,XMConvertToRadians(rand() % 360),0.0f));
-		mW._41 = - 400.0f + (float)(rand() % 400);
-		mW._43 = (float)(rand() % 800);
+		mW._41 = - 500.0f + (float)(rand() % 500);
+		mW._43 = (float)(200+rand() % 800);
 		m_pObject[i]->SetWorld(mW);
 	}
 
 	//スコア初期化
 	m_pScore = new CScore;
-	hr =m_pScore->Init();
+	hr =m_pScore->Init(this);
 	if (FAILED(hr)) {
 		MessageBox(GetMainWnd(), _T("スコア初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
 		return hr;
@@ -92,6 +103,7 @@ bool CGame::Init()
 	
 	//カメラプレイヤーに設定
 	m_camera.SetPlayer(m_pPlayer);
+
 
 	// レーダー生成、初期化
 	m_pRadar = new CRadar();

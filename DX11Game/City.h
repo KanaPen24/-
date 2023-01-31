@@ -17,7 +17,7 @@ private:
 	UINT m_nIndex;				// インデックス数
 	UINT* m_pIndex;				// インデックス配列
 	ID3D11ShaderResourceView*	m_pTexture;	// テクスチャ
-	XMFLOAT3 a;
+	XMFLOAT3 Storage;
 public:
 	CCity(CScene* pScene);		// コンストラクタ
 	virtual ~CCity();			// デストラクタ

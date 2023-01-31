@@ -11,16 +11,20 @@
 // インクルード部
 //*****************************************************************************
 #include "Main.h"
+#include "Game.h"
 
+class CObject;
 class CScore
 {
 private:
-	int m_nScore;
+	CObject* m_pObj;
+	CGame* m_pScene;
+	
 public:
-	HRESULT Init();
+	HRESULT Init(CGame* pScene);
 	void Uninit();
 	void Update();
 	void Draw();
-	void Add(int nScore) { m_nScore += nScore; }
-	int Get() {	return m_nScore;}
+	void Add(int nScore);
+	int m_nScore;
 };

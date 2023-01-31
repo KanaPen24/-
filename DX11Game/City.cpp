@@ -44,9 +44,6 @@ HRESULT CCity::Init()
 	pModel->GetVertex(m_pVertex, m_pIndex);
 	SetScale(XMFLOAT3(1.0f, 1.0f, 1.0f));
 	SetAngle(XMFLOAT3(0.0f, 0.0f, 0.0f));
-	/*mW._41 = POS.x;
-	mW._42 = POS.y;
-	mW._43 = POS.x;*/
 	SetPos(POS);
 	SetWorld(mW);
 
@@ -120,12 +117,12 @@ bool CCity::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, bool collision, XMFLOAT3* pX, X
 		}
 		// “_‚ª“à‘¤‚¾‚Á‚½‚Ì‚Å“–‚½‚Á‚Ä‚¢‚é
 		if (pX && collision) {
-			*pX = vX;
-			a = vX;
+			*pX = vX;	
+			Storage = vX;
 		}
 		else
 		{
-			*pX = a;
+			*pX = Storage;
 		}
 		if (pN) {
 			XMStoreFloat3(pN, n);

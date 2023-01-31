@@ -20,6 +20,7 @@ private:
 	XMFLOAT3 m_vPos2D[MAX_OBJECT];
 	CGame* m_pScene;
 	int m_nObject;
+	int m_nCntObj;
 	CPlayer* m_pPlayer;
 
 public:

@@ -15,7 +15,7 @@
 #include "Object.h"
 
 //定数定義
-const int MAX_OBJECT = 1;
+const int MAX_OBJECT = 30;
 
 // クラス定義
 class CEnemy;
@@ -33,6 +33,7 @@ private:
 	CRadar* m_pRadar;
 	CScore* m_pScore;
 
+	
 	int m_nBoundary;
 
 public:
@@ -47,6 +48,8 @@ public:
 	int GetBoundary() { return m_nBoundary; }
 
 	CPlayer* GetPlayer() { return m_pPlayer; }
+
+	int m_nCntObj;
 
 private:
 	void UpdateBoundary();

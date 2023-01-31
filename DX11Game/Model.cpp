@@ -16,9 +16,9 @@ namespace {
 		"data/model/Player.fbx",
 		"data/model/SkyDome/sky.fbx",
 		"data/model/Land.fbx",
-		"data/model/hover.fbx",
+		"data/model/enemy.fbx",
 		"data/model/book.fbx",
-		"data/model/city.fbx",
+		"data/model/city2.fbx",
 	};
 }
 

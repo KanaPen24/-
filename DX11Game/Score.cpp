@@ -12,7 +12,6 @@
 #include "Number.h"
 #include "Texture.h"
 #include "Polygon.h"
-#include "Object.h"
 #include "Debugproc.h"
 #include "Fade.h"
 #include "Scene.h"
@@ -22,17 +21,20 @@
 const int CHRCNT_SCORE = 2;
 const int POS_X_SCORE = 0.0f;
 const float POS_Y_SCORE = ((SCREEN_HEIGHT - 80.0f) * 0.5f + 16.0f);
-const int MAX_SCORE = 1;
 // グローバル変数
 static ID3D11ShaderResourceView* g_pTexture;
+int g_CntObj;
 
 // 初期化
-HRESULT CScore::Init()
+HRESULT CScore::Init(CGame* pScene)
 {
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = GetDevice();
 	// 変数初期化
-	m_nScore = MAX_SCORE;
+	m_pScene = pScene;
+	m_pObj = nullptr;
+	m_nScore = m_pScene->m_nCntObj;
+	g_CntObj = m_nScore;
 	return hr;
 }
 // 終了処理
@@ -44,9 +46,9 @@ void CScore::Uninit()
 // 更新
 void CScore::Update()
 {
-	if (m_nScore == 0)
+	if (g_CntObj == 0)
 	{
-//		CFade::CutOut(SCENE_CLEAR);
+		CFade::CutOut(SCENE_CLEAR);
 		CClear::Clearflg(true);
 	}
 }
@@ -57,7 +59,11 @@ void CScore::Draw()
 	// 明るい緑
 	CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	// スコア表示
-	DrawNumber(XMFLOAT2(POS_X_SCORE, POS_Y_SCORE),(unsigned)m_nScore, CHRCNT_SCORE);
+	DrawNumber(XMFLOAT2(POS_X_SCORE, POS_Y_SCORE),(unsigned)g_CntObj, CHRCNT_SCORE);
 	// 元に戻す
 	CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+}
+void CScore::Add(int nScore) 
+{  
+	g_CntObj+= nScore;
 }

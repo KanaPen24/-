@@ -32,6 +32,7 @@ void CRadar::Init(CGame* pScene)
 	}
 	m_nObject = 0;
 	m_pPlayer = m_pScene->GetPlayer();
+	m_nCntObj = m_pScene->m_nCntObj;
 }
 
 // XV

@@ -24,6 +24,12 @@ private:
 	ID3D11ShaderResourceView* m_pTexStart;
 	ID3D11ShaderResourceView* m_pTexBG;
 	int m_nTimer;
+	int m_nBlink;
+	int m_nStart;
+
+	bool bSound1;	//ˆê‰ñ‚¾‚¯—¬‚·
+	bool bSound2;	//ˆê‰ñ‚¾‚¯—¬‚·
+	bool bSound3;	//ˆê‰ñ‚¾‚¯—¬‚·
 
 public:
 	CSelect();

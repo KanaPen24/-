@@ -24,7 +24,7 @@ class CObject : public CModel
 {
 private:
 	CPlayer* m_pPlayer;
-	CLand* m_pLand;			// ’n–Ê
+	CCity* m_pCity;			// ŠX
 	CScore* m_pScore;
 
 public:
@@ -37,5 +37,4 @@ public:
 	virtual void Draw();
 
 	void SetPlayer(CPlayer* pPlayer) { m_pPlayer = pPlayer; }
-	static int GetCnt();
 };

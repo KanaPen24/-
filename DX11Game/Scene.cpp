@@ -70,7 +70,7 @@ bool CScene::InitAll()
 	new CGOver;
 
 	//Å‰‚ÌƒV[ƒ“
-	Change(SCENE_GAME);
+	Change(SCENE_TITLE);
 	return true;
 }
 
