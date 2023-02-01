@@ -55,7 +55,6 @@ enum ECamMode {
 CGameCamera::CGameCamera()
 {
 	m_pPlayer = nullptr;
-	m_fAngle = 0.0f;
 	m_fRadius = 1.0f;
 	m_nMode = CM_FIXED;
 }
@@ -64,8 +63,7 @@ CGameCamera::CGameCamera()
 void CGameCamera::Init()
 {
 	CCamera::Init();
-	SetPos(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);
-
+	m_fAngle = 0.0f;
 	SetSky(CModel::GetAssimp(MODEL_SKY));
 }
 
@@ -81,11 +79,13 @@ void CGameCamera::Update()
 	{
 		JoyX = 0;
 	}
-	if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
-		m_fAngle += ROTATE;
-	}
-	if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
-		m_fAngle -= ROTATE;
+	if (JoyCount >= 1) {
+		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
+			m_fAngle += ROTATE;
+		}
+		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
+			m_fAngle -= ROTATE;
+		}
 	}
 	if(CInput::GetKeyPress(VK_J))
 	m_fAngle -= ROTATE;
@@ -102,7 +102,6 @@ void CGameCamera::Update()
 	//カメラからターゲットの距離	
 	m_vVec.x = m_vPos.x - m_vTarget.x;
 	m_vVec.z = m_vPos.z - m_vTarget.z;
-	m_fLengthInterval = sqrtf(m_vVec.x * m_vVec.x + m_vVec.z * m_vVec.z);
 
 	CCamera::Update();
 #ifdef _DEBUG
@@ -110,7 +109,6 @@ void CGameCamera::Update()
 	CDebugProc::Print("*** ｶﾒﾗ ｿｳｻ ***\n");
 	CDebugProc::Print("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	CDebugProc::Print("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
-	CDebugProc::Print("[ｷｮﾘ : (%f)]\n", m_fLengthInterval);
 	CDebugProc::Print("\n");
 #endif
 }

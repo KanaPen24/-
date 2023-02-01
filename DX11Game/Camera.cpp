@@ -43,17 +43,14 @@ void CCamera::Init()
 	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);		// 視点
 	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);	// 注視点
 	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);		// 上方ベクトル
-
+	m_vVec = XMFLOAT3(0.0f, 1.0f, 0.0f);	// ベクトル
 	m_fAspectRatio = VIEW_ASPECT;			// 縦横比
 	m_fFovY = VIEW_ANGLE;					// 視野角(Degree)
 	m_fNearZ = VIEW_NEAR_Z;					// 前方クリップ距離
 	m_fFarZ = VIEW_FAR_Z;					// 後方クリップ距離
 
 	m_vAngle = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	float fVecX, fVecZ;
-	fVecX = m_vPos.x - m_vTarget.x;
-	fVecZ = m_vPos.z - m_vTarget.z;
-	m_fLengthInterval = sqrtf(fVecX * fVecX + fVecZ * fVecZ);
+
 
 	CalcWorldMatrix();
 }
@@ -64,6 +61,7 @@ void CCamera::Update()
 	// マトリックス更新
 	UpdateMatrix();
 }
+
 
 // 画面クリア
 void CCamera::Clear()

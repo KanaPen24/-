@@ -42,7 +42,6 @@ bool CGame::Init()
 
 	m_bResult = false;
 
-	m_camera.Init();
 	CCamera::Set(&m_camera);
 
 	new CLand(this);
@@ -103,7 +102,7 @@ bool CGame::Init()
 	
 	//カメラプレイヤーに設定
 	m_camera.SetPlayer(m_pPlayer);
-
+	m_camera.Init();
 
 	// レーダー生成、初期化
 	m_pRadar = new CRadar();
@@ -126,6 +125,8 @@ void CGame::Fin()
 
 	// レーダー テクスチャ解放
 	CRadar::ReleaseTexture();
+
+	m_camera.Fin();
 
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);
