@@ -21,7 +21,7 @@ private:
 	XMFLOAT4X4 m_mInvWorld;
 	int m_nSpeed;			// 速さ
 	CCity* m_pCity;			// 街
-	int m_naAnimNo;			// アニメーションNo.
+	int m_nAnimNo;			// アニメーションNo.
 	double m_dAnimTime;		// 再生時間
 	CCamera* m_pGCam;	// ゲームカメラ
 public:

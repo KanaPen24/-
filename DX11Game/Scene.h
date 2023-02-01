@@ -12,12 +12,13 @@
 // 定数定義
 enum EScene {
 	SCENE_NONE = 0, // 未設定
+	SCENE_PROLOGUE,	// プロローグ画面
 	SCENE_TITLE,	// タイトル画面
-	SCENE_RULE,		//チュートリアル画面
+	SCENE_RULE,		// チュートリアル画面
 	SCENE_SELECT,	// ステージセレクト画面
-	SCENE_GAME,	// ステージ
-	SCENE_CLEAR,	//クリア画面
-	SCENE_GAMEOVER,	//ゲームオーバー画面
+	SCENE_GAME,		// ステージ
+	SCENE_CLEAR,	// クリア画面
+	SCENE_GAMEOVER,	// ゲームオーバー画面
 	MAX_SCENE
 };
 

@@ -59,7 +59,7 @@ HRESULT CPlayer::Init()
 		m_uTick = 0;
 		m_pCity = (CCity*)m_pScene->Find(GOT_CITY);
 		m_pGCam = CCamera::Get();
-		m_naAnimNo = ANIM_IDLE;
+		m_nAnimNo = ANIM_IDLE;
 		m_dAnimTime = 0.0;
 	}
 	CAssimpModel* pModel = GetAssimp(MODEL_PLAYER);
@@ -203,23 +203,23 @@ void CPlayer::Update()
 	
 	// アニメーション更新
 	if (m_nSpeed == 0)
-		m_naAnimNo = ANIM_IDLE;
+		m_nAnimNo = ANIM_IDLE;
 	if (m_nSpeed == 1)
-		m_naAnimNo = ANIM_WALK;
+		m_nAnimNo = ANIM_WALK;
 	if (m_nSpeed == 2)
-		m_naAnimNo = ANIM_RUN;
+		m_nAnimNo = ANIM_RUN;
 	static double dLastTime = clock() / double(CLOCKS_PER_SEC);
 	double dNowTime = clock() / double(CLOCKS_PER_SEC);
 	double dSlice = dNowTime - dLastTime;
 	dLastTime = dNowTime;
 	m_dAnimTime += dSlice;
-	if (m_dAnimTime >= GetModel()->GetAnimDuration(m_naAnimNo)) {
+	if (m_dAnimTime >= GetModel()->GetAnimDuration(m_nAnimNo)) {
 		m_dAnimTime = 0.0;
 	}
 #ifdef _DEBUG
 	//デバック表示
 	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
-	CDebugProc::Print("Animation=%d\n", m_naAnimNo);
+	CDebugProc::Print("Animation=%d\n", m_nAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰVec=X:%f Y:%f Z:%f\n", vVec.x, vVec.y, vVec.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰAng=X:%f Y:%f Z:%f\n", angle.x, angle.y, angle.z);
@@ -233,7 +233,7 @@ void CPlayer::Draw()
 	CAssimpModel::InitShader(pDevice, 1);
 	CAssimpModel* pModel = GetModel();
 	if (pModel) {
-		pModel->SetAnimIndex(m_naAnimNo);
+		pModel->SetAnimIndex(m_nAnimNo);
 		pModel->SetAnimTime(m_dAnimTime);
 #ifdef REV_Z_AXIS
 		ID3D11DeviceContext* pDC = GetDeviceContext();
@@ -253,7 +253,7 @@ void CPlayer::DrawAlpha()
 {
 	CAssimpModel* pModel = GetModel();
 	if (pModel) {
-		pModel->SetAnimIndex(m_naAnimNo);
+		pModel->SetAnimIndex(m_nAnimNo);
 		pModel->SetAnimTime(m_dAnimTime);
 #ifdef REV_Z_AXIS
 		ID3D11DeviceContext* pDC = GetDeviceContext();

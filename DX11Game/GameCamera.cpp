@@ -71,7 +71,7 @@ void CGameCamera::Init()
 void CGameCamera::Update()
 {
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
-		//ゲームコントローラー
+	//ゲームコントローラー
 	DWORD JoyCount = CInput::GetJoyCount();
 	LONG JoyX = CInput::GetJoyX(JOYSTICKID1);
 	if (JoyX <  GAMEPAD_LEFT_STICK_DEADZONE &&

@@ -17,6 +17,7 @@ enum EModel {
 	MODEL_ENEMY,		// 敵モデル
 	MODEL_OBJECT,		//オブジェクトモデル
 	MODEL_CITY,			//街モデル
+	MODEL_TCITY,		//タイトル用街モデル
 
 	MAX_MODEL
 };

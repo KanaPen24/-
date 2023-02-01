@@ -155,6 +155,13 @@ void CTitle::Update()
 		}
 		break;
 	}
+	// デバック用シーン遷移
+	if (CInput::GetKeyRelease(VK_1)) {//エンター入力
+		CSound::Play(SE_SELECT);	//効果音
+		CFade::Out(SCENE_PROLOGUE);	//タイトル画面へ
+		return;
+	}
+
 	// 全キャラ更新
 	CGameObj::UpdateAll(m_pObj);
 }

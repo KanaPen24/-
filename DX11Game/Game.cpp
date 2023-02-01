@@ -12,7 +12,6 @@
 #include "Sound.h"
 #include "Fade.h"
 #include "Debugproc.h"
-#include "City.h"
 #include "Score.h"
 #include "Radar.h"
 #include "StegeSelect.h"
@@ -125,8 +124,6 @@ void CGame::Fin()
 
 	// レーダー テクスチャ解放
 	CRadar::ReleaseTexture();
-
-	m_camera.Fin();
 
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);

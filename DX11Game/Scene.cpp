@@ -14,6 +14,7 @@
 #include "GameObj.h"
 #include "SceneClear.h"
 #include "SceneGameover.h"
+#include "ScenePrologue.h"
 
 // 静的メンバ
 CScene* CScene::m_pScene = nullptr;
@@ -62,6 +63,7 @@ void CScene::Fin()
 // 初期化
 bool CScene::InitAll()
 {
+	new CPrologue;
 	new CTitle;
 	new CGame;
 	new CSelect;
@@ -70,7 +72,7 @@ bool CScene::InitAll()
 	new CGOver;
 
 	//最初のシーン
-	Change(SCENE_GAME);
+	Change(SCENE_TITLE);
 	return true;
 }
 

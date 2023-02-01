@@ -421,6 +421,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScenePrologue.cpp" />
     <ClCompile Include="SceneRule.cpp" />
     <ClCompile Include="SceneSelect.cpp" />
     <ClCompile Include="Score.cpp" />
@@ -463,6 +464,7 @@
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ScenePrologue.h" />
     <ClInclude Include="SceneRule.h" />
     <ClInclude Include="SceneSelect.h" />
     <ClInclude Include="Score.h" />

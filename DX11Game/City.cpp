@@ -16,11 +16,11 @@ const XMFLOAT3 POS = XMFLOAT3(0.0f, -40.0f, 0.0f);
 CCity::CCity(CScene* pScene) : CModel(pScene)
 {
 	m_id = GOT_CITY;
-
 	m_pVertex = nullptr;
 	m_nVertex = 0;
 	m_pIndex = nullptr;
 	m_nIndex = 0;
+	m_pScene = pScene->GetScene();
 }
 
 // デストラクタ
@@ -35,13 +35,29 @@ HRESULT CCity::Init()
 	XMFLOAT4X4 mW;
 	HRESULT hr = S_OK;
 	ID3D11Device* pDevice = GetDevice();
-	SetModel(MODEL_CITY);
-	// 頂点配列、インデックス配列を取得しておく
-	CAssimpModel* pModel = GetAssimp(MODEL_CITY);
-	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
-	m_pVertex = new TAssimpVertex[m_nVertex];
-	m_pIndex = new UINT[m_nIndex];
-	pModel->GetVertex(m_pVertex, m_pIndex);
+
+	//シーンで変更
+	if (m_pScene == SCENE_TITLE) {
+		SetModel(MODEL_TCITY);
+		// 頂点配列、インデックス配列を取得しておく
+		CAssimpModel* pModel = GetAssimp(MODEL_TCITY);
+		pModel->GetVertexCount(&m_nVertex, &m_nIndex);
+		m_pVertex = new TAssimpVertex[m_nVertex];
+		m_pIndex = new UINT[m_nIndex];
+		pModel->GetVertex(m_pVertex, m_pIndex);
+	}
+	else
+	{
+		SetModel(MODEL_CITY);
+		// 頂点配列、インデックス配列を取得しておく
+		CAssimpModel* pModel = GetAssimp(MODEL_CITY);
+		pModel->GetVertexCount(&m_nVertex, &m_nIndex);
+		m_pVertex = new TAssimpVertex[m_nVertex];
+		m_pIndex = new UINT[m_nIndex];
+		pModel->GetVertex(m_pVertex, m_pIndex);
+	}
+	
+	//初期値
 	SetScale(XMFLOAT3(1.0f, 1.0f, 1.0f));
 	SetAngle(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	SetPos(POS);

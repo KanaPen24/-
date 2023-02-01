@@ -8,10 +8,12 @@
 */
 #pragma once
 #include "Model.h"
+#include "Scene.h"
 
 class CCity : public CModel
 {
 private:
+	EScene m_pScene;			//シーン用
 	UINT m_nVertex;				// 頂点数
 	TAssimpVertex* m_pVertex;	// 頂点配列
 	UINT m_nIndex;				// インデックス数

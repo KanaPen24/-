@@ -19,6 +19,7 @@ namespace {
 		"data/model/enemy.fbx",
 		"data/model/book.fbx",
 		"data/model/city2.fbx",
+		"data/model/city.fbx",
 	};
 }
 
