@@ -34,9 +34,9 @@ const float ROGO_SPEED = 0.5f;					//ロゴが動くスピード
 static ID3D11ShaderResourceView*	g_pTextures[3] = { nullptr };	// テクスチャへのポインタ
 
 static STAGE_SELECT g_nSelectSMenu = STAGE_1;		// 選択中のメニューNo.
-static float g_fCurve = 0.0f;
-static float g_fCol = 0.0f;
-static bool g_bJoyStick;
+static float m_fCurve = 0.0f;
+static float m_fCol = 0.0f;
+static bool m_bJoyStick;
 static bool flg;
 static float g_fPosY;
 
@@ -63,8 +63,8 @@ HRESULT InitSSelect(void)
 	}
 
 	g_nSelectSMenu = STAGE_1;
-	g_fCurve = 0.0f;
-	g_bJoyStick = false;
+	m_fCurve = 0.0f;
+	m_bJoyStick = false;
 	flg = true;
 	g_fPosY = SELECT_MENU_POS_Y;
 
@@ -99,21 +99,21 @@ void UpdateSSelect(void)
 		JoyX = 0l;
 	}
 	if (JoyCount >= 1) {
-		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false) {
+		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false) {
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
 			SetStageSelect();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
-		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false) {
+		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false) {
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + 1) % NUM_SELECT_MENU);
 			SetStageSelect();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
 		if (JoyX == 0l)
 		{
-			g_bJoyStick = false;
+			m_bJoyStick = false;
 		}
 	}
 	if (CInput::GetKeyRepeat(VK_LEFT))
@@ -127,13 +127,13 @@ void UpdateSSelect(void)
 		SetStageSelect();
 	}
 
-	g_fCurve += XM_PI * 0.01f;
-	if (g_fCurve > XM_PI) {
-		g_fCurve -= XM_2PI;
+	m_fCurve += XM_PI * 0.01f;
+	if (m_fCurve > XM_PI) {
+		m_fCurve -= XM_2PI;
 	}
 
 	// 反射光の設定
-	g_fCol = cosf(g_fCurve) * 0.2f + 0.8f;
+	m_fCol = cosf(m_fCurve) * 0.2f + 0.8f;
 
 	//ロゴのふわふわ感
 	if (flg) {
@@ -181,7 +181,7 @@ void DrawSSelect(void)
 //=============================================================================
 void SetStageSelect(void)
 {
-	g_fCurve = 0.0f;
+	m_fCurve = 0.0f;
 }
 
 //=============================================================================

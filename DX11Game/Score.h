@@ -22,7 +22,7 @@ private:
 	
 public:
 	HRESULT Init(CGame* pScene);
-	void Uninit();
+	void Fin();
 	void Update();
 	void Draw();
 	void Add(int nScore);

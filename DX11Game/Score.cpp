@@ -38,7 +38,7 @@ HRESULT CScore::Init(CGame* pScene)
 	return hr;
 }
 // 終了処理
-void CScore::Uninit()
+void CScore::Fin()
 {
 	// テクスチャ解放
 	SAFE_RELEASE(g_pTexture);

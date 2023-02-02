@@ -34,10 +34,10 @@ const int MAX_TEXTURE = 2;
 static ID3D11ShaderResourceView*	g_pTextures[MAX_TEXTURE] = { nullptr };	// テクスチャへのポインタ
 
 static TITLE_SELECT g_nSelectTMenu = GAME;		// 選択中のメニューNo.
-static float g_fCurve = 0.0f;
-static float g_fCol = 0.0f;
+static float m_fCurve = 0.0f;
+static float m_fCol = 0.0f;
 static int g_texture = 0;
-static bool g_bJoyStick;
+static bool m_bJoyStick;
 
 static LPCWSTR c_aFileNameTitleMenu[MAX_TEXTURE] =
 {
@@ -61,8 +61,8 @@ HRESULT InitTSelect(void)
 	}
 
 	g_nSelectTMenu = GAME;
-	g_fCurve = 0.0f;
-	g_bJoyStick = false;
+	m_fCurve = 0.0f;
+	m_bJoyStick = false;
 
 	// 効果音初期化
 	//g_pSE_SHIZUKU = CreateSound(SE_SHIZUKU_PATH);
@@ -96,22 +96,22 @@ void UpdateTSelect(void)
 	}
 	if (JoyCount >= 1) {
 		//ジョイスティックがうえ
-		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false){
+		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false){
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectTMenu = (TITLE_SELECT)((g_nSelectTMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
 			SetTitleSelect();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
 		//ジョイスティックが下
-		if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false){
+		if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false){
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectTMenu = (TITLE_SELECT)((g_nSelectTMenu + 1) % NUM_SELECT_MENU);
 			SetTitleSelect();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
 		if (JoyY == 0l)
 		{
-			g_bJoyStick = false;
+			m_bJoyStick = false;
 		}
 	}
 	if (CInput::GetKeyRepeat(VK_UP))
@@ -125,13 +125,13 @@ void UpdateTSelect(void)
 		SetTitleSelect();
 	}
 
-	g_fCurve += XM_PI * 0.01f;
-	if (g_fCurve > XM_PI) {
-		g_fCurve -= XM_2PI;
+	m_fCurve += XM_PI * 0.01f;
+	if (m_fCurve > XM_PI) {
+		m_fCurve -= XM_2PI;
 	}
 
 	// 反射光の設定
-	g_fCol = cosf(g_fCurve) * 0.2f + 0.8f;
+	m_fCol = cosf(m_fCurve) * 0.2f + 0.8f;
 
 }
 
@@ -171,7 +171,7 @@ void DrawTSelect(void)
 //=============================================================================
 void SetTitleSelect(void)
 {
-	g_fCurve = 0.0f;
+	m_fCurve = 0.0f;
 }
 
 //=============================================================================

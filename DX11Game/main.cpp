@@ -34,7 +34,7 @@
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int OnCreate(HWND hWnd, LPCREATESTRUCT lpcs);
 HRESULT Init(HWND hWnd, BOOL bWindow);
-void Uninit(void);
+void Fin(void);
 void Update(void);
 void Draw(void);
 
@@ -167,7 +167,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	timeEndPeriod(1);
 
 	// 終了処理
-	Uninit();
+	Fin();
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, g_hInst);
@@ -446,7 +446,7 @@ void ReleaseBackBuffer()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void Uninit(void)
+void Fin(void)
 {
 	// シーン終了処理
 	CScene::FinAll();

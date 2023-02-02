@@ -45,9 +45,9 @@ const int		TEX_BG = 0;				//背景の画像数
 static ID3D11ShaderResourceView*	g_pTextures[4] = { nullptr };	// テクスチャへのポインタ
 
 static CLEAR_MENU g_nSelectCMenu = CLEAR_MENU_SELECT;		// 選択中のメニューNo.
-static float	g_fCurve = 0.0f;
-//static float	g_fCol = 0.0f;
-static bool		g_bJoyStick;
+static float	m_fCurve = 0.0f;
+//static float	m_fCol = 0.0f;
+static bool		m_bJoyStick;
 static bool		g_bSound1;		// 一回だけ流す
 static bool		g_bSound2;		// 一回だけ流す
 static bool		g_bSound3;		// 一回だけ流す
@@ -93,8 +93,8 @@ bool CClear::Init(void)
 	}
 
 	g_nSelectCMenu = CLEAR_MENU_SELECT;
-	g_fCurve = 0.0f;
-	g_bJoyStick = false;
+	m_fCurve = 0.0f;
+	m_bJoyStick = false;
 	g_bClear = false;
 
 	// 効果音初期化
@@ -137,24 +137,24 @@ void CClear::Update(void)
 
 	if (JoyCount >= 1) {
 		//左スティックが左に押された
-		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
+		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false)
 		{
 			CSound::Play(SE_PI);
 			g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + NUM_CLEAR_MENU - 1) % NUM_CLEAR_MENU);
 			SetClearMenu();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
 		//左スティックが右に押された
-		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && g_bJoyStick == false)
+		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false)
 		{
 			CSound::Play(SE_PI);
 			g_nSelectCMenu = (CLEAR_MENU)((g_nSelectCMenu + 1) % NUM_CLEAR_MENU);
 			SetClearMenu();
-			g_bJoyStick = true;
+			m_bJoyStick = true;
 		}
 		if (JoyX == 0l)
 		{
-			g_bJoyStick = false;
+			m_bJoyStick = false;
 		}
 	}
 	if (CInput::GetKeyRepeat(VK_LEFT)) {
@@ -168,9 +168,9 @@ void CClear::Update(void)
 		SetClearMenu();
 	}
 
-	g_fCurve += XM_PI * 0.01f;
-	if (g_fCurve > XM_PI) {
-		g_fCurve -= XM_2PI;
+	m_fCurve += XM_PI * 0.01f;
+	if (m_fCurve > XM_PI) {
+		m_fCurve -= XM_2PI;
 	}
 	//ゲームクリアメニューの選択
 	if (g_bClear&&CFade::Get() == FADE_NONE) {
@@ -236,7 +236,7 @@ void CClear::Update(void)
 		}
 	}
 	//// 反射光の設定
-	//g_fCol = cosf(g_fCurve) * 0.2f + 0.8f;
+	//m_fCol = cosf(m_fCurve) * 0.2f + 0.8f;
 
 }
 
@@ -283,7 +283,7 @@ void CClear::Draw(void)
 //=============================================================================
 void CClear::SetClearMenu(void)
 {
-	g_fCurve = 0.0f;
+	m_fCurve = 0.0f;
 }
 
 //=============================================================================

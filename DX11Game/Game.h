@@ -13,6 +13,13 @@
 #include "Explosion.h"
 #include "Enemy.h"
 #include "Object.h"
+#include "Input.h"
+#include "GameObj.h"
+#include "Sound.h"
+#include "Fade.h"
+#include "Debugproc.h"
+#include "StegeSelect.h"
+
 
 //’è”’è‹`
 const int MAX_OBJECT = 30;
@@ -21,6 +28,7 @@ const int MAX_OBJECT = 30;
 class CEnemy;
 class CRadar;
 class CScore;
+class CPause;
 class CGame : public CScene
 {
 private:
@@ -32,9 +40,12 @@ private:
 	CObject* m_pObject[MAX_OBJECT];
 	CRadar* m_pRadar;
 	CScore* m_pScore;
-
+	CPause* m_pPause;
 	
 	int m_nBoundary;
+	bool m_bPause;	//ˆê’â~’†
+	bool m_bSoundPause;	//’â~’†‚ÌŒø‰Ê‰¹ˆê‰ñ—¬‚·‚æ‚¤
+	float m_fAlf;
 
 public:
 	CGame();

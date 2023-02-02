@@ -7,14 +7,9 @@
 *@更新者	：吉田叶聖
 */
 #include "Game.h"
-#include "Input.h"
-#include "GameObj.h"
-#include "Sound.h"
-#include "Fade.h"
-#include "Debugproc.h"
 #include "Score.h"
 #include "Radar.h"
-#include "StegeSelect.h"
+#include "Pause.h"
 
 // コンストラクタ
 CGame::CGame() : CScene()
@@ -23,6 +18,10 @@ CGame::CGame() : CScene()
 
 	m_pPlayer = nullptr;
 	m_pEnemy = nullptr;
+	m_pPause = nullptr;
+	m_pRadar = nullptr;
+	m_pScore = nullptr;
+
 	for (int i = 0; i < _countof(m_pObject); ++i)
 		m_pObject[i] = nullptr;
 
@@ -39,7 +38,10 @@ bool CGame::Init()
 {
 	HRESULT hr = S_OK;
 
+	//変数初期化
 	m_bResult = false;
+	m_bPause = false;
+	m_fAlf = 0.0f;
 
 	CCamera::Set(&m_camera);
 
@@ -89,6 +91,14 @@ bool CGame::Init()
 		return hr;
 	}
 
+	//一時停止初期化
+	m_pPause = new CPause;
+	hr = m_pPause->Init();
+	if (FAILED(hr)) {
+		MessageBox(GetMainWnd(), _T("ポーズ初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
+		return hr;
+	}
+
 	// レーダー テクスチャ読込
 	if (FAILED(CRadar::LoadTexture())) {
 		return false;
@@ -107,9 +117,11 @@ bool CGame::Init()
 	m_pRadar = new CRadar();
 	m_pRadar->Init(this);
 
-	// BGM再生開始
-	CSound::Play(BGM_GAME);
 
+	// BGM再生開始&音量設定
+	CSound::Play(BGM_GAME);
+	CSound::SetVolume(SE_SHIZUKU, 0.2f);
+	CSound::SetVolume(SE_CANCEL, 0.2f);
 	return true;
 }
 
@@ -120,7 +132,10 @@ void CGame::Fin()
 	CSound::Stop(BGM_GAME);
 
 	//スコア終了処理
-	m_pScore->Uninit();
+	m_pScore->Fin();
+
+	//ポーズ終了
+	m_pPause->Fin();
 
 	// レーダー テクスチャ解放
 	CRadar::ReleaseTexture();
@@ -132,22 +147,84 @@ void CGame::Fin()
 // 更新
 void CGame::Update()
 {
-	// 全キャラ更新
-	CGameObj::UpdateAll(m_pObj);
+	//一時停止中？
+	if (m_bPause) {
+		//一時停止更新
+		m_pPause->Update();
+	}
+	else
+	{
+		// 全キャラ更新
+		CGameObj::UpdateAll(m_pObj);
 
-	if (!m_bResult) {
-		if (CInput::GetKeyRelease(VK_BACK) ||
-			CInput::GetKeyRelease(VK_DELETE)) {
-			m_bResult = true;
-			CFade::Out(SCENE_TITLE);
+		if (!m_bResult) {
+			if (CInput::GetKeyRelease(VK_BACK) ||
+				CInput::GetKeyRelease(VK_DELETE)) {
+				m_bResult = true;
+				CFade::Out(SCENE_TITLE);
+			}
+		}
+
+		// レーダー更新
+		m_pRadar->Update();
+
+		// スコアの更新
+		m_pScore->Update();
+	}
+	//一時停止ON/OFF
+	if (CInput::GetKeyTrigger(VK_Q) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON8)) {
+		//フェードイン/アウト中でなければ
+		if (CFade::Get() == FADE_NONE) {
+			m_bPause = !m_bPause;
+			if (m_bPause) {
+				//一時停止開始
+				CSound::Pause();
+				CSound::Play(SE_SHIZUKU);
+				if (m_bSoundPause == true)	//押したら一回だけ再生
+				{
+					m_bSoundPause = false;
+				}
+			}
+			else
+			{
+				//一時停止解除
+				m_fAlf = 0.0f;
+				CSound::Play(SE_CANCEL);
+				CSound::Resume();
+				if (m_bSoundPause == false)  //押したら一回だけ再生
+				{
+					m_bSoundPause = true;
+				}
+
+			}
 		}
 	}
+	//一時停止メニューの選択
+	if (m_bPause&&CFade::Get() == FADE_NONE) {
+		//[Enter]が押された？
+		if (CInput::GetKeyTrigger(VK_SPACE) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {
+			//選択中のメニュー項目により分岐
+			switch (m_pPause->GetPauseMenu())
+			{
+			case PAUSE_MENU_CONTINUE:
+				CFade::Out(SCENE_GAME);
+				CSound::Play(SE_CANCEL);
+				CSound::Resume();
+				break;
+			case PAUSE_MENU_SELECT:
+				CSound::Play(SE_CANCEL);
+				CSound::Resume();
+				CFade::Out(SCENE_SELECT);
+				break;
+			case PAUSE_MENU_RULE:
+				CSound::Play(SE_CANCEL);
+				CSound::Resume();
+				m_fAlf = 1.0f;
 
-	// レーダー更新
-	m_pRadar->Update();
-
-	// スコアの更新
-	m_pScore->Update();
+				break;
+			}
+		}
+	}
 
 #ifdef _DEBUG
 	//static LPCSTR boundary[] = {"ﾋﾋｮｳｼﾞ", "ｷｭｳ"};
@@ -171,6 +248,12 @@ void CGame::Draw()
 	m_pScore->Draw();
 	// レーダー描画
 	m_pRadar->Draw();
+
+	//一時停止描画
+	if (m_bPause) {
+		m_pPause->Draw();
+	}
+	
 }
 
 // 境界表示更新
