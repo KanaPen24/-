@@ -19,18 +19,18 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	NUM_PAUSE_MENU		(3)			// ポーズメニュー数
-#define	PAUSE_MENU_WIDTH	(320.0f)	// ポーズメニュー幅
-#define	PAUSE_MENU_HEIGHT	(60.0f)		// ポーズメニュー高さ
-#define	PAUSE_MENU_POS_X	(0.0f)		// ポーズメニュー位置(X座標)
-#define	PAUSE_MENU_POS_Y	(PAUSE_MENU_INTERVAL)	// ポーズメニュー位置(Y座標)
-#define	PAUSE_MENU_INTERVAL	(100.0f)	// ポーズメニュー間隔
-#define	PLATE_WIDTH			(360.0f)	// プレートの幅
-#define	PLATE_HEIGHT		(340.0f)	// プレートの幅
-#define	PLATE_POS_X			(0.0f)		// プレートの位置(X座標)
-#define	PLATE_POS_Y			(0.0f)		// プレートの位置(Y座標)
-#define GAMEPAD_LEFT_STICK_DEADZONE  (7800)	//左スティックのデッドゾーン
-#define MAX_TEXTURE	(3)
+const int NUM_PAUSE_MENU = 3;			// ポーズメニュー数
+const float PAUSE_MENU_WIDTH = 320.0f;	// ポーズメニュー幅
+const float PAUSE_MENU_HEIGHT = 60.0f;	// ポーズメニュー高さ
+const float PAUSE_MENU_INTERVAL = 100.0f;			// ポーズメニュー間隔
+const float PAUSE_MENU_POS_X = 0.0f;				// ポーズメニュー位置(X座標)
+const float PAUSE_MENU_POS_Y = PAUSE_MENU_INTERVAL;	// ポーズメニュー位置(Y座標)
+const float PLATE_WIDTH = 360.0f;		// プレートの幅
+const float PLATE_HEIGHT = 340.0f;		// プレートの幅
+const float PLATE_POS_X = 0.0f;			// プレートの位置(X座標)
+const float PLATE_POS_Y = 0.0f;			// プレートの位置(Y座標)
+const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;		//左スティックのデッドゾーン
+const int MAX_TEXTURE = 3;				//最大テクスチャ
 
 
 //*****************************************************************************

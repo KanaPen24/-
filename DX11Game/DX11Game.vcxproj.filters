@@ -237,6 +237,9 @@
     <ClCompile Include="Pause.cpp">
       <Filter>ソース ファイル\2D</Filter>
     </ClCompile>
+    <ClCompile Include="PostProcess.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -369,6 +372,9 @@
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Pause.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcess.h">
       <Filter>ヘッダー ファイル\2D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,6 +21,7 @@ private:
 
 	static CLight* m_pLight;
 	EScene m_pScene;			// 現在シーン
+	float m_fAngle;				// アングル
 public:
 	CLight();
 

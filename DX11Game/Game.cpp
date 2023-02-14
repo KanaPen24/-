@@ -10,6 +10,7 @@
 #include "Score.h"
 #include "Radar.h"
 #include "Pause.h"
+#include "PostProcess.h"
 
 // コンストラクタ
 CGame::CGame() : CScene()
@@ -117,6 +118,8 @@ bool CGame::Init()
 	m_pRadar = new CRadar();
 	m_pRadar->Init(this);
 
+	//ポストプロセス初期化
+	CPostProcess::Init();
 
 	// BGM再生開始&音量設定
 	CSound::Play(BGM_GAME);
@@ -226,6 +229,9 @@ void CGame::Update()
 		}
 	}
 
+	//ポストプロセス更新
+	CPostProcess::Update();
+
 #ifdef _DEBUG
 	//static LPCSTR boundary[] = {"ﾋﾋｮｳｼﾞ", "ｷｭｳ"};
 	//CDebugProc::Print("[B] : ｷｮｳｶｲ %s\n", boundary[m_nBoundary]);
@@ -244,10 +250,15 @@ void CGame::Draw()
 
 	SetZBuffer(false);
 	SetBlendState(BS_ALPHABLEND);
+
 	// スコア描画
 	m_pScore->Draw();
+
 	// レーダー描画
 	m_pRadar->Draw();
+
+	//ポストプロセス描画
+	CPostProcess::Draw();
 
 	//一時停止描画
 	if (m_bPause) {

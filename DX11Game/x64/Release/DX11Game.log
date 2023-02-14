@@ -1,8 +1,26 @@
-﻿  Pause.cpp
+﻿  AssimpModel.cpp
+  City.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\city.cpp(85): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  ConstantBuffer.cpp
+  Radar.cpp
+  SceneBase.cpp
+  Enemy.cpp
+  Game.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\game.cpp(82): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Land.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\land.cpp(69): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  Object.cpp
+  Player.cpp
+  Scene.cpp
+  Score.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\score.cpp(22): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+  SceneTitle.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\scenetitle.cpp(176): warning C4101: 'hdc': ローカル変数は 1 度も使われていません。
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\scenetitle.cpp(177): warning C4101: 'ps': ローカル変数は 1 度も使われていません。
      ライブラリ C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.lib とオブジェクト C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.exp を作成中
   コード生成しています。
-  1 of 1605 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  156 of 1738 functions ( 9.0%) were compiled, the rest were copied from previous compilation.
+    128 functions were new in current compilation
+    147 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   DX11Game.vcxproj -> C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.exe

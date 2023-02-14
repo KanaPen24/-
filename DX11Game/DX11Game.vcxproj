@@ -403,6 +403,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="mesh2.cpp" />
     <ClCompile Include="Pause.cpp" />
+    <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="Radar.cpp" />
     <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="DebugProc.cpp" />
@@ -447,6 +448,7 @@
     <ClInclude Include="mesh2.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Pause.h" />
+    <ClInclude Include="PostProcess.h" />
     <ClInclude Include="Radar.h" />
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="DebugProc.h" />

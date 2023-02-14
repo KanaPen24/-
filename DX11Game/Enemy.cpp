@@ -13,15 +13,16 @@
 #include "Fade.h"
 #include "Sound.h"
 #include "Input.h"
+#include "PostProcess.h"
 
-const float VALUE_MOVE_ENEMY = 1.0f;		// 移動量
+const float VALUE_MOVE_ENEMY = 1.2f;		// 移動量
 const float RATE_ROTATE_ENEMY = 0.20f;		// 回転慣性係数
 const float VALUE_ROTATE_ENEMY = 7.0f;		// 回転速度
 const float SCALE = 10.0f;		// 大きさ
 const float MAX_VOLUME = 1.0f;	// 最大音量
 
 //グローバル変数
-bool g_bAlflg = true;
+bool g_bAlflg = false;
 
 // コンストラクタ
 CEnemy::CEnemy(CScene* pScene) : CModel(pScene)
@@ -61,8 +62,6 @@ void CEnemy::Update()
 		g_bAlflg = true;
 	if (CInput::GetKeyTrigger(VK_2))
 		g_bAlflg = false;
-
-	
 
 	XMFLOAT3 pPos = m_pPlayer->GetPos();		//プレイヤーの座標取得
 	// 現在位置取得
@@ -148,6 +147,7 @@ void CEnemy::Update()
 	volume = std::fmin(volume, 1.0f);
 	m_fChan= std::fmax(m_fChan, -1.0f);
 	m_fChan = std::fmin(m_fChan, 1.0f);
+	CPostProcess::SetAlf(volume - 0.15f);
 	////角度によってLRを調整する
 	//if (vAng.y <= 90)	m_fChan += 0.01f;
 	//if (vAng.y >= 275)	m_fChan += -0.01f;
@@ -156,9 +156,9 @@ void CEnemy::Update()
 
 	// 衝突判定
 	if (CollisionBSphere(m_pPlayer)) {
-		//CFade::CutOut(SCENE_GAMEOVER);
-		//CSound::SetVolume(SE_DAMAGE, 0.2f);
-		//CSound::Play(SE_DAMAGE);
+		/*CFade::CutOut(SCENE_GAMEOVER);
+		CSound::SetVolume(SE_DAMAGE, 0.2f);
+		CSound::Play(SE_DAMAGE);*/
 	}
 
 #ifdef _DEBUG

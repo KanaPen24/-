@@ -43,6 +43,7 @@ HRESULT CLand::Init()
 	m_pIndex = new UINT[m_nIndex];
 	pModel->GetVertex(m_pVertex, m_pIndex);
 	SetScale(XMFLOAT3(1.0f, 1.0f, 1.0f));
+
 	// テクスチャの読み込み
 	hr = CreateTextureFromFile(pDevice, TEXTURE_FILENAME, &m_pTexture);
 	if (FAILED(hr))
@@ -130,11 +131,10 @@ bool CLand::Collision(XMFLOAT3 vP0, XMFLOAT3 vW, XMFLOAT3* pX, XMFLOAT3* pN)
 
 void CLand::Draw()
 {
-	
+
 	// 法線マップ設定
 	SetTexturePS(m_pTexture, 1);	//引数2:1はテクスチャの切り替え	
 	ID3D11Device* pDevice = GetDevice();
-
 	// シーンによってシェーダーを変える
 	if (m_pScene == SCENE_TITLE)
 		CAssimpModel::InitShader(pDevice, 0);
@@ -143,4 +143,6 @@ void CLand::Draw()
 
 	//描画
 	CModel::Draw();
+	//リセット
+	CAssimpModel::InitShader(pDevice, 0);
 }

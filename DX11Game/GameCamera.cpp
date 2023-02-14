@@ -36,7 +36,7 @@ namespace {
 	const float TP_POS_R_Z = 0.0f;		// 三人称カメラの注視点位置(Z座標)
 
 	const float DISTANCE = 9.0f;		// カメラの距離
-	const float ROTATE = 1.7f;		// カメラの距離
+	const float ROTATE = 1.7f;			// カメラの回転
 	const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
 
 };

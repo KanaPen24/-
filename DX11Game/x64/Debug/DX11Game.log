@@ -1,2 +1,3 @@
-﻿  City.cpp
-  DX11Game.vcxproj -> C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11GameD.exe
+﻿  Game.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\game.cpp(259): error C2275: 'ConstantBuffer': この型は演算子として使用できません
+  c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\constantbuffer.h(6): note: 'ConstantBuffer' の宣言を確認してください

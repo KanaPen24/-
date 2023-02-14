@@ -7,16 +7,18 @@
 *@更新者	：吉田叶聖
 */
 #include "Light.h"
+#include "Input.h"
+#include "DebugProc.h"
 
 using namespace DirectX;
 
 // グローバル変数
 namespace {
-	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, 1.0f, 0.0f);		//方向
-	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);	//拡散
-	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4(0.01f, 0.01f, 0.01f, 1.0f);//周囲
-	const XMFLOAT4 LIGHT0_SPECULAR = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);	//鏡面反射
-
+	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, -1.0f, 0.0f);			//方向
+	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f);	//拡散
+	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4(0.01f, 0.01f, 0.01f, 1.0f);	//周囲
+	const XMFLOAT4 LIGHT0_SPECULAR = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);		//鏡面反射
+	const float ROTATE = 0.00024f;		// 回転
 	CLight g_light;
 };
 
@@ -38,25 +40,24 @@ void CLight::Init()
 	m_ambient = LIGHT0_AMBIENT;
 	m_specular = LIGHT0_SPECULAR;
 	m_bEnable = true;
+	m_fAngle = 0.0f;
 }
 
 // 光源方向取得
 XMFLOAT3& CLight::GetDir()
 {
 	//シーンで挙動を変える
-	if (m_pScene == SCENE_TITLE)
-	{
-		static float q;
-		q += 0.00005f;
-		m_direction = XMFLOAT3(sin(q), -1.0f, cos(q));
-	}
-	else
-	{
-		m_direction = XMFLOAT3(0.0f, -1.0f, 1.0f);
-	}
+	if (CInput::GetKeyPress(VK_J))
+		m_fAngle += ROTATE;
+	if (CInput::GetKeyPress(VK_L))
+		m_fAngle -= ROTATE;
+		
+		m_direction = XMFLOAT3(sin(m_fAngle), -1.0f, cos(m_fAngle));
+	
 	if (m_bEnable) return m_direction;
 	static XMFLOAT3 off(0.0f, 0.0f, 0.0f);
 	return off;
+
 }
 
 // 光源インスタンス取得

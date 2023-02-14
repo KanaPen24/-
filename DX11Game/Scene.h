@@ -16,7 +16,7 @@ enum EScene {
 	SCENE_TITLE,	// タイトル画面
 	SCENE_RULE,		// チュートリアル画面
 	SCENE_SELECT,	// ステージセレクト画面
-	SCENE_GAME,		// ステージ
+	SCENE_GAME,		// ゲーム
 	SCENE_CLEAR,	// クリア画面
 	SCENE_GAMEOVER,	// ゲームオーバー画面
 	MAX_SCENE
