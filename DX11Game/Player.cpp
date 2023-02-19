@@ -89,7 +89,8 @@ void CPlayer::Update()
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = m_pGCam->GetAngle();
 	//ダッシュ処理
-	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) fDash = DASH;
+	if (CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+		|| CInput::GetKeyPress(VK_S)))	fDash = DASH;
 	//ゲームコントローラー
 	DWORD JoyCount = CInput::GetJoyCount();
 	CInput::GetJoyState(JOYSTICKID1);
@@ -105,6 +106,9 @@ void CPlayer::Update()
 	}
 	/*ここからコントローラー操作の入力*/
 	if (JoyCount >= 1) {
+		if(CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)&& 
+			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE|| JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
+			fDash = DASH;
 		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
 			// 前移動
 			vPos.x -= vVec.x* SPEED * fDash;
@@ -123,7 +127,9 @@ void CPlayer::Update()
 		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
 			angle.y += ROTATE;
 		}
-
+		if (CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
+			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE || JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
+			m_nSpeed = 2;
 	}
 
 	// タイマ更新
@@ -142,7 +148,9 @@ void CPlayer::Update()
 		vPos.z += vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
-	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) m_nSpeed = 2;
+	if (CInput::GetKeyPress(VK_LSHIFT)&&(CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+		|| CInput::GetKeyPress(VK_S)))
+		m_nSpeed = 2;
 
 	//角度の変更
 	if (CInput::GetKeyPress(VK_D))
