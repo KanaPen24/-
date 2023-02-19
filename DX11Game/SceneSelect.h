@@ -16,6 +16,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 // クラス定義
+class CSSelect;
 class CSelect : public CScene
 {
 private:
@@ -23,6 +24,7 @@ private:
 	ID3D11ShaderResourceView* m_pTexTitle;
 	ID3D11ShaderResourceView* m_pTexStart;
 	ID3D11ShaderResourceView* m_pTexBG;
+	CSSelect* m_pSSelect;
 	int m_nTimer;
 	int m_nBlink;
 	int m_nStart;

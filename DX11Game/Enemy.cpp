@@ -148,17 +148,14 @@ void CEnemy::Update()
 	m_fChan= std::fmax(m_fChan, -1.0f);
 	m_fChan = std::fmin(m_fChan, 1.0f);
 	CPostProcess::SetAlf(volume - 0.15f);
-	////äpìxÇ…ÇÊÇ¡ÇƒLRÇí≤êÆÇ∑ÇÈ
-	//if (vAng.y <= 90)	m_fChan += 0.01f;
-	//if (vAng.y >= 275)	m_fChan += -0.01f;
 
 	CSound::SetVolume(BGM_GAME, volume, m_fChan);
 
 	// è’ìÀîªíË
 	if (CollisionBSphere(m_pPlayer)) {
-		/*CFade::CutOut(SCENE_GAMEOVER);
-		CSound::SetVolume(SE_DAMAGE, 0.2f);
-		CSound::Play(SE_DAMAGE);*/
+		//CFade::CutOut(SCENE_GAMEOVER);
+		//CSound::SetVolume(SE_DAMAGE, 0.2f);
+		//CSound::Play(SE_DAMAGE);
 	}
 
 #ifdef _DEBUG

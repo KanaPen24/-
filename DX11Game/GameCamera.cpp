@@ -87,9 +87,9 @@ void CGameCamera::Update()
 			m_fAngle -= ROTATE;
 		}
 	}
-	if(CInput::GetKeyPress(VK_J))
+	if(CInput::GetKeyPress(VK_D))
 	m_fAngle -= ROTATE;
-	if (CInput::GetKeyPress(VK_L))
+	if (CInput::GetKeyPress(VK_A))
 	m_fAngle += ROTATE;
 	if (m_fAngle >= 180.0f)m_fAngle -= 360.0f;	
 	m_vTarget = m_pPlayer->GetPos();

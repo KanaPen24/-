@@ -36,6 +36,7 @@ CTitle::CTitle() : CScene()
 	m_bStart = false;
 	m_pTexTitle = nullptr;
 	m_pTexBG = nullptr;	
+	m_pTSelect = nullptr;
 }
 
 // デストラクタ
@@ -72,7 +73,8 @@ bool CTitle::Init()
 		return false;
 	}
 	//タイトルセレクト初期化
-	hr = InitTSelect();
+	m_pTSelect = new CTSelect;
+	hr = m_pTSelect->Init();
 	if (FAILED(hr)) {
 		MessageBox(GetMainWnd(), _T("タイトルセレクト初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
 		return hr;
@@ -102,7 +104,7 @@ void CTitle::Fin()
 	SAFE_RELEASE(m_pTexTitle);
 
 	//タイトルセレクト終了
-	UninitTSelect();
+	m_pTSelect->Uninit();
 
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);
@@ -114,13 +116,13 @@ void CTitle::Fin()
 void CTitle::Update()
 {
 	//タイトルセレクト更新
-	UpdateTSelect();
+	m_pTSelect->Update();
 
 	//パーティクル更新
 	UpdateParticle();
 
 	CSound::SetVolume(SE_SELECT, 0.1f);
-	switch (GetTitleSelect())
+	switch (m_pTSelect->GetTitleSelect())
 	{
 	case GAME:
 		bSound2 = true;
@@ -169,8 +171,6 @@ void CTitle::Update()
 // 描画
 void CTitle::Draw()
 {
-	HDC hdc;
-	PAINTSTRUCT	ps;
 	HWND hWnd = GetMainWnd();
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 	SetZBuffer(false);
@@ -201,7 +201,7 @@ void CTitle::Draw()
 	CPolygon::Draw(pDC);
 
 	//タイトルセレクト描画
-	DrawTSelect();
+	m_pTSelect->Draw();
 
 	SetZBuffer(true);
 

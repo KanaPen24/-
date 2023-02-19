@@ -24,11 +24,12 @@
 //定数定義
 const int MAX_OBJECT = 30;
 
-// クラス定義
+
 class CEnemy;
 class CRadar;
 class CScore;
 class CPause;
+// クラス定義
 class CGame : public CScene
 {
 private:
@@ -41,6 +42,8 @@ private:
 	CRadar* m_pRadar;
 	CScore* m_pScore;
 	CPause* m_pPause;
+	CSSelect* m_pSSelect;
+
 	
 	int m_nBoundary;
 	bool m_bPause;	//一時停止中

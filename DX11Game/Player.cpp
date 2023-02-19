@@ -142,22 +142,12 @@ void CPlayer::Update()
 		vPos.z += vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
-	else if (CInput::GetKeyPress(VK_RIGHT) || CInput::GetKeyPress(VK_D)) {
-		// 右移動
-		vPos.x += SPEED * fDash *50;
-		m_nSpeed = 1;
-	}
-	if (CInput::GetKeyPress(VK_LEFT) || CInput::GetKeyPress(VK_A)) {
-		// 左移動
-		vPos.x -= SPEED * fDash *50;
-		m_nSpeed = 1;
-	}
 	if (CInput::GetKeyPress(VK_LSHIFT) || CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)) m_nSpeed = 2;
 
 	//角度の変更
-	if (CInput::GetKeyPress(VK_J))
+	if (CInput::GetKeyPress(VK_D))
 		angle.y += ROTATE;
-	if (CInput::GetKeyPress(VK_L))
+	if (CInput::GetKeyPress(VK_A))
 		angle.y -= ROTATE;
 
 	if (angle.y >= 360.0f)
@@ -217,6 +207,16 @@ void CPlayer::Update()
 		m_dAnimTime = 0.0;
 	}
 #ifdef _DEBUG
+	if (CInput::GetKeyPress(VK_RIGHT) || CInput::GetKeyPress(VK_D)) {
+		// 右移動
+		vPos.x += SPEED * fDash * 50;
+		m_nSpeed = 1;
+	}
+	if (CInput::GetKeyPress(VK_LEFT) || CInput::GetKeyPress(VK_A)) {
+		// 左移動
+		vPos.x -= SPEED * fDash * 50;
+		m_nSpeed = 1;
+	}
 	//デバック表示
 	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
 	CDebugProc::Print("Animation=%d\n", m_nAnimNo);

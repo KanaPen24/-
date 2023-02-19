@@ -12,6 +12,7 @@
 #include "Pause.h"
 #include "PostProcess.h"
 
+
 // コンストラクタ
 CGame::CGame() : CScene()
 {
@@ -22,6 +23,7 @@ CGame::CGame() : CScene()
 	m_pPause = nullptr;
 	m_pRadar = nullptr;
 	m_pScore = nullptr;
+	m_pSSelect = nullptr;
 
 	for (int i = 0; i < _countof(m_pObject); ++i)
 		m_pObject[i] = nullptr;
@@ -50,11 +52,13 @@ bool CGame::Init()
 
 	new CCity(this);
 
+	m_pSSelect = new CSSelect;	
+
 	CLight* pLight = CLight::Get();
 	if (pLight) {
 		pLight->Init();
 	}
-	switch (GetStageSelect())
+	switch (m_pSSelect->GetStageSelect())
 	{
 	case STAGE_1:
 		m_nCntObj = 1;
@@ -80,6 +84,7 @@ bool CGame::Init()
 		XMFLOAT4X4 mW;
 		XMStoreFloat4x4(&mW, XMMatrixRotationRollPitchYaw(0.0f,XMConvertToRadians(rand() % 360),0.0f));
 		mW._41 = - 500.0f + (float)(rand() % 500);
+		mW._42 = 17.0f;
 		mW._43 = (float)(200+rand() % 800);
 		m_pObject[i]->SetWorld(mW);
 	}

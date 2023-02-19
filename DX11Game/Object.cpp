@@ -83,7 +83,7 @@ void CObject::Update()
 	if (CollisionBSphere(m_pPlayer)) {
 		m_pScore->Add(-1);
 		m_vPos.x = 50000.0f;
-		CSound::SetVolume(SE_CRASH, 0.2f);
+		CSound::SetVolume(SE_CRASH, 0.1f);
 		CSound::Play(SE_CRASH);
 	}
 
@@ -93,7 +93,7 @@ void CObject::Update()
 	SetPos(m_vPos);
 
 #ifdef _DEBUG
-//	CDebugProc::Print("[си ╡а : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
+	CDebugProc::Print("[си ╡а : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 #endif
 }
 

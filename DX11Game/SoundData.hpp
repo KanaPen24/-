@@ -9,7 +9,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"papercrash.wav",		// キャンセル音
 	L"select.mp3",			// 選択音
 	L"gyaaaa_d.wav",		// ダメージ音
-	L"paperball.wav",		// アイテム消失音
+	L"balloon.mp3",		// アイテム消失音
 	L"shizuku.wav",			// 雫音
 	L"shinden.wav"			// ピ
 };

@@ -48,6 +48,7 @@ CSelect::CSelect() : CScene()
 	m_pTexTitle = nullptr;
 	m_pTexStart = nullptr;
 	m_pTexBG = nullptr;
+	m_pSSelect = nullptr;
 }
 
 CSelect::~CSelect()
@@ -78,8 +79,9 @@ bool CSelect::Init()
 	// BGM再生
 	CSound::SetVolume(BGM_TITLE, 0.1f, 0.0f);
 	CSound::Play(BGM_TITLE);
-	//一時停止初期化
-	hr = InitSSelect();
+	//ステージセレクト初期化
+	m_pSSelect = new CSSelect;
+	hr = m_pSSelect->Init();
 	if (FAILED(hr)) {
 		MessageBox(GetMainWnd(), _T("ステージセレクト初期化失敗"), NULL, MB_OK | MB_ICONSTOP);
 		return hr;
@@ -96,16 +98,16 @@ void CSelect::Fin()
 	CSound::Stop(SE_SELECT);
 	SAFE_RELEASE(m_pTexBG);
 	//ステージセレクト終了
-	UninitSSelect();
+	m_pSSelect->Uninit();
 }
 //=============================================================================
 // セレクトシーンの更新処理
 //=============================================================================
 void CSelect::Update() {
 	//ステージセレクト更新
-	UpdateSSelect();
+	m_pSSelect->Update();
 	
-	switch (GetStageSelect())
+	switch (m_pSSelect->GetStageSelect())
 	{
 	case STAGE_1:
 		bSound2 = true;
@@ -226,6 +228,6 @@ void  CSelect::Draw() {
 	CPolygon::Draw(pDC);
 
 	//ステージセレクト描画
-	DrawSSelect();
+	m_pSSelect->Draw();
 
 }

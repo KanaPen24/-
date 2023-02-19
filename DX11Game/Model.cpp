@@ -17,7 +17,7 @@ namespace {
 		"data/model/SkyDome/sky.fbx",
 		"data/model/Land.fbx",
 		"data/model/enemy.fbx",
-		"data/model/book.fbx",
+		"data/model/Balloon.fbx",
 		"data/model/city2.fbx",
 		"data/model/city.fbx",
 	};

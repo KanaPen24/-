@@ -23,11 +23,17 @@ typedef enum {
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitSSelect(void);
-void UninitSSelect(void);
-void UpdateSSelect(void);
-void DrawSSelect(void);
+class CSSelect
+{
+public:
+	HRESULT Init(void);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
 
-void SetStageSelect(void);
-STAGE_SELECT GetStageSelect(void);
-void ResetStageSelect(void);
+	void SetStageSelect(void);
+	STAGE_SELECT GetStageSelect(void);
+	void ResetStageSelect(void);
+};
+
+

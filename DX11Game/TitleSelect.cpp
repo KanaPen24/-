@@ -48,7 +48,7 @@ static LPCWSTR c_aFileNameTitleMenu[MAX_TEXTURE] =
 //=============================================================================
 // ステージセレクト初期化処理
 //=============================================================================
-HRESULT InitTSelect(void)
+HRESULT CTSelect::Init(void)
 {
 	ID3D11Device* pDevice = GetDevice();
 	HRESULT hr = S_OK;
@@ -73,7 +73,7 @@ HRESULT InitTSelect(void)
 //=============================================================================
 // ステージセレクト終了処理
 //=============================================================================
-void UninitTSelect(void)
+void CTSelect::Uninit(void)
 {
 	// テクスチャの開放
 	for (int nCntPauseMenu = 0; nCntPauseMenu < NUM_SELECT_MENU; ++nCntPauseMenu) {
@@ -84,7 +84,7 @@ void UninitTSelect(void)
 //=============================================================================
 // ステージセレクト更新処理
 //=============================================================================
-void UpdateTSelect(void)
+void CTSelect::Update(void)
 {
 	DWORD JoyCount = CInput::GetJoyCount();
 	LONG JoyY = CInput::GetJoyY(JOYSTICKID1);
@@ -138,7 +138,7 @@ void UpdateTSelect(void)
 //=============================================================================
 // ステージセレクト描画処理
 //=============================================================================
-void DrawTSelect(void)
+void CTSelect::Draw(void)
 {
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
@@ -169,7 +169,7 @@ void DrawTSelect(void)
 //=============================================================================
 // ステージセレクトメニューの設定
 //=============================================================================
-void SetTitleSelect(void)
+void CTSelect::SetTitleSelect(void)
 {
 	m_fCurve = 0.0f;
 }
@@ -177,7 +177,7 @@ void SetTitleSelect(void)
 //=============================================================================
 // ステージセレクトメニューの取得
 //=============================================================================
-TITLE_SELECT GetTitleSelect(void)
+TITLE_SELECT CTSelect::GetTitleSelect(void)
 {
 	return g_nSelectTMenu;
 }
@@ -185,7 +185,7 @@ TITLE_SELECT GetTitleSelect(void)
 //=============================================================================
 // ステージセレクトメニューのリセット
 //=============================================================================
-void ResetTitleSelect(void)
+void CTSelect::ResetTitleSelect(void)
 {
 	g_nSelectTMenu = GAME;
 	CSound::Play(SE_SHIZUKU);

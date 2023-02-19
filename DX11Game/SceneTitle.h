@@ -11,6 +11,7 @@
 #include "TitleCamera.h"
 #include "City.h"
 
+class CTSelect;
 // ƒNƒ‰ƒX’è‹`
 class CTitle : public CScene
 {
@@ -21,6 +22,7 @@ private:
 	ID3D11ShaderResourceView* m_pTexBG;
 	CTitleCamera m_camera;
 	CCity* m_pCity;
+	CTSelect* m_pTSelect;
 	int m_nTimer;
 
 public:

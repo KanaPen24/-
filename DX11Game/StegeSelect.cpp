@@ -12,6 +12,7 @@
 #include "Polygon.h"
 #include "Texture.h"
 #include "Sound.h"
+#include "DebugProc.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -50,7 +51,7 @@ static LPCWSTR c_aFileNameStageMenu[NUM_SELECT_MENU] =
 //=============================================================================
 // ステージセレクト初期化処理
 //=============================================================================
-HRESULT InitSSelect(void)
+HRESULT CSSelect::Init(void)
 {
 	ID3D11Device* pDevice = GetDevice();
 	HRESULT hr = S_OK;
@@ -78,7 +79,7 @@ HRESULT InitSSelect(void)
 //=============================================================================
 // ステージセレクト終了処理
 //=============================================================================
-void UninitSSelect(void)
+void CSSelect::Uninit(void)
 {
 	// テクスチャの開放
 	for (int nCntSelectMenu = 0; nCntSelectMenu < NUM_SELECT_MENU; ++nCntSelectMenu) {
@@ -89,7 +90,7 @@ void UninitSSelect(void)
 //=============================================================================
 // ステージセレクト更新処理
 //=============================================================================
-void UpdateSSelect(void)
+void CSSelect::Update(void)
 {
 	DWORD JoyCount = CInput::GetJoyCount();
 	LONG JoyX = CInput::GetJoyX(JOYSTICKID1);
@@ -102,13 +103,13 @@ void UpdateSSelect(void)
 		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false) {
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
-			SetStageSelect();
+			CSSelect::SetStageSelect();
 			m_bJoyStick = true;
 		}
 		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE && m_bJoyStick == false) {
 				CSound::Play(SE_SHIZUKU);
 			g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + 1) % NUM_SELECT_MENU);
-			SetStageSelect();
+			CSSelect::SetStageSelect();
 			m_bJoyStick = true;
 		}
 		if (JoyX == 0l)
@@ -119,12 +120,12 @@ void UpdateSSelect(void)
 	if (CInput::GetKeyRepeat(VK_LEFT))
 	{
 		g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + NUM_SELECT_MENU - 1) % NUM_SELECT_MENU);
-		SetStageSelect();
+		CSSelect::SetStageSelect();
 	}
 	if (CInput::GetKeyRepeat(VK_RIGHT))
 	{
 		g_nSelectSMenu = (STAGE_SELECT)((g_nSelectSMenu + 1) % NUM_SELECT_MENU);
-		SetStageSelect();
+		CSSelect::SetStageSelect();
 	}
 
 	m_fCurve += XM_PI * 0.01f;
@@ -145,13 +146,15 @@ void UpdateSSelect(void)
 	if (g_fPosY <= UNDER_MOVE_RIMIT_Y) flg = false;
 	if (g_fPosY >= TOP_MOVE_RIMIT_Y)flg = true;
 
-
+#ifdef _DEBUG
+	CDebugProc::Print("ｽﾃｰｼﾞｾﾚｸﾄ:%d\n", g_nSelectSMenu);
+#endif // _DEBUG
 }
 
 //=============================================================================
 // ステージセレクト描画処理
 //=============================================================================
-void DrawSSelect(void)
+void CSSelect::Draw(void)
 {
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
@@ -179,7 +182,7 @@ void DrawSSelect(void)
 //=============================================================================
 // ステージセレクトメニューの設定
 //=============================================================================
-void SetStageSelect(void)
+void CSSelect::SetStageSelect(void)
 {
 	m_fCurve = 0.0f;
 }
@@ -187,7 +190,7 @@ void SetStageSelect(void)
 //=============================================================================
 // ステージセレクトメニューの取得
 //=============================================================================
-STAGE_SELECT GetStageSelect(void)
+STAGE_SELECT CSSelect::GetStageSelect(void)
 {
 	return g_nSelectSMenu;
 }
@@ -195,7 +198,7 @@ STAGE_SELECT GetStageSelect(void)
 //=============================================================================
 // ステージセレクトメニューのリセット
 //=============================================================================
-void ResetStageSelect(void)
+void CSSelect::ResetStageSelect(void)
 {
 	g_nSelectSMenu = STAGE_1;
 	//CSound::Play(SE_SHIZUKU);
