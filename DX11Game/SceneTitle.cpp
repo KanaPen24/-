@@ -170,8 +170,7 @@ void CTitle::Update()
 
 // •`‰æ
 void CTitle::Draw()
-{
-	HWND hWnd = GetMainWnd();
+{	
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 	SetZBuffer(false);
 	SetBlendState(BS_ALPHABLEND);

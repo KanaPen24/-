@@ -83,9 +83,9 @@ bool CGame::Init()
 		m_pObject[i]->SetPlayer(m_pPlayer);
 		XMFLOAT4X4 mW;
 		XMStoreFloat4x4(&mW, XMMatrixRotationRollPitchYaw(0.0f,XMConvertToRadians(rand() % 360),0.0f));
-		mW._41 = - 500.0f + (float)(rand() % 500);
+		mW._41 = - 900.0f + (float)(rand() % 1000);
 		mW._42 = 17.0f;
-		mW._43 = (float)(200+rand() % 800);
+		mW._43 = (float)(200+rand() % 1000);
 		m_pObject[i]->SetWorld(mW);
 	}
 

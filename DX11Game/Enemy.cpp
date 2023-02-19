@@ -153,9 +153,9 @@ void CEnemy::Update()
 
 	// è’ìÀîªíË
 	if (CollisionBSphere(m_pPlayer)) {
-		//CFade::CutOut(SCENE_GAMEOVER);
-		//CSound::SetVolume(SE_DAMAGE, 0.2f);
-		//CSound::Play(SE_DAMAGE);
+		/*CFade::CutOut(SCENE_GAMEOVER);
+		CSound::SetVolume(SE_DAMAGE, 0.2f);
+		CSound::Play(SE_DAMAGE);*/
 	}
 
 #ifdef _DEBUG

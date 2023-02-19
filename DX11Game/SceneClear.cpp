@@ -246,29 +246,29 @@ void CClear::Update(void)
 //=============================================================================
 void CClear::Draw(void)
 {
+	SetZBuffer(false);
+	SetBlendState(BS_ALPHABLEND);
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
-
 	CPolygon::SetTexture(nullptr);
 	CPolygon::SetSize(WIDTH_BG, HEIGHT_BG);
 	CPolygon::SetPos(POS_X_BG, POS_Y_BG);
 	CPolygon::SetTexture(g_pTextures[0]);
 	CPolygon::Draw(pDeviceContext);
+	CPolygon::SetTexture(nullptr);
+	CPolygon::SetSize(CLEAR_MENU_WIDTH, CLEAR_MENU_HEIGHT);
 
-	
-	
 	for (int nCntClearMenu = 0; nCntClearMenu < NUM_CLEAR_MENU; ++nCntClearMenu) {
 		CPolygon::SetPos(CLEAR_MENU_POS_X + nCntClearMenu * CLEAR_MENU_INTERVAL, CLEAR_MENU_POS_Y);
-
 		if (nCntClearMenu == g_nSelectCMenu) {
+			//選ばれてるほう
 			CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 			CPolygon::SetSize(CLEAR_MENU_WIDTH + 30.0f, CLEAR_MENU_HEIGHT + 80.0f);
 		}
 		else {
 			//選ばれてないほう
-			CPolygon::SetColor(0.3f, 0.3f, 0.3f, 0.5);
+			CPolygon::SetColor(0.3f, 0.3f, 0.3f, 0.5f);
 			CPolygon::SetSize(CLEAR_MENU_WIDTH, CLEAR_MENU_HEIGHT);
 		}
-
 		// テクスチャの設定
 		CPolygon::SetTexture(g_pTextures[nCntClearMenu+1]);
 		// ポリゴンの描画
@@ -276,6 +276,8 @@ void CClear::Draw(void)
 	}
 
 	CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	SetZBuffer(true);
+	SetBlendState(BS_NONE);
 }
 
 //=============================================================================

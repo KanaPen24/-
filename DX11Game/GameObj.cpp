@@ -222,7 +222,7 @@ bool CGameObj::CollisionBSphere(CGameObj* pOther)
 	float dx = vA.x - vB.x;
 	float dy = vA.y - vB.y;
 	float dz = vA.z - vB.z;
-	float dr = m_fRadius + pOther->m_fRadius-15.0f;
+	float dr = m_fRadius + pOther->m_fRadius-8.0f;
 	return dx * dx + dy * dy + dz * dz <= dr * dr;
 }
 

@@ -69,8 +69,6 @@ HRESULT CPlayer::Init()
 	return hr;
 }
 
-
-
 // XV
 void CPlayer::Update()
 {

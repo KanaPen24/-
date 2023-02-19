@@ -86,6 +86,10 @@ void CObject::Update()
 		CSound::SetVolume(SE_CRASH, 0.1f);
 		CSound::Play(SE_CRASH);
 	}
+	if (CollisionBSphere(m_pCity))
+	{
+		m_vPos.x--;
+	}
 
 	m_mWorld._41 = m_vPos.x;
 	m_mWorld._42 = m_vPos.y;

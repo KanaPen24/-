@@ -34,7 +34,7 @@ const int BLINK_START_TIMER = 5;			//点滅開始時間
 // グローバル変数
 //*****************************************************************************
 namespace {
-	const LPCWSTR g_pszPathTexBG = L"data/texture/Prologue.png";
+	const LPCWSTR g_pszPathTexBG = L"data/texture/Prologue.jpg";
 }
 static ID3D11ShaderResourceView*	g_pTextures[1];			// テクスチャへのポインタ
 

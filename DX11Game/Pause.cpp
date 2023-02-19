@@ -148,14 +148,15 @@ void CPause::Update()
 void CPause::Draw()
 {
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
-
+	SetZBuffer(false);
+	SetBlendState(BS_ALPHABLEND);
 	CPolygon::SetTexture(nullptr);
 	CPolygon::SetSize(PLATE_WIDTH, PLATE_HEIGHT);
 	CPolygon::SetPos(PLATE_POS_X, PLATE_POS_Y);
 	CPolygon::SetFrameSize(1.0f, 1.0f);
 	CPolygon::SetUV(0.0f, 0.0f);
 	CPolygon::SetColor(m_fCol, m_fCol, m_fCol, 1.0f);
-	//CPolygon::Draw(pDeviceContext);
+	CPolygon::Draw(pDeviceContext);
 
 	CPolygon::SetSize(PAUSE_MENU_WIDTH, PAUSE_MENU_HEIGHT);
 	for (int nCntPauseMenu = 0; nCntPauseMenu < NUM_PAUSE_MENU; ++nCntPauseMenu) {
@@ -176,6 +177,8 @@ void CPause::Draw()
 	}
 
 	CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	SetZBuffer(true);
+	SetBlendState(BS_NONE);
 }
 
 //=============================================================================
