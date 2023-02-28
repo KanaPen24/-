@@ -90,7 +90,7 @@ void CPrologue::Update(void)
 {
 	// セレクト画面へ
 	if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
-		CSound::SetVolume(SE_SELECT, 0.3f);
+		CSound::SetVolume(SE_SELECT, 0.1f);
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_TITLE);//セレクトに移動
 		return;

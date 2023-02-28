@@ -127,7 +127,7 @@ void CClear::Update(void)
 {
 	DWORD JoyCount =CInput::GetJoyCount();
 	LONG JoyX = CInput::GetJoyX(JOYSTICKID1);
-	CSound::SetVolume(SE_PI, 0.2f);
+	CSound::SetVolume(SE_PI, 0.1f);
 	//デッドゾーン以下ならすべて０にする
 	if ((JoyX <  GAMEPAD_LEFT_STICK_DEADZONE &&
 		JoyX > -GAMEPAD_LEFT_STICK_DEADZONE))
@@ -181,17 +181,17 @@ void CClear::Update(void)
 			{
 			case CLEAR_MENU_SELECT:
 				CFade::Out(SCENE_SELECT);
-				CSound::SetVolume(SE_SELECT, 0.2f);
+				CSound::SetVolume(SE_SELECT, 0.1f);
 				CSound::Play(SE_SELECT);
 				break;
 			case CLEAR_MENU_RETRY:
 				CFade::Out(SCENE_GAME);
-				CSound::SetVolume(SE_SELECT, 0.2f);
+				CSound::SetVolume(SE_SELECT, 0.1f);
 				CSound::Play(SE_SELECT);
 				break;
 			case CLEAR_MENU_TITLE:
 				CFade::Out(SCENE_TITLE);
-				CSound::SetVolume(SE_SELECT, 0.2f);
+				CSound::SetVolume(SE_SELECT, 0.1f);
 				CSound::Play(SE_SELECT);
 				break;
 			}
@@ -204,7 +204,7 @@ void CClear::Update(void)
 
 			if (g_bSound1 == true)
 			{
-				CSound::SetVolume(SE_PI, 0.2f);
+				CSound::SetVolume(SE_PI, 0.1f);
 				CSound::Play(SE_PI);
 				g_bSound1 = false;
 			}
@@ -216,7 +216,7 @@ void CClear::Update(void)
 
 			if (g_bSound2 == true)
 			{
-				CSound::SetVolume(SE_PI, 0.2f);
+				CSound::SetVolume(SE_PI, 0.1f);
 				CSound::Play(SE_PI);
 				g_bSound2 = false;
 			}
@@ -228,7 +228,7 @@ void CClear::Update(void)
 
 			if (g_bSound3 == true)
 			{
-				CSound::SetVolume(SE_PI, 0.2f);
+				CSound::SetVolume(SE_PI, 0.1f);
 				CSound::Play(SE_PI);
 				g_bSound3 = false;
 			}

@@ -82,6 +82,7 @@ bool CRule::Init()
 
 	// BGM再生開始
 	CSound::Play(BGM_TITLE);
+	CSound::SetVolume(BGM_TITLE, 0.1f, 0.0f);
 
 	return hr;
 }
@@ -125,7 +126,7 @@ void CRule::Update(void)
 	//}
 	// セレクト画面へ
 	if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
-		CSound::SetVolume(SE_SELECT, 0.3f);
+		CSound::SetVolume(SE_SELECT, 0.1f);
 		CSound::Play(SE_SELECT);	//効果音
 		CFade::Out(SCENE_SELECT);//セレクトに移動
 		g_nStart = 1; // 開始フラグ

@@ -146,6 +146,16 @@ void CPlayer::Update()
 		vPos.z += vVec.z* SPEED * fDash;
 		m_nSpeed = 1;
 	}
+	else if (CInput::GetKeyPress(VK_RIGHT)) {
+		// 右移動
+		vPos.x += SPEED * fDash * 100;
+		m_nSpeed = 1;
+	}
+	if (CInput::GetKeyPress(VK_LEFT)) {
+		// 左移動
+		vPos.x -= SPEED * fDash * 100;
+		m_nSpeed = 1;
+	}
 	if (CInput::GetKeyPress(VK_LSHIFT)&&(CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
 		|| CInput::GetKeyPress(VK_S)))
 		m_nSpeed = 2;
@@ -213,22 +223,13 @@ void CPlayer::Update()
 		m_dAnimTime = 0.0;
 	}
 #ifdef _DEBUG
-	if (CInput::GetKeyPress(VK_RIGHT) || CInput::GetKeyPress(VK_D)) {
-		// 右移動
-		vPos.x += SPEED * fDash * 50;
-		m_nSpeed = 1;
-	}
-	if (CInput::GetKeyPress(VK_LEFT) || CInput::GetKeyPress(VK_A)) {
-		// 左移動
-		vPos.x -= SPEED * fDash * 50;
-		m_nSpeed = 1;
-	}
+	
 	//デバック表示
-	CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
+	/*CDebugProc::Print("SPEED * fDash=%f\n", m_nSpeed);
 	CDebugProc::Print("Animation=%d\n", m_nAnimNo);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰVec=X:%f Y:%f Z:%f\n", vVec.x, vVec.y, vVec.z);
-	CDebugProc::Print("ﾌﾟﾚｲﾔｰAng=X:%f Y:%f Z:%f\n", angle.x, angle.y, angle.z);
+	CDebugProc::Print("ﾌﾟﾚｲﾔｰAng=X:%f Y:%f Z:%f\n", angle.x, angle.y, angle.z);*/
 	
 #endif
 }

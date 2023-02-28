@@ -128,8 +128,8 @@ bool CGame::Init()
 
 	// BGMçƒê∂äJén&âπó ê›íË
 	CSound::Play(BGM_GAME);
-	CSound::SetVolume(SE_SHIZUKU, 0.2f);
-	CSound::SetVolume(SE_CANCEL, 0.2f);
+	CSound::SetVolume(SE_SHIZUKU, 0.1f);
+	CSound::SetVolume(SE_CANCEL, 0.1f);
 	return true;
 }
 

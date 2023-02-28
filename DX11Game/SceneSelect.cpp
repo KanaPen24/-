@@ -115,13 +115,13 @@ void CSelect::Update() {
 		//CSound::Resume();
 		if (bSound1 == true)
 		{
-			CSound::SetVolume(SE_PI, 0.2f);
+			CSound::SetVolume(SE_PI, 0.1f);
 			CSound::Play(SE_PI);
 			bSound1 = false;
 		}
 		// 開始
 		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
-			CSound::SetVolume(SE_SELECT, 0.2f);
+			CSound::SetVolume(SE_SELECT, 0.1f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム1画面へ
 			m_nStart = 1; // 開始フラグ
@@ -135,12 +135,12 @@ void CSelect::Update() {
 		bSound3 = true;
 		if (bSound2 == true)
 		{
-			CSound::SetVolume(SE_PI, 0.2f);
+			CSound::SetVolume(SE_PI, 0.1f);
 			CSound::Play(SE_PI);
 			bSound2 = false;
 		}
 		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
-			CSound::SetVolume(SE_SELECT, 0.2f);
+			CSound::SetVolume(SE_SELECT, 0.1f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
 			m_nStart = 1; // 開始フラグ
@@ -153,12 +153,12 @@ void CSelect::Update() {
 		bSound2 = true;
 		if (bSound3 == true)
 		{
-			CSound::SetVolume(SE_PI, 0.2f);
+			CSound::SetVolume(SE_PI, 0.1f);
 			CSound::Play(SE_PI);
 			bSound3 = false;
 		}
 		if (CInput::GetKeyRelease(VK_RETURN) || CInput::GetJoyTrigger(JOYSTICKID1, JOY_BUTTON1)) {//エンター入力
-			CSound::SetVolume(SE_SELECT, 0.2f);
+			CSound::SetVolume(SE_SELECT, 0.1f);
 			CSound::Play(SE_SELECT);	//効果音
 			CFade::Out(SCENE_GAME);	//ゲーム画面へ
 			m_nStart = 1; // 開始フラグ

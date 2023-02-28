@@ -91,7 +91,7 @@ void CPause::Update()
 {
 	DWORD JoyCount = CInput::GetJoyCount();
 	LONG JoyY = CInput::GetJoyY(JOYSTICKID1);
-	CSound::SetVolume(SE_PI, 0.2f);
+	CSound::SetVolume(SE_PI, 0.1f);
 	//デッドゾーン以下ならすべて０にする
 	if ((JoyY <  GAMEPAD_LEFT_STICK_DEADZONE &&
 		JoyY > -GAMEPAD_LEFT_STICK_DEADZONE))

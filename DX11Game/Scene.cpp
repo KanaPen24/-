@@ -72,7 +72,7 @@ bool CScene::InitAll()
 	new CGOver;
 
 	//Å‰‚ÌƒV[ƒ“
-	Change(SCENE_SELECT);
+	Change(SCENE_PROLOGUE);
 	return true;
 }
 

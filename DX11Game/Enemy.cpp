@@ -15,11 +15,15 @@
 #include "Input.h"
 #include "PostProcess.h"
 
-const float VALUE_MOVE_ENEMY = 1.2f;		// 移動量
+const float VALUE_MOVE_ENEMY = 1.0f;		// 移動量
 const float RATE_ROTATE_ENEMY = 0.20f;		// 回転慣性係数
 const float VALUE_ROTATE_ENEMY = 7.0f;		// 回転速度
 const float SCALE = 10.0f;		// 大きさ
 const float MAX_VOLUME = 1.0f;	// 最大音量
+const float MIN_VOLUME = 0.15f;	// 最小音量
+const float LEFT_VOLUME = -1.0f;	// 左音量
+const float RIGHT_VOLUME = 1.0f;	// 右音量
+const float DELALFA = 0.15f;	// アルファ値を減らす
 
 //グローバル変数
 bool g_bAlflg = false;
@@ -43,7 +47,7 @@ HRESULT CEnemy::Init()
 	HRESULT hr = CModel::Init();
 	SetModel(MODEL_ENEMY);
 	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
-	SetPos(XMFLOAT3(-400.0f + (float)(rand() % 400), 0.0f, (float)(rand() % 900)));
+	SetPos(XMFLOAT3(-500.0f + (float)(rand() % 500), 0.0f, 400.0f + (float)(rand() % 1000)));
 	
 	return hr;
 }
@@ -135,20 +139,31 @@ void CEnemy::Update()
 
 	SetPos(m_vPos);
 
-	//距離のよってサウンド調整をする
+	//距離によってサウンド調整をする
 	float x, z, volume;
 	x = m_vPos.x - pPos.x;
 	z = m_vPos.z - pPos.z;
 	volume = x * x + z * z;
 	sqrt(volume);
+
+	//ボリューム調整
 	volume = volume / 50000;
 	volume = MAX_VOLUME - volume;
-	volume = std::fmax(volume, 0.15f);
-	volume = std::fmin(volume, 1.0f);
-	m_fChan= std::fmax(m_fChan, -1.0f);
-	m_fChan = std::fmin(m_fChan, 1.0f);
-	CPostProcess::SetAlf(volume - 0.15f);
 
+	//ボリュームの最大値最小値設定
+	volume = std::fmax(volume, MIN_VOLUME);
+	volume = std::fmin(volume, MAX_VOLUME);
+
+	//LRの最大値最小値設定
+	m_fChan= std::fmax(m_fChan, LEFT_VOLUME);
+	m_fChan = std::fmin(m_fChan, RIGHT_VOLUME);
+
+	//画面のアルファ値をvolume(敵との距離)入れる
+	//1.0までいくとゲーム画面が見えなくなるので
+	//少し値を減らす
+	CPostProcess::SetAlf(volume - DELALFA);
+
+	//ボリューム設定
 	CSound::SetVolume(BGM_GAME, volume, m_fChan);
 
 	// 衝突判定

@@ -90,7 +90,7 @@ bool CTitle::Init()
 
 	// BGMçƒê∂äJén
 	CSound::Play(BGM_TITLE);
-	CSound::SetVolume(BGM_TITLE, 0.2f, 0.0f);
+	CSound::SetVolume(BGM_TITLE, 0.1f, 0.0f);
 	return true;
 }
 
@@ -130,7 +130,7 @@ void CTitle::Update()
 		//CSound::Resume();
 		if (bSound1 == true)
 		{
-			CSound::SetVolume(SE_PI, 0.2f);
+			CSound::SetVolume(SE_PI, 0.1f);
 			CSound::Play(SE_PI);
 			bSound1 = false;
 		}
@@ -147,7 +147,7 @@ void CTitle::Update()
 		bSound3 = true;
 		if (bSound2 == true)
 		{
-			CSound::SetVolume(SE_PI, 0.2f);
+			CSound::SetVolume(SE_PI, 0.1f);
 			CSound::Play(SE_PI);
 			bSound2 = false;
 		}
