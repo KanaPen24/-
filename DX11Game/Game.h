@@ -21,7 +21,7 @@
 #include "StegeSelect.h"
 
 
-//定数定義
+//マクロ定義
 const int MAX_OBJECT = 30;
 
 

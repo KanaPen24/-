@@ -16,7 +16,7 @@
 #include "Land.h"
 #include "Particle.h"
 
-// 定数定義
+// マクロ定義
 namespace {
 	const LPCWSTR g_pszPathTexLogo = L"data/texture/title2.png";
 

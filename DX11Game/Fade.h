@@ -10,7 +10,7 @@
 #include "Main.h"
 #include "Scene.h"
 
-// 定数定義
+// マクロ定義
 enum EFade {
 	FADE_NONE = 0,	// 何もしていない
 	FADE_IN,		// フェードイン処理

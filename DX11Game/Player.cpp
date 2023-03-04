@@ -13,7 +13,7 @@
 #include "Scene.h"
 #include <time.h>
 
-// 定数定義
+// マクロ定義
 namespace {
 	enum EAnimNo {
 		ANIM_IDLE = 0,
@@ -22,7 +22,6 @@ namespace {
 		MAX_ANIMNO
 	};
 }
-
 const float RATE_MOVE_MODEL = 0.25f;			// 移動慣性係数
 const float SPEED = 0.02f;						// 移動スピード
 const float SCALE = 1.0f;						// 大きさ

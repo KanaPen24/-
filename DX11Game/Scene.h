@@ -9,7 +9,7 @@
 #pragma once
 #include "Main.h"
 
-// 定数定義
+// マクロ定義
 enum EScene {
 	SCENE_NONE = 0, // 未設定
 	SCENE_PROLOGUE,	// プロローグ画面

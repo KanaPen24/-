@@ -10,7 +10,7 @@
 #include "Main.h"
 #include "Sphere.h"		// デバッグ表示用
 
-// 定数定義
+// マクロ定義
 enum EGameObjType {		// オブジェクト型
 	GOT_GAMEOBJ = 0,	// 型無し
 	GOT_PLAYER,			// プレイヤー
