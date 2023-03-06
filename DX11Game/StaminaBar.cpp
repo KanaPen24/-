@@ -41,15 +41,14 @@ void CStaminaBar::Update()
 {
 	if (!m_bVisible) return;
 
-	if (CInput::GetKeyPress(VK_RIGHT))
-		m_fStamina ++;
-	if (CInput::GetKeyPress(VK_LEFT))
-		m_fStamina --;
-
 	//スタミナ増減受け取り
 	m_fStamina = m_pPlayer->GetStamina();
 	
 #ifdef _DEBUG
+	if (CInput::GetKeyPress(VK_RIGHT))
+		m_fStamina++;
+	if (CInput::GetKeyPress(VK_LEFT))
+		m_fStamina--;
 	CDebugProc::Print("ｽﾀﾐﾅ%f\n", m_fStamina);
 #endif // _DEBUG
 

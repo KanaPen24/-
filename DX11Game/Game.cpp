@@ -110,6 +110,10 @@ bool CGame::Init()
 	if (FAILED(CRadar::LoadTexture())) {
 		return false;
 	}
+	// スタミナバー テクスチャ読込
+	if (FAILED(CStaminaBar::LoadTexture())) {
+		return false;
+	}
 
 	// 全オブジェクト初期化
 	if (FAILED(CGameObj::InitAll(m_pObj))) {
@@ -152,6 +156,9 @@ void CGame::Fin()
 
 	// レーダー テクスチャ解放
 	CRadar::ReleaseTexture();
+
+	// スタミナバーテクスチャ解放
+	CStaminaBar::ReleaseTexture();
 
 	// 全オブジェクト終了処理
 	CGameObj::FinAll(m_pObj);
