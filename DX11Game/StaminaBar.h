@@ -1,6 +1,6 @@
 /*=====ヘッダコメント=====
-*@プログラム名	：Rader.h
-*@説明・概要	：レーダーについて
+*@プログラム名	：Staminabar.h
+*@説明・概要	：スタミナバーについて
 *@製作者	：吉田叶聖
 *@更新内容	：2023/03/06
 *@更新履歴	：コメント追記
@@ -11,24 +11,21 @@
 #include "Game.h"
 
 enum {
-	RT_RADAR,		// レーダー
-	RT_BRIGHTSPOT,	// 輝点
+	ST_STAMINABAR,		// スタミナバー
 
-	MAX_RT
+	MAX_ST
 };
 
-class CRadar
+class CGame;
+class CStaminaBar
 {
 private:
-	static ID3D11ShaderResourceView* m_pTexture[MAX_RT];
-
+	
+	static ID3D11ShaderResourceView* m_pTexture[MAX_ST];
 	bool m_bVisible;
-	XMFLOAT3 m_vPos[MAX_OBJECT];
-	XMFLOAT3 m_vPos2D[MAX_OBJECT];
 	CGame* m_pScene;
-	int m_nObject;
-	int m_nCntObj;
 	CPlayer* m_pPlayer;
+	float m_fStamina;
 
 public:
 	void Init(CGame* pScene);

@@ -1,49 +1,17 @@
-﻿  AssimpModel.cpp
-  Camera.cpp
-  City.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\city.cpp(85): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-  Enemy.cpp
-  Explosion.cpp
-  Fade.cpp
+﻿  Enemy.cpp
   Game.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\game.cpp(85): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-  GameCamera.cpp
-  GameObj.cpp
-  Land.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\land.cpp(69): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-  Light.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\light.cpp(55): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
-  Mesh.cpp
-  Model.cpp
-  Number.cpp
+c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\game.cpp(86): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   Object.cpp
-  Particle.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\particle.cpp(95): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\particle.cpp(244): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\particle.cpp(245): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  Pause.cpp
   Player.cpp
   Radar.cpp
   Scene.cpp
-  コンパイル中...
-  SceneClear.cpp
-c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\sceneclear.cpp(28): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-  SceneGameover.cpp
-  ScenePrologue.cpp
-  SceneRule.cpp
-  SceneSelect.cpp
-  SceneTitle.cpp
   Score.cpp
 c:\users\pengi\onedrive\デスクトップ\directxgame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\dx11game\score.cpp(22): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-  StegeSelect.cpp
-  TitleCamera.cpp
-  TitleSelect.cpp
-  main.cpp
-  mesh2.cpp
+  StaminaBar.cpp
      ライブラリ C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.lib とオブジェクト C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.exp を作成中
   コード生成しています。
-  0 of 1610 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  5 of 1617 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    10 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   DX11Game.vcxproj -> C:\Users\pengi\OneDrive\デスクトップ\DirectXGame\ｵﾘｼﾞﾅﾙｹﾞｰﾑ\DX11Game\DX11Game.exe

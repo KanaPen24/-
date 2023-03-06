@@ -23,6 +23,7 @@ private:
 	CCity* m_pCity;			// 街
 	int m_nAnimNo;			// アニメーションNo.
 	double m_dAnimTime;		// 再生時間
+	float m_fStamina;
 	CCamera* m_pGCam;	// ゲームカメラ
 public:
 	CPlayer(CScene* pScene);
@@ -34,4 +35,5 @@ public:
 	virtual void DrawAlpha();
 	bool m_bCollision;
 	XMFLOAT4X4& GetInvWorld() { return m_mInvWorld; }
+	float GetStamina() { return m_fStamina; }
 };

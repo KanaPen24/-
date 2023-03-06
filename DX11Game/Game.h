@@ -19,6 +19,7 @@
 #include "Fade.h"
 #include "Debugproc.h"
 #include "StegeSelect.h"
+#include "StaminaBar.h"
 
 
 //マクロ定義
@@ -29,6 +30,7 @@ class CEnemy;
 class CRadar;
 class CScore;
 class CPause;
+class CStaminaBar;
 // クラス定義
 class CGame : public CScene
 {
@@ -43,6 +45,7 @@ private:
 	CScore* m_pScore;
 	CPause* m_pPause;
 	CSSelect* m_pSSelect;
+	CStaminaBar* m_pStaminaBar;
 
 	
 	int m_nBoundary;

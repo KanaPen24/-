@@ -24,6 +24,7 @@ CGame::CGame() : CScene()
 	m_pRadar = nullptr;
 	m_pScore = nullptr;
 	m_pSSelect = nullptr;
+	m_pStaminaBar = nullptr;
 
 	for (int i = 0; i < _countof(m_pObject); ++i)
 		m_pObject[i] = nullptr;
@@ -123,6 +124,10 @@ bool CGame::Init()
 	m_pRadar = new CRadar();
 	m_pRadar->Init(this);
 
+	// スタミナバー
+	m_pStaminaBar = new CStaminaBar;
+	m_pStaminaBar->Init(this);
+
 	//ポストプロセス初期化
 	CPostProcess::Init();
 
@@ -175,6 +180,9 @@ void CGame::Update()
 
 		// レーダー更新
 		m_pRadar->Update();
+
+		// スタミナバーの更新
+		m_pStaminaBar->Update();
 
 		// スコアの更新
 		m_pScore->Update();
@@ -261,6 +269,9 @@ void CGame::Draw()
 
 	// レーダー描画
 	m_pRadar->Draw();
+
+	// スタミナバー描画
+	m_pStaminaBar->Draw();
 
 	//ポストプロセス描画
 	CPostProcess::Draw();

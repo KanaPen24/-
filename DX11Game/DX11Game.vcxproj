@@ -431,6 +431,7 @@
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="StaminaBar.cpp" />
     <ClCompile Include="StegeSelect.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
@@ -478,6 +479,7 @@
     <ClInclude Include="SoundData.h" />
     <ClInclude Include="SoundData.hpp" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="StaminaBar.h" />
     <ClInclude Include="StegeSelect.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="SceneTitle.h" />

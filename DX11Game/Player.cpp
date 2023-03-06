@@ -26,9 +26,10 @@ const float RATE_MOVE_MODEL = 0.25f;			// 移動慣性係数
 const float SPEED = 0.02f;						// 移動スピード
 const float SCALE = 1.0f;						// 大きさ
 const float DASH = 1.5f;						// ダッシュ
-const float ROTATE = 1.7f;		// カメラの距離
+const float ROTATE = 1.7f;						// カメラの距離
+const float MAX_STAMINA = 100.0f;				// スタミナ最大値
+const float MIN_STAMINA = 0.0f;					// スタミナ最小値
 const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
-//#define REV_Z_AXIS	// Y軸180度回転
 
 // コンストラクタ
 CPlayer::CPlayer(CScene* pScene) : CModel(pScene)
@@ -65,6 +66,7 @@ HRESULT CPlayer::Init()
 	pModel->GetVertexCount(&m_nVertex, &m_nIndex);
 	SetScale(XMFLOAT3(SCALE, SCALE, SCALE));
 	SetAngle(XMFLOAT3(0.0f, 180.0f, 0.0f));	//初期で奥を向く
+	m_fStamina = MAX_STAMINA;
 	return hr;
 }
 
@@ -78,6 +80,10 @@ void CPlayer::Update()
 	XMFLOAT3 vVec = m_pGCam->GetVec();
 	vVec.y = 0.0f;
 
+	//スタミナの最大値最小値設定
+	m_fStamina = std::fmax(m_fStamina, MIN_STAMINA);
+	m_fStamina = std::fmin(m_fStamina, MAX_STAMINA);
+
 	// 現在位置取得
 	XMFLOAT3 vPos = GetPos();
 	m_nSpeed = 0;
@@ -85,9 +91,7 @@ void CPlayer::Update()
 	XMFLOAT3 angle = GetAngle();
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = m_pGCam->GetAngle();
-	//ダッシュ処理
-	if (CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
-		|| CInput::GetKeyPress(VK_S)))	fDash = DASH;
+	
 	//ゲームコントローラー
 	DWORD JoyCount = CInput::GetJoyCount();
 	CInput::GetJoyState(JOYSTICKID1);
@@ -103,9 +107,17 @@ void CPlayer::Update()
 	}
 	/*ここからコントローラー操作の入力*/
 	if (JoyCount >= 1) {
-		if(CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4)&& 
-			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE|| JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
+		//ダッシュ処理
+		if (CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
+			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE || JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
+		{
 			fDash = DASH;
+			m_fStamina--;
+		}
+		else
+		{
+			m_fStamina++;
+		}
 		if (JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE) {
 			// 前移動
 			vPos.x -= vVec.x* SPEED * fDash;
@@ -132,7 +144,19 @@ void CPlayer::Update()
 	// タイマ更新
 	++m_uTick;
 
-	//キー入力処理
+	/*キー入力*/
+
+	//ダッシュ処理
+	if (m_fStamina>0.0f && CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+		|| CInput::GetKeyPress(VK_S)))
+	{
+		fDash = DASH;
+		m_fStamina--;
+	}
+	else if(!CInput::GetKeyPress(VK_LSHIFT))
+	{
+		m_fStamina++;
+	}
 	if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
 		// 前移動
 		vPos.x -= vVec.x* SPEED * fDash;
@@ -155,7 +179,7 @@ void CPlayer::Update()
 		vPos.x -= SPEED * fDash * 100;
 		m_nSpeed = 1;
 	}
-	if (CInput::GetKeyPress(VK_LSHIFT)&&(CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+	if (m_fStamina > 0.0f && CInput::GetKeyPress(VK_LSHIFT)&&(CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
 		|| CInput::GetKeyPress(VK_S)))
 		m_nSpeed = 2;
 
@@ -221,6 +245,7 @@ void CPlayer::Update()
 	if (m_dAnimTime >= GetModel()->GetAnimDuration(m_nAnimNo)) {
 		m_dAnimTime = 0.0;
 	}
+	
 #ifdef _DEBUG
 	
 	//デバック表示
@@ -229,7 +254,8 @@ void CPlayer::Update()
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰPos=X:%f Y:%f Z:%f\n", vPos.x, vPos.y, vPos.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰVec=X:%f Y:%f Z:%f\n", vVec.x, vVec.y, vVec.z);
 	CDebugProc::Print("ﾌﾟﾚｲﾔｰAng=X:%f Y:%f Z:%f\n", angle.x, angle.y, angle.z);*/
-	
+	CDebugProc::Print("Stamina=%f\n", m_fStamina);
+
 #endif
 }
 // 描画
