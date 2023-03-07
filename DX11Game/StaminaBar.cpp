@@ -31,7 +31,7 @@ ID3D11ShaderResourceView* CStaminaBar::m_pTexture[MAX_ST];
 void CStaminaBar::Init(CGame* pScene)
 {
 	m_pScene = pScene;
-	
+	m_bVisible = true;
 	m_pPlayer = m_pScene->GetPlayer();
 	m_fStamina = m_pPlayer->GetStamina();
 }
@@ -44,12 +44,13 @@ void CStaminaBar::Update()
 	//スタミナ増減受け取り
 	m_fStamina = m_pPlayer->GetStamina();
 	
+	CDebugProc::Print("ｽﾀﾐﾅ%f\n", m_fStamina);
 #ifdef _DEBUG
 	if (CInput::GetKeyPress(VK_RIGHT))
 		m_fStamina++;
 	if (CInput::GetKeyPress(VK_LEFT))
 		m_fStamina--;
-	CDebugProc::Print("ｽﾀﾐﾅ%f\n", m_fStamina);
+	
 #endif // _DEBUG
 
 }

@@ -129,7 +129,7 @@ bool CGame::Init()
 	m_pRadar->Init(this);
 
 	// スタミナバー
-	m_pStaminaBar = new CStaminaBar;
+	m_pStaminaBar = new CStaminaBar();
 	m_pStaminaBar->Init(this);
 
 	//ポストプロセス初期化

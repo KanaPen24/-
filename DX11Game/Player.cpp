@@ -108,13 +108,13 @@ void CPlayer::Update()
 	/*ここからコントローラー操作の入力*/
 	if (JoyCount >= 1) {
 		//ダッシュ処理
-		if (CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
+		if (m_fStamina > 0.0f && CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
 			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE || JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
 		{
 			fDash = DASH;
 			m_fStamina--;
 		}
-		else
+		else if (!CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4))
 		{
 			m_fStamina++;
 		}
@@ -136,52 +136,54 @@ void CPlayer::Update()
 		if (JoyX >= GAMEPAD_LEFT_STICK_DEADZONE) {
 			angle.y += ROTATE;
 		}
-		if (CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
+		if (m_fStamina > 0.0f && CInput::GetJoyButton(JOYSTICKID1, JOY_BUTTON4) &&
 			(JoyY <= -GAMEPAD_LEFT_STICK_DEADZONE || JoyY >= GAMEPAD_LEFT_STICK_DEADZONE))
 			m_nSpeed = 2;
 	}
+	else 
+	{
 
+		/*キー入力*/
+
+		//ダッシュ処理
+		if (m_fStamina > 0.0f && CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+			|| CInput::GetKeyPress(VK_S)))
+		{
+			fDash = DASH;
+			m_fStamina--;
+		}
+		else if (!CInput::GetKeyPress(VK_LSHIFT))
+		{
+			m_fStamina++;
+		}
+		if (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W)) {
+			// 前移動
+			vPos.x -= vVec.x* SPEED * fDash;
+			vPos.z -= vVec.z* SPEED * fDash;
+			m_nSpeed = 1;
+		}
+		else if (CInput::GetKeyPress(VK_DOWN) || CInput::GetKeyPress(VK_S)) {
+			// 後移動
+			vPos.x += vVec.x* SPEED * fDash;
+			vPos.z += vVec.z* SPEED * fDash;
+			m_nSpeed = 1;
+		}
+		else if (CInput::GetKeyPress(VK_RIGHT)) {
+			// 右移動
+			vPos.x += SPEED * fDash * 100;
+			m_nSpeed = 1;
+		}
+		if (CInput::GetKeyPress(VK_LEFT)) {
+			// 左移動
+			vPos.x -= SPEED * fDash * 100;
+			m_nSpeed = 1;
+		}
+		if (m_fStamina > 0.0f && CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
+			|| CInput::GetKeyPress(VK_S)))
+			m_nSpeed = 2;
+	}
 	// タイマ更新
 	++m_uTick;
-
-	/*キー入力*/
-
-	//ダッシュ処理
-	if (m_fStamina>0.0f && CInput::GetKeyPress(VK_LSHIFT) && (CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
-		|| CInput::GetKeyPress(VK_S)))
-	{
-		fDash = DASH;
-		m_fStamina--;
-	}
-	else if(!CInput::GetKeyPress(VK_LSHIFT))
-	{
-		m_fStamina++;
-	}
-	if (CInput::GetKeyPress(VK_UP)|| CInput::GetKeyPress(VK_W)) {
-		// 前移動
-		vPos.x -= vVec.x* SPEED * fDash;
-		vPos.z -= vVec.z* SPEED * fDash;
-		m_nSpeed = 1;
-	}
-	else if (CInput::GetKeyPress(VK_DOWN) || CInput::GetKeyPress(VK_S)) {
-		// 後移動
-		vPos.x += vVec.x* SPEED * fDash;
-		vPos.z += vVec.z* SPEED * fDash;
-		m_nSpeed = 1;
-	}
-	else if (CInput::GetKeyPress(VK_RIGHT)) {
-		// 右移動
-		vPos.x += SPEED * fDash * 100;
-		m_nSpeed = 1;
-	}
-	if (CInput::GetKeyPress(VK_LEFT)) {
-		// 左移動
-		vPos.x -= SPEED * fDash * 100;
-		m_nSpeed = 1;
-	}
-	if (m_fStamina > 0.0f && CInput::GetKeyPress(VK_LSHIFT)&&(CInput::GetKeyPress(VK_UP) || CInput::GetKeyPress(VK_W) || CInput::GetKeyPress(VK_DOWN)
-		|| CInput::GetKeyPress(VK_S)))
-		m_nSpeed = 2;
 
 	//角度の変更
 	if (CInput::GetKeyPress(VK_D))
@@ -189,10 +191,12 @@ void CPlayer::Update()
 	if (CInput::GetKeyPress(VK_A))
 		angle.y -= ROTATE;
 
+	//一周回転したら値を0か360に直す
 	if (angle.y >= 360.0f)
 		angle.y = 0.0f;
 	if (angle.y < 0.0f)
 		angle.y = 360.0f;
+
 	// 回転マトリックス生成
 	XMFLOAT4X4 mW;
 	XMStoreFloat4x4(&mW, XMMatrixRotationY(XMConvertToRadians(angle.y)));
