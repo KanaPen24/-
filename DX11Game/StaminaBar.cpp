@@ -44,7 +44,6 @@ void CStaminaBar::Update()
 	//スタミナ増減受け取り
 	m_fStamina = m_pPlayer->GetStamina();
 	
-	CDebugProc::Print("ｽﾀﾐﾅ%f\n", m_fStamina);
 #ifdef _DEBUG
 	if (CInput::GetKeyPress(VK_RIGHT))
 		m_fStamina++;
