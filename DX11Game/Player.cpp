@@ -27,7 +27,7 @@ const float SPEED = 0.02f;						// 移動スピード
 const float SCALE = 1.0f;						// 大きさ
 const float DASH = 1.5f;						// ダッシュ
 const float ROTATE = 1.7f;						// カメラの距離
-const float MAX_STAMINA = 100.0f;				// スタミナ最大値
+const float MAX_STAMINA = 80.0f;				// スタミナ最大値
 const float MIN_STAMINA = 0.0f;					// スタミナ最小値
 const int GAMEPAD_LEFT_STICK_DEADZONE = 7800;	// 左スティックのデッドゾーン
 
@@ -124,12 +124,12 @@ void CPlayer::Update()
 			vPos.z -= vVec.z* SPEED * fDash;
 			m_nSpeed = 1;
 		}
-		else if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE) {
-			// 後移動
-			vPos.x += vVec.x* SPEED * fDash;
-			vPos.z += vVec.z* SPEED * fDash;
-			m_nSpeed = 1;
-		}
+		//else if (JoyY >= GAMEPAD_LEFT_STICK_DEADZONE) {
+		//	// 後移動
+		//	vPos.x += vVec.x* SPEED * fDash;
+		//	vPos.z += vVec.z* SPEED * fDash;
+		//	m_nSpeed = 1;
+		//}
 		if (JoyX <= -GAMEPAD_LEFT_STICK_DEADZONE) {
 			angle.y -= ROTATE;
 		}

@@ -167,7 +167,7 @@ void CEnemy::Update()
 	CSound::SetVolume(BGM_GAME, volume, m_fChan);
 
 	// è’ìÀîªíË
-	if (CollisionBSphere(m_pPlayer)) {
+	if (!g_bAlflg && CollisionBSphere(m_pPlayer)) {
 		CFade::CutOut(SCENE_GAMEOVER);
 		CSound::SetVolume(SE_DAMAGE, 0.2f);
 		CSound::Play(SE_DAMAGE);

@@ -2,8 +2,8 @@
 *@プログラム名	：Rader.cpp
 *@説明・概要	：レーダーについて
 *@製作者	：吉田叶聖
-*@更新内容	：2023/03/06
-*@更新履歴	：コメント追記
+*@更新内容	：2023/03/08
+*@更新履歴	：プレイヤーの輝点ついか
 *@更新者	：吉田叶聖
 */
 #include "Radar.h"
@@ -17,6 +17,7 @@ namespace {
 		_T("data/texture/bright_spot.png"),
 	};
 	const XMFLOAT4 BRIGHTSPOT_COLOR = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	const XMFLOAT4 PLAYER_BRIGHTSPOT_COLOR = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 	const float BRIGHTSPOT_RADIUS = 8.0f;	// 輝点半径
 	const float RADAR_RANGE = 1500.0f;		// レーダー探知半径(ワールド座標系)
 	const float RADAR_RADIUS = 128.0f;		// レーダー表示半径(スクリーン座標系)
@@ -109,6 +110,15 @@ void CRadar::Draw()
 		CPolygon::Draw(pDC);
 	}
 
+	//プレイヤーの輝点
+	SetBlendState(BS_ALPHABLEND);
+	CPolygon::SetTexture(m_pTexture[RT_BRIGHTSPOT]);
+	CPolygon::SetSize(BRIGHTSPOT_RADIUS * 2, BRIGHTSPOT_RADIUS * 2);
+	CPolygon::SetColor(PLAYER_BRIGHTSPOT_COLOR);
+	CPolygon::SetPos(-RADAR_POS_X, -RADAR_POS_Y);
+	CPolygon::Draw(pDC);
+
+	//リセット
 	CPolygon::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	SetBlendState(BS_NONE);
 	SetZBuffer(true);
